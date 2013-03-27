@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Horeca</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="button_choose_horeca">Choose new horeca</string>
+    <string name="label_current_selection">Current selection: </string>
+    <string name="label_default_selection">None</string>
+
+</resources>
