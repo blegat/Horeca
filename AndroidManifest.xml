@@ -23,12 +23,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HorecaListActivity"
-            android:label="@string/app_name">
+            android:name="com.horeca.HorecaListActivity"
+            android:label="@string/title_activity_horeca_list" >
         </activity>
         <activity
-            android:name=".PlatListActivity"
-            android:label="@string/app_name">
+            android:name="com.horeca.PlatListActivity"
+            android:label="@string/title_activity_plat_list" >
+        </activity>
+        <activity
+            android:name="com.horeca.PlatActivity"
+            android:label="@string/title_activity_plat" >
         </activity>
     </application>
 

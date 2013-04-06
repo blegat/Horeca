@@ -10,63 +10,47 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.SimpleCursorAdapter;
 
 public class HorecaListActivity extends ListActivity {
 
 	public static final String CHOSEN_TEXT = "chosenText";
 	
-	List<String> someStrings = new ArrayList<String>();
-	String chosenString;
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		// Open the db
 		MySqliteHelper sqliteHelper = new MySqliteHelper(this);
 		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
 		
-		Cursor cursor = db.query(MySqliteHelper.TABLE_HORECAS,
-				MySqliteHelper.HORECAS_COLUMNS, null, null, null, null, null);
+		// Get the restaurants
+		Cursor cursor = db.query(HorecaContract.Horeca.TABLE_NAME,
+				HorecaContract.Horeca.COLUMN_NAMES, null, null, null, null, null);
 		
-		cursor.moveToFirst();
-		while (!cursor.isAfterLast()) {
-			someStrings.add(cursor.getString(1));
-			cursor.moveToNext();
-		}
+		//db.close(); // too early, the adapter still uses it apparently
 		
-		db.close();
-		
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, //this context
+		// Create the List of restaurants to choose from
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, //this context
 				android.R.layout.simple_list_item_1, //id of the item layout used by default for the individual rows (this id is pre-defined by Android)
-				someStrings); // the list of objects to be adapted
+				cursor,
+				new String[] { HorecaContract.Horeca.NAME },
+				new int[] { android.R.id.text1 }); // the list of objects to be adapted
+		// to remove deprecation warning, I need to add ", 0" but it is only in API 11 and we need 2.3.3 which is API 10
+		//db.close(); // too early, the adapter still uses it apparently
 		setListAdapter(adapter);
+		db.close();
 		
 		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 			{
-				// set chosenString, the string returned at finish
-				chosenString = someStrings.get(position);
-				// display a message
-				//Toast.makeText(HorecaListActivity.this, "You have chosen: " + chosenString, Toast.LENGTH_SHORT).show();
         		Intent i = new Intent(HorecaListActivity.this, PlatListActivity.class);
-        		// FIXME 0 est naze, comment dire qu'on veut pas
-        		// de résultat ?
-        		// if faut sans doute ne pas passer par un intent...
-        		startActivityForResult(i, 0);
+        		// Tell PlatListActivity which horeca to take plats from
+        		i.putExtra("horeca_id", id);
+        		startActivity(i);
 			}
 		});
-	}
-	
-	@Override
-	public void finish() {
-		if (chosenString != null) {
-			Intent data = new Intent();
-			data.putExtra(CHOSEN_TEXT, chosenString);
-			setResult(RESULT_OK, data);
-		}
-		super.finish();
 	}
 
 }

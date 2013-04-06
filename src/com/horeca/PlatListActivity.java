@@ -4,48 +4,56 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
+import android.widget.SimpleCursorAdapter;
 
 public class PlatListActivity extends ListActivity {
-	
-	List<String> someStrings = new ArrayList<String>();
-	String chosenString;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		// Open the db
 		MySqliteHelper sqliteHelper = new MySqliteHelper(this);
 		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
 		
-		Cursor cursor = db.query(MySqliteHelper.TABLE_PLATS,
-				MySqliteHelper.PLATS_COLUMNS, null, null, null, null, null);
+		// Get the horeca from which to take the plats
+		// specified by the HorecaListActivity calling this activity
+		Bundle b = getIntent().getExtras();
+		long horeca_id = b.getLong("horeca_id");
 		
-		cursor.moveToFirst();
-		while (!cursor.isAfterLast()) {
-			someStrings.add(cursor.getString(1));
-			cursor.moveToNext();
-		}
+		// Get the menu
+		Cursor cursor = db.query(HorecaContract.Plat.TABLE_NAME,
+				HorecaContract.Plat.COLUMN_NAMES,
+				HorecaContract.Plat.HORECA_ID + " == ?",
+				new String[]{((Long) horeca_id).toString()},
+				null, null, null);
 		
-		db.close();
-		
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, //this context
+		// Display the menu in a list
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, //this context
 				android.R.layout.simple_list_item_1, //id of the item layout used by default for the individual rows (this id is pre-defined by Android)
-				someStrings); // the list of objects to be adapted
+				cursor,
+				new String[] { HorecaContract.Plat.NAME },
+				new int[] { android.R.id.text1 }); // the list of objects to be adapted
+		// to remove deprecation warning, I need to add ", 0" but it is only in API 11 and we need 2.3.3 which is API 10
 		setListAdapter(adapter);
+		
+		db.close(); // the adapter uses it so we can't do it earlier
 		
 		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 			{
-				chosenString = someStrings.get(position);
-				Toast.makeText(PlatListActivity.this, "You have chosen: " + chosenString, Toast.LENGTH_SHORT).show();
+        		Intent i = new Intent(PlatListActivity.this, PlatActivity.class);
+        		// Tell the PlatActivity which plat to display
+        		// by giving its id
+        		i.putExtra("_id", id);
+        		startActivity(i);
 			}
 		});
 	}
