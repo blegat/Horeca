@@ -11,27 +11,37 @@
 	    android:orientation="vertical"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content" >
-    	<TextView
-    	    android:id="@+id/horeca_name"
-    	    android:textIsSelectable="true"
-       		android:layout_width="fill_parent"
-       		android:layout_height="wrap_content" />
-    	<TextView
-    	    android:id="@+id/plat_name"
-    	    android:textIsSelectable="true"
-       		android:layout_width="wrap_content"
-       		android:layout_height="wrap_content" />
+    	<RelativeLayout
+    	    android:layout_width="fill_parent"
+    	    android:layout_height="wrap_content" >
+	    	<TextView
+	    	    android:id="@+id/horeca_name"
+	    	    android:textIsSelectable="true"
+	       		android:layout_width="wrap_content"
+	       		android:layout_height="wrap_content"
+	       		android:layout_alignParentLeft="true"
+	       		style="@style/simple_text" />
+	    	<TextView
+	    	    android:id="@+id/plat_name"
+	    	    android:textIsSelectable="true"
+	       		android:layout_width="wrap_content"
+	       		android:layout_height="wrap_content"
+	       		android:layout_alignParentRight="true"
+	       		style="@style/simple_text" />
+    	</RelativeLayout>
     	<TextView
     	    android:id="@+id/plat_description_label"
     	    android:text="@string/plat_description_label"
     	    android:textIsSelectable="true"
        		android:layout_width="wrap_content"
-       		android:layout_height="wrap_content" />
+       		android:layout_height="wrap_content"
+       		style="@style/simple_text" />
     	<TextView
     	    android:id="@+id/plat_description"
     	    android:textIsSelectable="true"
        		android:layout_width="wrap_content"
-       		android:layout_height="wrap_content" />
+       		android:layout_height="wrap_content"
+       		style="@style/simple_text" />
     	<RelativeLayout
     	    android:layout_width="fill_parent"
     	    android:layout_height="wrap_content" >
@@ -41,36 +51,42 @@
 	    	    android:textIsSelectable="true"
 	       		android:layout_width="wrap_content"
 	       		android:layout_height="wrap_content"
-	       		android:layout_alignParentLeft="true" />
+	       		android:layout_alignParentLeft="true"
+	       		style="@style/simple_text" />
 	    	<TextView
 	    	    android:id="@+id/plat_stock"
 	    	    android:textIsSelectable="true"
 	       		android:layout_width="wrap_content"
 	       		android:layout_height="wrap_content"
-	       		android:layout_toRightOf="@id/plat_stock_label" />
+	       		android:layout_toRightOf="@id/plat_stock_label"
+	       		style="@style/simple_text" />
 	    	<TextView
 	    	    android:text="@string/plat_price_label"
 	    	    android:textIsSelectable="true"
 	       		android:layout_width="wrap_content"
 	       		android:layout_height="wrap_content"
-	       		android:layout_toLeftOf="@+id/plat_price" />
+	       		android:layout_toLeftOf="@+id/plat_price"
+	       		style="@style/simple_text" />
 	    	<TextView
 	    	    android:id="@id/plat_price"
 	    	    android:textIsSelectable="true"
 	       		android:layout_width="wrap_content"
 	       		android:layout_height="wrap_content"
-	       		android:layout_alignParentRight="true" />
+	       		android:layout_alignParentRight="true"
+	       		style="@style/simple_text" />
     	</RelativeLayout>
     	<TextView
     	    android:text="@string/plat_ingredients_label"
     	    android:textIsSelectable="true"
        		android:layout_width="wrap_content"
-       		android:layout_height="wrap_content" />
+       		android:layout_height="wrap_content"
+       		style="@style/simple_text" />
     	<TextView
     	    android:id="@+id/plat_ingredients"
     	    android:textIsSelectable="true"
        		android:layout_width="wrap_content"
-       		android:layout_height="wrap_content" />
+       		android:layout_height="wrap_content"
+       		style="@style/simple_text" />
 	</LinearLayout>
 
 </ScrollView>
