@@ -11,5 +11,7 @@
     <string name="plat_description_label"><b>Description:</b></string>
     <string name="plat_stock_label"><b>Stock: </b></string>
     <string name="plat_stock_unknown">unknown</string>
+    <string name="plat_ingredients_label"><b>Ingredients:</b></string>
+    <string name="plat_ingredients_none">No ingredient.</string>
 
 </resources>

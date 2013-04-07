@@ -14,6 +14,7 @@ public class PlatActivity extends Activity {
 	private TextView plat_price = null;
 	private TextView plat_description = null;
 	private TextView plat_stock = null;
+	private TextView plat_ingredients = null;
 	private Plat plat = null;
 
 	@Override
@@ -30,6 +31,9 @@ public class PlatActivity extends Activity {
 		
 		// Get the plat from the db
 		plat = new Plat(id, db);
+		
+		// close the db, exerything has been loaded in the constructor of Plat
+		db.close();
 		
 		// Set TextView's content
 		setContentView(R.layout.activity_plat);
@@ -55,6 +59,21 @@ public class PlatActivity extends Activity {
 			plat_stock.setText(((Long) plat.getStock()).toString());
 		} else {
 			plat_stock.setText(R.string.plat_stock_unknown);
+		}
+		
+		plat_ingredients = (TextView) findViewById(R.id.plat_ingredients);
+		Ingredient[] ingredients = plat.getIngredients();
+		if (ingredients.length == 0) {
+			plat_ingredients.setText(R.string.plat_ingredients_none);
+		} else {
+			StringBuilder text = new StringBuilder();
+			for (int i = 0; i < ingredients.length; i++) {
+				if (i != 0) {
+					text.append(", ");
+				}
+				text.append(ingredients[i].getName());
+			}
+			plat_ingredients.setText(text.toString());
 		}
 		
 	}

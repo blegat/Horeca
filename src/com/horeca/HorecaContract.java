@@ -8,7 +8,7 @@ public class HorecaContract {
 	/*
 	 * The `*_INDEX` are there for optimization.
 	 * If a query is done with COLOMN_NAMES as a selection,
-	 * to avoid calling getColumnIndex call or hardcoding the index,
+	 * to avoid calling getColumnIndex call or hard-coding the index,
 	 * the index in COLUMN_NAMES is in `*_INDEX`
 	 */
 	public static abstract class Horeca implements BaseColumns {
@@ -34,5 +34,23 @@ public class HorecaContract {
 		public static final String[] COLUMN_NAMES = new String[]{_ID,
 			HORECA_ID, NAME, PRICE,
 			DESCRIPTION, STOCK};
+	}
+	public static abstract class Ingredient implements BaseColumns {
+		public static final String TABLE_NAME = "ingredients";
+		public static final int _ID_INDEX = 0;
+		public static final String NAME = "nom";
+		public static final int NAME_INDEX = 1;
+		public static final String[] COLUMN_NAMES = new String[]{_ID,
+			NAME};
+	}
+	public static abstract class Contient implements BaseColumns {
+		public static final String TABLE_NAME = "contients";
+		public static final int _ID_INDEX = 0;
+		public static final String PLAT_ID = "plat_id";
+		public static final int PLAT_ID_INDEX = 1;
+		public static final String INGREDIENT_ID = "ingredient_id";
+		public static final int INGREDIENT_ID_INDEX = 2;
+		public static final String[] COLUMN_NAMES = new String[]{_ID,
+			PLAT_ID, INGREDIENT_ID};
 	}
 }

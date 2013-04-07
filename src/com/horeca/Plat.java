@@ -12,6 +12,7 @@ public class Plat {
 	private boolean hasStock;
 	private long stock;
 	private Horeca horeca;
+	private Ingredient[] ingredients;
 	//SQLiteDatabase db; // (1)
 	public Plat (long id, SQLiteDatabase db) {
 		// this.db = db; // (1)
@@ -36,6 +37,19 @@ public class Plat {
 		if (hasStock) {
 			stock = cursor.getLong(HorecaContract.Plat.STOCK_INDEX);
 		}
+		cursor.close();
+		cursor = db.query(HorecaContract.Contient.TABLE_NAME,
+				new String[]{HorecaContract.Contient.INGREDIENT_ID},
+				HorecaContract.Contient.PLAT_ID + " == ?",
+				new String[]{((Long) this.id).toString()},
+				null, null, null);
+		ingredients = new Ingredient[cursor.getCount()];
+		cursor.moveToFirst();
+		for (int i = 0; i < ingredients.length; i++) {
+			ingredients[i] = new Ingredient(cursor.getLong(0), db); // There is only 1 column we don't user COLUMN_NAMES
+			cursor.moveToNext();
+		}
+		cursor.close();
 	}
 	public long getId () {
 		return id;
@@ -64,5 +78,8 @@ public class Plat {
 	}
 	public long getStock() {
 		return stock;
+	}
+	public Ingredient[] getIngredients() {
+		return ingredients;
 	}
 }

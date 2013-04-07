@@ -37,6 +37,13 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 				HorecaContract.Plat.PRICE + " INTEGER NOT NULL, " +
 				HorecaContract.Plat.DESCRIPTION + " TEXT, " +
 				HorecaContract.Plat.STOCK + " INTEGER);");
+		db.execSQL("CREATE TABLE " + HorecaContract.Ingredient.TABLE_NAME + "(" +
+				HorecaContract.Ingredient._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				HorecaContract.Ingredient.NAME + " TEXT NOT NULL);");
+		db.execSQL("CREATE TABLE " + HorecaContract.Contient.TABLE_NAME + "(" +
+				HorecaContract.Contient._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				HorecaContract.Contient.PLAT_ID + " INTEGER NOT NULL, " +
+				HorecaContract.Contient.INGREDIENT_ID + " INTEGER NOT NULL);");
 	}	
 	
 	public void populateDatabase(SQLiteDatabase db) {
@@ -45,6 +52,7 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 			db.execSQL("INSERT INTO " + HorecaContract.Horeca.TABLE_NAME + "(" +
 					HorecaContract.Horeca.NAME + ") VALUES('" + horeca_name + "');");
 		}
+
 		String plat_names[] = {"CheeseBurger", "Chicken Wigs Truck", "Cake méditerranéen",
 					"Promenade de crustacés", "Gigondas", "Club", "Royal"};
 		long plat_horeca_ids[] = {1, 1, 1,
@@ -78,11 +86,27 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 			db.execSQL("INSERT INTO " + HorecaContract.Plat.TABLE_NAME + "(" +
 					column_names + ") VALUES(" + column_values + ");");
 		}
+
+		String ingredient_names[] = {"Homard", "Crabe", "Raisin"};
+		for(String ingredient_name : ingredient_names) {
+			db.execSQL("INSERT INTO " + HorecaContract.Ingredient.TABLE_NAME + "(" +
+					HorecaContract.Ingredient.NAME + ") VALUES('" + ingredient_name + "');");
+		}
+
+		long contient_plat_ids[] = {4, 4, 5};
+		long contient_ingredient_ids[] = {1, 2, 3};
+		for (int i = 0; i < contient_plat_ids.length; i++) {
+			db.execSQL("INSERT INTO " + HorecaContract.Contient.TABLE_NAME + "(" +
+					HorecaContract.Contient.PLAT_ID + ", " + HorecaContract.Contient.INGREDIENT_ID +
+					") VALUES('" + contient_plat_ids[i] + "', '" + contient_ingredient_ids[i] + "');");
+		}
 	}
 	
 	public void deleteDatabase(SQLiteDatabase db) {
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Horeca.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Plat.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Ingredient.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Contient.TABLE_NAME);
 	}
 
 }
