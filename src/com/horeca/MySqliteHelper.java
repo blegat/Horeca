@@ -29,7 +29,8 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 	public void createDatabase(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE " + HorecaContract.Horeca.TABLE_NAME + "(" +
 				HorecaContract.Horeca._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				HorecaContract.Horeca.NAME + " TEXT NOT NULL);");
+				HorecaContract.Horeca.NAME + " TEXT NOT NULL, " +
+				HorecaContract.Horeca.DESCRIPTION + " TEXT);");
 		db.execSQL("CREATE TABLE " + HorecaContract.Plat.TABLE_NAME + "(" +
 				HorecaContract.Plat._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				HorecaContract.Plat.HORECA_ID + " INTEGER NOT NULL, " +
@@ -48,9 +49,16 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 	
 	public void populateDatabase(SQLiteDatabase db) {
 		String horeca_names[] = {"Quick", "Longeatude", "Crousty"};
-		for(String horeca_name : horeca_names) {
+		String horeca_descriptions[] = {"Nous, c est le goût !", "Cher mais bon !", null};
+		for(int i = 0; i < horeca_names.length; i++) {
+			String column_names = HorecaContract.Horeca.NAME;
+			String column_values = "'" + horeca_names[i] + "'";
+			if (horeca_descriptions[i] != null) {
+				column_names = column_names + ", " + HorecaContract.Horeca.DESCRIPTION;
+				column_values = column_values + ", '" + horeca_descriptions[i] + "'";
+			}
 			db.execSQL("INSERT INTO " + HorecaContract.Horeca.TABLE_NAME + "(" +
-					HorecaContract.Horeca.NAME + ") VALUES('" + horeca_name + "');");
+					column_names + ") VALUES(" + column_values + ");");
 		}
 
 		String plat_names[] = {"CheeseBurger", "Chicken Wigs Truck", "Cake méditerranéen",

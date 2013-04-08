@@ -16,7 +16,9 @@ public class HorecaContract {
 		public static final int _ID_INDEX = 0;
 		public static final String NAME = "nom";
 		public static final int NAME_INDEX = 1;
-		public static final String[] COLUMN_NAMES = new String[]{_ID, NAME};
+		public static final String DESCRIPTION = "description";
+		public static final int DESCRIPTION_INDEX = 2;
+		public static final String[] COLUMN_NAMES = new String[]{_ID, NAME, DESCRIPTION};
 	}
 	public static abstract class Plat implements BaseColumns {
 		public static final String TABLE_NAME = "plats";

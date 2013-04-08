@@ -1,0 +1,35 @@
+package com.horeca;
+
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTabHost;
+import android.view.Menu;
+
+public class HorecaActivity extends FragmentActivity {
+
+    private FragmentTabHost tabHost;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_horeca);
+        tabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
+        tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
+
+        tabHost.addTab(tabHost.newTabSpec("pres").setIndicator("Présentation",
+        		getResources().getDrawable(android.R.drawable.ic_menu_gallery)),
+        		PresentationFragment.class, null);
+        tabHost.addTab(tabHost.newTabSpec("menu").setIndicator("Menu",
+        		getResources().getDrawable(android.R.drawable.ic_menu_agenda)),
+        		MenuFragment.class, null);
+    }
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.horeca, menu);
+		return true;
+	}
+
+}

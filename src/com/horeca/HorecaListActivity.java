@@ -45,7 +45,7 @@ public class HorecaListActivity extends ListActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 			{
-        		Intent i = new Intent(HorecaListActivity.this, PlatListActivity.class);
+        		Intent i = new Intent(HorecaListActivity.this, HorecaActivity.class);
         		// Tell PlatListActivity which horeca to take plats from
         		i.putExtra("horeca_id", id);
         		startActivity(i);

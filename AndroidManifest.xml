@@ -27,8 +27,8 @@
             android:label="@string/title_activity_horeca_list" >
         </activity>
         <activity
-            android:name="com.horeca.PlatListActivity"
-            android:label="@string/title_activity_plat_list" >
+            android:name="com.horeca.HorecaActivity"
+            android:label="@string/title_activity_horeca" >
         </activity>
         <activity
             android:name="com.horeca.PlatActivity"

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+    <LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" >
+    	<TextView
+    	    android:id="@+id/horeca_description_label"
+    	    android:text="@string/horeca_description_label"
+    	    android:textIsSelectable="true"
+       		android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		style="@style/simple_text" />
+    	<TextView
+    	    android:id="@+id/horeca_description"
+    	    android:textIsSelectable="true"
+       		android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		style="@style/simple_text" />
+	</LinearLayout>
+</ScrollView>

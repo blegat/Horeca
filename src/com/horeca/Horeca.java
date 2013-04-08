@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 public class Horeca {
 	private long id;
 	private String name;
+	private String description;
 	SQLiteDatabase db;
 	public Horeca (long id, SQLiteDatabase db) {
 		this.db = db;
@@ -17,11 +18,18 @@ public class Horeca {
 		cursor.moveToFirst();
 		id = cursor.getLong(HorecaContract.Horeca._ID_INDEX);
 		name = cursor.getString(HorecaContract.Horeca.NAME_INDEX);
+		description = cursor.getString(HorecaContract.Horeca.DESCRIPTION_INDEX);
 	}
 	public long getId () {
 		return id;
 	}
 	public String getName() {
 		return name;
+	}
+	public boolean hasDescription() {
+		return description != null;
+	}
+	public String getDescription() {
+		return description;
 	}
 }
