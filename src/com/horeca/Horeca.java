@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 public class Horeca {
 	private long id;
 	private String name;
+	private String numtel;
 	private String description;
 	SQLiteDatabase db;
 	public Horeca (long id, SQLiteDatabase db) {
@@ -18,6 +19,7 @@ public class Horeca {
 		cursor.moveToFirst();
 		id = cursor.getLong(HorecaContract.Horeca._ID_INDEX);
 		name = cursor.getString(HorecaContract.Horeca.NAME_INDEX);
+		numtel = cursor.getString(HorecaContract.Horeca.NUMTEL_INDEX);
 		description = cursor.getString(HorecaContract.Horeca.DESCRIPTION_INDEX);
 	}
 	public long getId () {
@@ -25,6 +27,9 @@ public class Horeca {
 	}
 	public String getName() {
 		return name;
+	}
+	public String getNumtel() {
+		return numtel;
 	}
 	public boolean hasDescription() {
 		return description != null;

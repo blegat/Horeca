@@ -30,6 +30,7 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		db.execSQL("CREATE TABLE " + HorecaContract.Horeca.TABLE_NAME + "(" +
 				HorecaContract.Horeca._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				HorecaContract.Horeca.NAME + " TEXT NOT NULL, " +
+				HorecaContract.Horeca.NUMTEL + " TEXT NOT NULL, " +
 				HorecaContract.Horeca.DESCRIPTION + " TEXT);");
 		db.execSQL("CREATE TABLE " + HorecaContract.Plat.TABLE_NAME + "(" +
 				HorecaContract.Plat._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -49,10 +50,11 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 	
 	public void populateDatabase(SQLiteDatabase db) {
 		String horeca_names[] = {"Quick", "Longeatude", "Crousty"};
+		String horeca_numtels[] = {"01045424242", "01045007007", "01045454545"};
 		String horeca_descriptions[] = {"Nous, c est le goût !", "Cher mais bon !", null};
 		for(int i = 0; i < horeca_names.length; i++) {
-			String column_names = HorecaContract.Horeca.NAME;
-			String column_values = "'" + horeca_names[i] + "'";
+			String column_names = HorecaContract.Horeca.NAME + ", " + HorecaContract.Horeca.NUMTEL;
+			String column_values = "'" + horeca_names[i] + "', '" + horeca_numtels[i] + "'";
 			if (horeca_descriptions[i] != null) {
 				column_names = column_names + ", " + HorecaContract.Horeca.DESCRIPTION;
 				column_values = column_values + ", '" + horeca_descriptions[i] + "'";

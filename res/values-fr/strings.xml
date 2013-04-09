@@ -5,9 +5,7 @@
     <string name="action_settings">Préférences</string>
     <string name="button_choose_horeca">Choisir nouveau horeca</string>
     <string name="title_activity_horeca_list">Restaurants</string>
-    <string name="title_activity_horeca">Restaurant choisi</string>
-    <string name="title_activity_plat_list">Menu</string>
-    <string name="title_activity_plat">Description du plat</string>
+    <string name="horeca_numtel_label"><b>Numéro de téléphone: </b></string>
     <string name="horeca_description_label"><b>Description:</b></string>
     <string name="plat_price_label"><b>Prix: </b></string>
     <string name="plat_description_label"><b>Description:</b></string>
@@ -15,6 +13,6 @@
     <string name="plat_stock_unknown">inconnu</string>
     <string name="plat_ingredients_label"><b>Ingrédients:</b></string>
     <string name="plat_ingredients_none">Aucun ingrédient.</string>
-    <string name="menu">Menu:</string>
+    <string name="menu"><b>Menu:</b></string>
     
 </resources>

@@ -17,6 +17,10 @@ public class HorecaActivity extends FragmentActivity {
         tabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
+        // Presentation is the default tab which is mandatory
+        // since it sets the title of the activity.
+        // Setting the title here would require a access to the database
+        // or sharing the Horeca object which would be complicating things.
         tabHost.addTab(tabHost.newTabSpec("pres").setIndicator("Présentation",
         		getResources().getDrawable(android.R.drawable.ic_menu_gallery)),
         		PresentationFragment.class, null);

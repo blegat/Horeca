@@ -35,6 +35,9 @@ public class PlatActivity extends Activity {
 		// close the db, exerything has been loaded in the constructor of Plat
 		db.close();
 		
+		// Set the title of the activity
+		setTitle(plat.getHoreca().getName() + " - " + plat.getName());
+		
 		// Set TextView's content
 		setContentView(R.layout.activity_plat);
 		horeca_name = (TextView) findViewById(R.id.horeca_name);

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 public class PresentationFragment extends Fragment {
 	
+	private TextView horeca_numtel = null;
 	private TextView horeca_description = null;
 	private Horeca horeca = null;
 	
@@ -27,6 +28,12 @@ public class PresentationFragment extends Fragment {
 		// specified by the HorecaListActivity calling this activity
 		Bundle b = getActivity().getIntent().getExtras();
 		horeca = new Horeca(b.getLong("horeca_id"), db);
+		
+		// it sets the title because it is the default tab
+		getActivity().setTitle(horeca.getName());
+		
+		horeca_numtel = (TextView) view.findViewById(R.id.horeca_numtel);
+		horeca_numtel.setText(horeca.getNumtel());
         
 		horeca_description = (TextView) view.findViewById(R.id.horeca_description);
 		if (horeca.hasDescription()) {
