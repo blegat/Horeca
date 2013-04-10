@@ -27,9 +27,14 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 	}
 	
 	public void createDatabase(SQLiteDatabase db) {
+		db.execSQL("CREATE TABLE " + HorecaContract.Ville.TABLE_NAME + "(" +
+				HorecaContract.Ville._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				HorecaContract.Ville.NAME + " TEXT NOT NULL, " +
+				HorecaContract.Ville.CODEPOSTAL + " TEXT NOT NULL);");
 		db.execSQL("CREATE TABLE " + HorecaContract.Horeca.TABLE_NAME + "(" +
 				HorecaContract.Horeca._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				HorecaContract.Horeca.NAME + " TEXT NOT NULL, " +
+				HorecaContract.Horeca.VILLE_ID + " INTEGER NOT NULL, " +
 				HorecaContract.Horeca.NUMTEL + " TEXT NOT NULL, " +
 				HorecaContract.Horeca.DESCRIPTION + " TEXT);");
 		db.execSQL("CREATE TABLE " + HorecaContract.Plat.TABLE_NAME + "(" +
@@ -49,12 +54,22 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 	}	
 	
 	public void populateDatabase(SQLiteDatabase db) {
+		String ville_names[] = {"Louvain-la-Neuve", "Brussels"};
+		long ville_codepostals[] = {1348, 1000};
+		for (int i = 0; i < ville_names.length; i++) {
+			db.execSQL("INSERT INTO " + HorecaContract.Ville.TABLE_NAME + "(" +
+					HorecaContract.Ville.NAME + ", " + HorecaContract.Ville.CODEPOSTAL + ") VALUES('" +
+					ville_names[i] + "', '" + ville_codepostals[i] + "');");
+		}
 		String horeca_names[] = {"Quick", "Longeatude", "Crousty"};
+		long horeca_ville_ids[] = {1, 1, 1};
 		String horeca_numtels[] = {"01045424242", "01045007007", "01045454545"};
 		String horeca_descriptions[] = {"Nous, c est le goût !", "Cher mais bon !", null};
 		for(int i = 0; i < horeca_names.length; i++) {
-			String column_names = HorecaContract.Horeca.NAME + ", " + HorecaContract.Horeca.NUMTEL;
-			String column_values = "'" + horeca_names[i] + "', '" + horeca_numtels[i] + "'";
+			String column_names = HorecaContract.Horeca.NAME + ", " +
+					HorecaContract.Horeca.VILLE_ID + ", " + HorecaContract.Horeca.NUMTEL;
+			String column_values = "'" + horeca_names[i] + "', '" + 
+					horeca_ville_ids[i] + "', '" + horeca_numtels[i] + "'";
 			if (horeca_descriptions[i] != null) {
 				column_names = column_names + ", " + HorecaContract.Horeca.DESCRIPTION;
 				column_values = column_values + ", '" + horeca_descriptions[i] + "'";

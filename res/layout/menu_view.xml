@@ -6,13 +6,13 @@
     
     <TextView
         android:text="@string/menu"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/simple_text" >
     </TextView>
     <ListView
         android:id="@+id/plats_list"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </ListView>
         

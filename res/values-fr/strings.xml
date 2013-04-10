@@ -4,7 +4,8 @@
     <string name="app_name">Horeca</string>
     <string name="action_settings">Préférences</string>
     <string name="button_choose_horeca">Choisir nouveau horeca</string>
-    <string name="title_activity_horeca_list">Restaurants</string>
+    <string name="title_activity_horeca_list">Restaurants à %1$s</string>
+    <string name="ville_spinner_label"><b>Ville:</b></string>
     <string name="horeca_numtel_label"><b>Numéro de téléphone: </b></string>
     <string name="horeca_description_label"><b>Description:</b></string>
     <string name="plat_price_label"><b>Prix: </b></string>

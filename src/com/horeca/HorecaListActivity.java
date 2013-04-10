@@ -10,8 +10,8 @@ import android.widget.AdapterView;
 import android.widget.SimpleCursorAdapter;
 
 public class HorecaListActivity extends ListActivity {
-
-	public static final String CHOSEN_TEXT = "chosenText";
+	
+	private Ville ville;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -21,16 +21,15 @@ public class HorecaListActivity extends ListActivity {
 		MySqliteHelper sqliteHelper = new MySqliteHelper(this);
 		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
 		
-		// Get the restaurants
-		Cursor cursor = db.query(HorecaContract.Horeca.TABLE_NAME,
-				HorecaContract.Horeca.COLUMN_NAMES, null, null, null, null, null);
-		
-		//db.close(); // too early, the adapter still uses it apparently
+		// Get the ville
+		Bundle b = getIntent().getExtras();
+		ville = new Ville(b.getLong(MainActivity.VILLE_ID_EXTRA), db);
+		setTitle(String.format(getResources().getString(R.string.title_activity_horeca_list), ville.getName()));
 		
 		// Create the List of restaurants to choose from
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, //this context
 				android.R.layout.simple_list_item_1, //id of the item layout used by default for the individual rows (this id is pre-defined by Android)
-				cursor,
+				Horeca.getAllHorecasInVille(db, ville),
 				new String[] { HorecaContract.Horeca.NAME },
 				new int[] { android.R.id.text1 }); // the list of objects to be adapted
 		// to remove deprecation warning, I need to add ", 0" but it is only in API 11 and we need 2.3.3 which is API 10

@@ -2,31 +2,49 @@ package com.horeca;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class Horeca {
+	
+	public static Cursor getAllHorecasInVille(SQLiteDatabase db, Ville ville) {
+		return getCursor(db,
+				HorecaContract.Horeca.VILLE_ID + " = ?",
+				new String[]{((Long) ville.getId()).toString()});
+	}
+	private static Cursor getCursor(SQLiteDatabase db, String selection, String[] selectionArgs) {
+		Log.i("horeca db query", selection + "|" + selectionArgs[0]);
+		return db.query(HorecaContract.Horeca.TABLE_NAME,
+				HorecaContract.Horeca.COLUMN_NAMES, selection, selectionArgs, null, null, null);
+	}
+	
 	private long id;
 	private String name;
+	private VilleModel ville;
 	private String numtel;
 	private String description;
-	SQLiteDatabase db;
+	
 	public Horeca (long id, SQLiteDatabase db) {
-		this.db = db;
-		Cursor cursor = db.query(HorecaContract.Horeca.TABLE_NAME,
-				HorecaContract.Horeca.COLUMN_NAMES,
+		Cursor cursor = getCursor(db,
 				HorecaContract.Horeca._ID + " == ?",
-				new String[]{((Long) id).toString()},
-				null, null, null);
+				new String[]{((Long) id).toString()});
 		cursor.moveToFirst();
-		id = cursor.getLong(HorecaContract.Horeca._ID_INDEX);
+		this.id = cursor.getLong(HorecaContract.Horeca._ID_INDEX);
 		name = cursor.getString(HorecaContract.Horeca.NAME_INDEX);
+		long ville_id = cursor.getLong(HorecaContract.Horeca.VILLE_ID_INDEX);
 		numtel = cursor.getString(HorecaContract.Horeca.NUMTEL_INDEX);
 		description = cursor.getString(HorecaContract.Horeca.DESCRIPTION_INDEX);
+		cursor.close();
+		ville = new VilleModel(ville_id, db);
 	}
+	
 	public long getId () {
 		return id;
 	}
 	public String getName() {
 		return name;
+	}
+	public VilleModel getVille() {
+		return ville;
 	}
 	public String getNumtel() {
 		return numtel;

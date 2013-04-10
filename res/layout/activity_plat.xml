@@ -9,10 +9,10 @@
     tools:context=".PlatActivity" >
 	<LinearLayout
 	    android:orientation="vertical"
-	    android:layout_width="fill_parent"
+	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content" >
     	<RelativeLayout
-    	    android:layout_width="fill_parent"
+    	    android:layout_width="match_parent"
     	    android:layout_height="wrap_content" >
 	    	<TextView
 	    	    android:id="@+id/horeca_name"
@@ -31,7 +31,7 @@
 	       		style="@style/simple_text" />
     	</RelativeLayout>
     	<View
-    	    android:layout_width="fill_parent"
+    	    android:layout_width="match_parent"
     		android:layout_height="2dip"
     		android:background="#FF909090" />
     	<TextView
@@ -48,7 +48,7 @@
        		android:layout_height="wrap_content"
        		style="@style/simple_text" />
     	<RelativeLayout
-    	    android:layout_width="fill_parent"
+    	    android:layout_width="match_parent"
     	    android:layout_height="wrap_content" >
 	    	<TextView
 	    	    android:id="@+id/plat_stock_label"

@@ -11,16 +11,28 @@ public class HorecaContract {
 	 * to avoid calling getColumnIndex call or hard-coding the index,
 	 * the index in COLUMN_NAMES is in `*_INDEX`
 	 */
+	public static abstract class Ville implements BaseColumns {
+		public static final String TABLE_NAME = "villes";
+		public static final int _ID_INDEX = 0;
+		public static final String NAME = "nom";
+		public static final int NAME_INDEX = 1;
+		public static final String CODEPOSTAL = "codepostal";
+		public static final int CODEPOSTAL_INDEX = 2;
+		public static final String[] COLUMN_NAMES = new String[]{_ID,
+			NAME, CODEPOSTAL};
+	}
 	public static abstract class Horeca implements BaseColumns {
 		public static final String TABLE_NAME = "horecas";
 		public static final int _ID_INDEX = 0;
 		public static final String NAME = "nom";
 		public static final int NAME_INDEX = 1;
+		public static final String VILLE_ID = "ville_id";
+		public static final int VILLE_ID_INDEX = 2;
 		public static final String NUMTEL = "numtel";
-		public static final int NUMTEL_INDEX = 2;
+		public static final int NUMTEL_INDEX = 3;
 		public static final String DESCRIPTION = "description";
-		public static final int DESCRIPTION_INDEX = 3;
-		public static final String[] COLUMN_NAMES = new String[]{_ID, NAME, NUMTEL, DESCRIPTION};
+		public static final int DESCRIPTION_INDEX = 4;
+		public static final String[] COLUMN_NAMES = new String[]{_ID, NAME, VILLE_ID, NUMTEL, DESCRIPTION};
 	}
 	public static abstract class Plat implements BaseColumns {
 		public static final String TABLE_NAME = "plats";
