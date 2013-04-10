@@ -2,7 +2,6 @@ package com.horeca;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 public class Horeca {
 	
@@ -12,7 +11,6 @@ public class Horeca {
 				new String[]{((Long) ville.getId()).toString()});
 	}
 	private static Cursor getCursor(SQLiteDatabase db, String selection, String[] selectionArgs) {
-		Log.i("horeca db query", selection + "|" + selectionArgs[0]);
 		return db.query(HorecaContract.Horeca.TABLE_NAME,
 				HorecaContract.Horeca.COLUMN_NAMES, selection, selectionArgs, null, null, null);
 	}

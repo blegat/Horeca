@@ -47,7 +47,7 @@ public class PlatActivity extends Activity {
 		plat_name.setText(plat.getName());
 		
 		plat_price = (TextView) findViewById(R.id.plat_price);
-		plat_price.setText(((Double) plat.getPrice()).toString());
+		plat_price.setText(((Double) plat.getPrice()).toString() + getResources().getString(R.string.plat_price_currency));
 		
 		plat_description = (TextView) findViewById(R.id.plat_description);
 		if (plat.hasDescription()) {

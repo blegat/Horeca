@@ -9,6 +9,7 @@
     <string name="horeca_numtel_label"><b>Phone number: </b></string>
     <string name="horeca_description_label"><b>Description:</b></string>
     <string name="plat_price_label"><b>Price: </b></string>
+    <string name="plat_price_currency"> €</string>
     <string name="plat_description_label"><b>Description:</b></string>
     <string name="plat_stock_label"><b>Stock: </b></string>
     <string name="plat_stock_unknown">unknown</string>

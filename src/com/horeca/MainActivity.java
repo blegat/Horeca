@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -62,7 +61,6 @@ public class MainActivity extends Activity {
         	@Override
         	public void onClick(View arg0) {
         		Intent i = new Intent(MainActivity.this, HorecaListActivity.class);
-        		Log.i("ville_id main", ((Long) selected_ville_id).toString());
         		i.putExtra(VILLE_ID_EXTRA , selected_ville_id);
         		startActivity(i);
         	}
