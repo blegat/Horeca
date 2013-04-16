@@ -26,11 +26,13 @@
             android:name="com.horeca.HorecaListActivity"
             android:label="@string/title_activity_horeca_list" >
         </activity>
-        <activity
-            android:name="com.horeca.HorecaActivity" >
+        <activity android:name="com.horeca.HorecaActivity" >
+        </activity>
+        <activity android:name="com.horeca.PlatActivity" >
         </activity>
         <activity
-            android:name="com.horeca.PlatActivity" >
+            android:name="com.horeca.OuvertureActivity"
+            android:label="@string/title_activity_ouverture" >
         </activity>
     </application>
 

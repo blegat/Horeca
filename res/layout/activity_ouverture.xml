@@ -1,0 +1,86 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context=".OuvertureActivity" >
+
+    <TextView
+   	    android:text="@string/ouverture_debut_label"
+   	    android:textIsSelectable="true"
+        android:layout_width="wrap_content"
+      	android:layout_height="wrap_content"
+      	style="@style/simple_text" />
+   	<TextView
+   	    android:id="@+id/ouverture_debut"
+   	    android:textIsSelectable="true"
+      	android:layout_width="wrap_content"
+      	android:layout_height="wrap_content"
+      	style="@style/simple_text" />
+   	
+   	<TextView
+   	    android:text="@string/ouverture_fin_label"
+   	    android:textIsSelectable="true"
+        android:layout_width="wrap_content"
+      	android:layout_height="wrap_content"
+      	style="@style/simple_text" />
+   	<TextView
+   	    android:id="@+id/ouverture_fin"
+   	    android:textIsSelectable="true"
+      	android:layout_width="wrap_content"
+      	android:layout_height="wrap_content"
+      	style="@style/simple_text" />
+   	
+   	<RelativeLayout
+   	    android:layout_width="match_parent"
+   	    android:layout_height="wrap_content" >
+    	<TextView
+    	    android:id="@+id/ouverture_places_label"
+   	    	android:text="@string/ouverture_places_label"
+   	    	android:textIsSelectable="true"
+	        android:layout_width="wrap_content"
+	      	android:layout_height="wrap_content"
+	      	android:layout_alignParentLeft="true"
+	      	style="@style/simple_text" />
+	   	<TextView
+	   	    android:id="@+id/ouverture_places"
+	   	    android:textIsSelectable="true"
+	      	android:layout_width="wrap_content"
+	      	android:layout_height="wrap_content"
+	      	android:layout_toRightOf="@id/ouverture_places_label"
+	      	style="@style/simple_text" />
+   	</RelativeLayout>
+   	<RelativeLayout
+   	    android:layout_width="fill_parent"
+   	    android:layout_height="wrap_content" >
+   	    <TextView
+   	        android:id="@+id/reservation_number_label"
+   	        android:text="@string/reservation_number_label"
+   	        android:textIsSelectable="true"
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:layout_centerVertical="true"
+   	        style="@style/simple_text" />
+   	    <EditText
+   	        android:id="@+id/reservation_number"
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:layout_toRightOf="@id/reservation_number_label"
+   	        android:layout_centerVertical="true"
+   	        android:text="@string/default_reservation_number"
+   	        android:singleLine="true"
+   	        android:inputType="number" /> <!-- style simple_text ? -->
+   	    <Button
+		    android:id="@+id/reservation_button"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+		    android:text="@string/reservation_button_label" />
+   	</RelativeLayout>
+
+</LinearLayout>

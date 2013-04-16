@@ -27,6 +27,9 @@ public class HorecaActivity extends FragmentActivity {
         tabHost.addTab(tabHost.newTabSpec("menu").setIndicator("Menu",
         		getResources().getDrawable(android.R.drawable.ic_menu_agenda)),
         		MenuFragment.class, null);
+        tabHost.addTab(tabHost.newTabSpec("horaire").setIndicator("Horaire",
+        		getResources().getDrawable(android.R.drawable.ic_menu_today)),
+        		HoraireFragment.class, null);
     }
 
 	@Override

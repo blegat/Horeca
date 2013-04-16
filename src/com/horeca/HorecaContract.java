@@ -69,4 +69,18 @@ public class HorecaContract {
 		public static final String[] COLUMN_NAMES = new String[]{_ID,
 			PLAT_ID, INGREDIENT_ID};
 	}
+	public static abstract class Ouverture implements BaseColumns {
+		public static final String TABLE_NAME = "ouvertures";
+		public static final int _ID_INDEX = 0;
+		public static final String HORECA_ID = "horeca_id";
+		public static final int HORECA_ID_INDEX = 1;
+		public static final String DEBUT = "debut";
+		public static final int DEBUT_INDEX = 2;
+		public static final String FIN = "fin";
+		public static final int FIN_INDEX = 3;
+		public static final String PLACES = "places";
+		public static final int PLACES_INDEX = 4;
+		public static final String[] COLUMN_NAMES = new String[]{_ID,
+			HORECA_ID, DEBUT, FIN, PLACES};
+	}
 }

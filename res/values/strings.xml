@@ -16,5 +16,13 @@
     <string name="plat_ingredients_label"><b>Ingredients:</b></string>
     <string name="plat_ingredients_none">No ingredient.</string>
     <string name="menu"><b>Menu:</b></string>
+    <string name="horaire"><b>Schedule:</b></string>
+    <string name="title_activity_ouverture">Opening</string>
+    <string name="ouverture_debut_label"><b>From:</b></string>
+    <string name="ouverture_fin_label"><b>To:</b></string>
+    <string name="ouverture_places_label"><b>Places left: </b></string>
+    <string name="reservation_number_label"><b>Amount: </b></string>
+   	<string name="default_reservation_number">1</string>
+    <string name="reservation_button_label"><b>Book</b></string>
 
 </resources>

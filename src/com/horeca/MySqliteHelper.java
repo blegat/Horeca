@@ -1,6 +1,8 @@
 package com.horeca;
 
 //import static android.provider.BaseColumns._ID;
+import java.util.Calendar;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -51,6 +53,12 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 				HorecaContract.Contient._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				HorecaContract.Contient.PLAT_ID + " INTEGER NOT NULL, " +
 				HorecaContract.Contient.INGREDIENT_ID + " INTEGER NOT NULL);");
+		db.execSQL("CREATE TABLE " + HorecaContract.Ouverture.TABLE_NAME + "(" +
+				HorecaContract.Ouverture._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				HorecaContract.Ouverture.HORECA_ID + " INTEGER NOT NULL, " +
+				HorecaContract.Ouverture.DEBUT + " INTEGER NOT NULL, " +
+				HorecaContract.Ouverture.FIN + " INTEGER NOT NULL, " +
+				HorecaContract.Ouverture.PLACES + " INTEGER);");
 	}	
 	
 	public void populateDatabase(SQLiteDatabase db) {
@@ -124,6 +132,29 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 			db.execSQL("INSERT INTO " + HorecaContract.Contient.TABLE_NAME + "(" +
 					HorecaContract.Contient.PLAT_ID + ", " + HorecaContract.Contient.INGREDIENT_ID +
 					") VALUES('" + contient_plat_ids[i] + "', '" + contient_ingredient_ids[i] + "');");
+		}
+		
+		Calendar now_cal = Calendar.getInstance();
+		long hour = 60 * 60 * 1000, now = now_cal.getTimeInMillis();
+		long ouverture_horeca_ids[] = {1, 1, 1, 2, 2, 3, 3};
+		long ouverture_debuts[] = {now, now + 3 * hour, now + 10 * hour,
+				now + hour, now + 8 * hour,
+				now + 6 * hour, now + hour / 2};
+		long ouverture_fins[] = {now + hour, now + 5 * hour, now + 12 * hour,
+				now + 3 * hour, now + 10 * hour,
+				now + 9 * hour, now + 4 * hour};
+		long ouverture_places[] = {4, 8, -1, 8, 7, 32, 8};
+		for (int i = 0; i < ouverture_horeca_ids.length; i++) {
+			String column_names = HorecaContract.Ouverture.HORECA_ID + ", " +
+					HorecaContract.Ouverture.DEBUT + ", " + HorecaContract.Ouverture.FIN;
+			String column_values = "'" + ouverture_horeca_ids[i] + "', '" +
+					ouverture_debuts[i] + "', '" + ouverture_fins[i] + "'";
+			if (ouverture_places[i] != -1) {
+				column_names = column_names + ", " + HorecaContract.Ouverture.PLACES;
+				column_values = column_values + ", '" + ouverture_places[i] + "'";
+			}
+			db.execSQL("INSERT INTO " + HorecaContract.Ouverture.TABLE_NAME + "(" +
+					column_names + ") VALUES(" + column_values + ");");
 		}
 	}
 	

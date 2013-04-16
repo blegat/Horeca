@@ -29,6 +29,9 @@ public class PresentationFragment extends Fragment {
 		Bundle b = getActivity().getIntent().getExtras();
 		horeca = new Horeca(b.getLong("horeca_id"), db);
 		
+		// close db
+		db.close();
+		
 		// it sets the title because it is the default tab
 		getActivity().setTitle(horeca.getName());
 		

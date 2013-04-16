@@ -4,6 +4,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 public class Plat {
+	
+	public static Cursor getAllPlatsInHoreca(SQLiteDatabase db, Horeca horeca) {
+		return getCursor(db,
+				HorecaContract.Plat.HORECA_ID + " = ?",
+				new String[]{((Long) horeca.getId()).toString()});
+	}
+	private static Cursor getCursor(SQLiteDatabase db, String selection, String[] selectionArgs) {
+		return db.query(HorecaContract.Plat.TABLE_NAME,
+				HorecaContract.Plat.COLUMN_NAMES, selection, selectionArgs, null, null, null);
+	}
+	
 	private long id;
 	//private long horeca_id; // (1)
 	private String name;
@@ -16,11 +27,9 @@ public class Plat {
 	//SQLiteDatabase db; // (1)
 	public Plat (long id, SQLiteDatabase db) {
 		// this.db = db; // (1)
-		Cursor cursor = db.query(HorecaContract.Plat.TABLE_NAME,
-				HorecaContract.Plat.COLUMN_NAMES,
+		Cursor cursor = getCursor(db,
 				HorecaContract.Plat._ID + " == ?",
-				new String[]{((Long) id).toString()},
-				null, null, null);
+				new String[]{((Long) id).toString()});
 		cursor.moveToFirst();
 		this.id = cursor.getLong(HorecaContract.Plat._ID_INDEX);
 		//horeca_id = cursor.getLong(HorecaContract.Plat.HORECA_ID_INDEX); // (1)
