@@ -17,7 +17,7 @@ public class Horeca {
 	
 	private long id;
 	private String name;
-	private VilleModel ville;
+	private Ville ville;
 	private String numtel;
 	private String description;
 	
@@ -32,7 +32,7 @@ public class Horeca {
 		numtel = cursor.getString(HorecaContract.Horeca.NUMTEL_INDEX);
 		description = cursor.getString(HorecaContract.Horeca.DESCRIPTION_INDEX);
 		cursor.close();
-		ville = new VilleModel(ville_id, db);
+		ville = new Ville(ville_id, db);
 	}
 	
 	public long getId () {
@@ -41,7 +41,7 @@ public class Horeca {
 	public String getName() {
 		return name;
 	}
-	public VilleModel getVille() {
+	public Ville getVille() {
 		return ville;
 	}
 	public String getNumtel() {
