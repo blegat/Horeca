@@ -59,6 +59,18 @@ public class HorecaContract {
 		public static final String[] COLUMN_NAMES = new String[]{_ID,
 			NAME};
 	}
+	public static abstract class User implements BaseColumns {
+		public static final String TABLE_NAME = "users";
+		public static final int _ID_INDEX = 0;
+		public static final String EMAIL = "email";
+		public static final int EMAIL_INDEX = 1;
+		public static final String NAME = "nom";
+		public static final int NAME_INDEX = 2;
+		public static final String PASSWORD = "password";
+		public static final int PASSWORD_INDEX = 3;
+		public static final String[] COLUMN_NAMES = new String[]{_ID,
+			EMAIL, NAME, PASSWORD};
+	}
 	public static abstract class Contient implements BaseColumns {
 		public static final String TABLE_NAME = "contients";
 		public static final int _ID_INDEX = 0;
@@ -82,5 +94,31 @@ public class HorecaContract {
 		public static final int PLACES_INDEX = 4;
 		public static final String[] COLUMN_NAMES = new String[]{_ID,
 			HORECA_ID, DEBUT, FIN, PLACES};
+	}
+	public static abstract class Reservation implements BaseColumns {
+		public static final String TABLE_NAME = "reservations";
+		public static final int _ID_INDEX = 0;
+		public static final String USER_ID = "user_id";
+		public static final int USER_ID_INDEX = 1;
+		public static final String OUVERTURE_ID = "ouverture_id";
+		public static final int OUVERTURE_ID_INDEX = 2;
+		public static final String PLACES = "places";
+		public static final int PLACES_INDEX = 3;
+		public static final String[] COLUMN_NAMES = new String[]{_ID,
+			USER_ID, OUVERTURE_ID, PLACES};
+	}
+	public static abstract class Commande implements BaseColumns {
+		public static final String TABLE_NAME = "commandes";
+		public static final int _ID_INDEX = 0;
+		public static final String USER_ID = "user_id";
+		public static final int USER_ID_INDEX = 1;
+		public static final String PLAT_ID = "plat_id";
+		public static final int PLAT_ID_INDEX = 2;
+		public static final String TEMPS = "temps";
+		public static final int TEMPS_INDEX = 3;
+		public static final String NOMBRE = "nombres";
+		public static final int NOMBRE_INDEX = 4;
+		public static final String[] COLUMN_NAMES = new String[]{_ID,
+			USER_ID, PLAT_ID, TEMPS, NOMBRE};
 	}
 }

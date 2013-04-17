@@ -34,6 +34,10 @@
             android:name="com.horeca.OuvertureActivity"
             android:label="@string/title_activity_ouverture" >
         </activity>
+        <activity
+            android:name="com.horeca.CommandesActivity"
+            android:label="@string/title_activity_commandes" >
+        </activity>
     </application>
 
 </manifest>

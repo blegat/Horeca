@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,6 +28,10 @@ public class MainActivity extends Activity {
 		// Open the db
 		MySqliteHelper sqliteHelper = new MySqliteHelper(this);
 		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
+		
+		// Log a user in
+		User.signIn(db, "jean@dupont.com", "foobar");
+		Log.i("current_user", User.getCurrentUser().getName());
         
         ville_spinner = (Spinner) findViewById(R.id.ville_spinner);
         
@@ -61,7 +66,7 @@ public class MainActivity extends Activity {
         	@Override
         	public void onClick(View arg0) {
         		Intent i = new Intent(MainActivity.this, HorecaListActivity.class);
-        		i.putExtra(VILLE_ID_EXTRA , selected_ville_id);
+        		i.putExtra(VILLE_ID_EXTRA, selected_ville_id);
         		startActivity(i);
         	}
         });

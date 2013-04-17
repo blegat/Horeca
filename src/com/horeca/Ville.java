@@ -2,7 +2,6 @@ package com.horeca;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 public class Ville {
 	
@@ -19,7 +18,6 @@ public class Ville {
 	private long codepostal;
 	
 	public Ville (long id, SQLiteDatabase db) {
-		Log.i("id", ((Long) id).toString());
 		Cursor cursor = getCursor(db, HorecaContract.Ville._ID + " = ?", new String[]{((Long) id).toString()});
 		cursor.moveToFirst();
 		this.id = cursor.getLong(HorecaContract.Ville._ID_INDEX);

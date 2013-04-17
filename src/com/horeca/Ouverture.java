@@ -2,6 +2,7 @@ package com.horeca;
 
 import java.util.Date;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -40,6 +41,17 @@ public class Ouverture {
 		cursor.close();
 		horeca = new Horeca(horeca_id, db);
 	}
+	public void reloadPlaces(SQLiteDatabase db) {
+		Cursor cursor = getCursor(db,
+				HorecaContract.Ouverture._ID + " == ?",
+				new String[]{((Long) id).toString()});
+		cursor.moveToFirst();
+		hasPlaces = !cursor.isNull(HorecaContract.Ouverture.PLACES_INDEX);
+		if (hasPlaces) {
+			places = cursor.getLong(HorecaContract.Ouverture.PLACES_INDEX);
+		}
+		cursor.close();
+	}
 	
 	private String timestampToString(long ts) {
     	Date d = new Date(ts);
@@ -62,5 +74,12 @@ public class Ouverture {
 	}
 	public long getPlaces() {
 		return places;
+	}
+	public void setPlaces(SQLiteDatabase db, long places) {
+		this.places = places;
+	    ContentValues args = new ContentValues();
+	    args.put(HorecaContract.Ouverture.PLACES, this.places);
+	    db.update(HorecaContract.Ouverture.TABLE_NAME, args, HorecaContract.Ouverture._ID + " = ?",
+	    		new String[]{String.valueOf(this.id)});
 	}
 }

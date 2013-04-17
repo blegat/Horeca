@@ -1,4 +1,6 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,13 +9,13 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".PlatActivity" >
-	<LinearLayout
-	    android:orientation="vertical"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content" >
-    	<RelativeLayout
-    	    android:layout_width="match_parent"
-    	    android:layout_height="wrap_content" >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+	   	<RelativeLayout
+	   	    android:layout_width="match_parent"
+	   	    android:layout_height="wrap_content" >
 	    	<TextView
 	    	    android:id="@+id/horeca_name"
 	    	    android:textIsSelectable="true"
@@ -29,27 +31,27 @@
 	       		android:layout_alignParentRight="true"
 	       		android:layout_below="@id/horeca_name"
 	       		style="@style/simple_text" />
-    	</RelativeLayout>
-    	<View
-    	    android:layout_width="match_parent"
-    		android:layout_height="2dip"
-    		android:background="#FF909090" />
-    	<TextView
-    	    android:id="@+id/plat_description_label"
-    	    android:text="@string/plat_description_label"
-    	    android:textIsSelectable="true"
-       		android:layout_width="wrap_content"
-       		android:layout_height="wrap_content"
-       		style="@style/simple_text" />
-    	<TextView
-    	    android:id="@+id/plat_description"
-    	    android:textIsSelectable="true"
-       		android:layout_width="wrap_content"
-       		android:layout_height="wrap_content"
-       		style="@style/simple_text" />
-    	<RelativeLayout
-    	    android:layout_width="match_parent"
-    	    android:layout_height="wrap_content" >
+	   	</RelativeLayout>
+	   	<View
+	   	    android:layout_width="match_parent"
+	   		android:layout_height="2dip"
+	   		android:background="#FF909090" />
+	   	<TextView
+	   	    android:id="@+id/plat_description_label"
+	   	    android:text="@string/plat_description_label"
+	   	    android:textIsSelectable="true"
+	      		android:layout_width="wrap_content"
+	      		android:layout_height="wrap_content"
+	      		style="@style/simple_text" />
+	   	<TextView
+	   	    android:id="@+id/plat_description"
+	   	    android:textIsSelectable="true"
+	      		android:layout_width="wrap_content"
+	      		android:layout_height="wrap_content"
+	      		style="@style/simple_text" />
+	   	<RelativeLayout
+	   	    android:layout_width="match_parent"
+	   	    android:layout_height="wrap_content" >
 	    	<TextView
 	    	    android:id="@+id/plat_stock_label"
 	    	    android:text="@string/plat_stock_label"
@@ -79,19 +81,60 @@
 	       		android:layout_height="wrap_content"
 	       		android:layout_alignParentRight="true"
 	       		style="@style/simple_text" />
-    	</RelativeLayout>
-    	<TextView
-    	    android:text="@string/plat_ingredients_label"
-    	    android:textIsSelectable="true"
-       		android:layout_width="wrap_content"
-       		android:layout_height="wrap_content"
-       		style="@style/simple_text" />
-    	<TextView
-    	    android:id="@+id/plat_ingredients"
-    	    android:textIsSelectable="true"
-       		android:layout_width="wrap_content"
-       		android:layout_height="wrap_content"
-       		style="@style/simple_text" />
-	</LinearLayout>
-
+	   	</RelativeLayout>
+	   	<TextView
+	   	    android:text="@string/plat_ingredients_label"
+	   	    android:textIsSelectable="true"
+	      		android:layout_width="wrap_content"
+	      		android:layout_height="wrap_content"
+	      		style="@style/simple_text" />
+	   	<TextView
+	   	    android:id="@+id/plat_ingredients"
+	   	    android:textIsSelectable="true"
+	      		android:layout_width="wrap_content"
+	      		android:layout_height="wrap_content"
+	      		style="@style/simple_text" />
+	   	<View
+	   	    android:layout_width="match_parent"
+	   		android:layout_height="2dip"
+	   		android:background="#FF909090" />
+	   	<DatePicker
+	   	    android:id="@+id/commande_date"
+	   	    android:layout_width="fill_parent"
+	   	    android:layout_height="wrap_content" />
+	    	<TimePicker
+	   	    android:id="@+id/commande_time"
+	   	    android:layout_width="fill_parent"
+	   	    android:layout_height="wrap_content" />
+	   	<RelativeLayout
+	   	    android:layout_width="match_parent"
+	   	    android:layout_height="wrap_content" >
+	    	<TextView
+	    	    android:id="@+id/commande_nombre_label"
+	   	    	android:text="@string/commande_nombre_label"
+	   	    	android:textIsSelectable="true"
+		        android:layout_width="wrap_content"
+		      	android:layout_height="wrap_content"
+		      	android:layout_alignParentLeft="true"
+		      	style="@style/simple_text" />
+		   	<EditText
+		   	    android:id="@+id/commande_nombre"
+		   	    android:text="@string/default_commande_nombre"
+		      	android:layout_width="wrap_content"
+		      	android:layout_height="wrap_content"
+		      	android:layout_toRightOf="@id/commande_nombre_label"
+		      	android:inputType="number"
+		      	style="@style/simple_text" />
+	   	</RelativeLayout>
+	   	<Button
+	   	    android:id="@+id/commande_button"
+	   	    android:layout_width="fill_parent"
+	   	    android:layout_height="wrap_content"
+	   	    android:text="@string/commande_button_label" />
+	   	<Button
+	   	    android:id="@+id/current_commandes_button"
+	   	    android:layout_width="fill_parent"
+	   	    android:layout_height="wrap_content"
+	   	    android:text="@string/current_commandes_button_label" />
+   	</LinearLayout>
 </ScrollView>

@@ -45,7 +45,7 @@ public class HoraireFragment extends Fragment implements ViewBinder {
 		
 		View view = inflater.inflate(R.layout.horaire_view, container, false);
 		
-		// Display the menu in a list
+		// Display the horaire in a list
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(), //this context
 				android.R.layout.simple_list_item_1, //id of the item layout used by default for the individual rows (this id is pre-defined by Android)
 				//android.R.id.list,
@@ -60,7 +60,7 @@ public class HoraireFragment extends Fragment implements ViewBinder {
 		ouvertures_list = (ListView) view.findViewById(R.id.ouvertures_list);
 		ouvertures_list.setAdapter(adapter);
 		
-		db.close(); // the adapter uses it so we can't do it earlier
+		db.close();
 		
 		ouvertures_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override

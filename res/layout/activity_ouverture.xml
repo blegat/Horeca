@@ -80,7 +80,34 @@
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:layout_alignParentRight="true"
-		    android:text="@string/reservation_button_label" />
+		    android:text="@string/reservation_button_update_label" />
+   	</RelativeLayout>
+   	<RelativeLayout
+   	    android:id="@+id/current_reservation_layout"
+   	    android:layout_width="fill_parent"
+   	    android:layout_height="wrap_content" >
+   	    <TextView
+   	        android:id="@+id/current_reservation_number_label"
+   	        android:text="@string/current_reservation_number_label"
+   	        android:textIsSelectable="true"
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:layout_centerVertical="true"
+   	        style="@style/simple_text" />
+   	    <TextView
+   	        android:id="@+id/current_reservation_number"
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:layout_toRightOf="@id/current_reservation_number_label"
+   	        android:layout_centerVertical="true"
+   	        android:textIsSelectable="true"
+   	        style="@style/simple_text" />
+   	    <Button
+		    android:id="@+id/delete_reservation_button"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+		    android:text="@string/delete_reservation_button_label" />
    	</RelativeLayout>
 
 </LinearLayout>

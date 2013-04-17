@@ -49,6 +49,11 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		db.execSQL("CREATE TABLE " + HorecaContract.Ingredient.TABLE_NAME + "(" +
 				HorecaContract.Ingredient._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				HorecaContract.Ingredient.NAME + " TEXT NOT NULL);");
+		db.execSQL("CREATE TABLE " + HorecaContract.User.TABLE_NAME + "(" +
+				HorecaContract.User._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				HorecaContract.User.EMAIL + " TEXT NOT NULL, " +
+				HorecaContract.User.NAME + " TEXT NOT NULL, " +
+				HorecaContract.User.PASSWORD + " TEXT NOT NULL);");
 		db.execSQL("CREATE TABLE " + HorecaContract.Contient.TABLE_NAME + "(" +
 				HorecaContract.Contient._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				HorecaContract.Contient.PLAT_ID + " INTEGER NOT NULL, " +
@@ -59,6 +64,17 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 				HorecaContract.Ouverture.DEBUT + " INTEGER NOT NULL, " +
 				HorecaContract.Ouverture.FIN + " INTEGER NOT NULL, " +
 				HorecaContract.Ouverture.PLACES + " INTEGER);");
+		db.execSQL("CREATE TABLE " + HorecaContract.Reservation.TABLE_NAME + "(" +
+				HorecaContract.Reservation._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				HorecaContract.Reservation.USER_ID + " INTEGER NOT NULL, " +
+				HorecaContract.Reservation.OUVERTURE_ID + " INTEGER NOT NULL, " +
+				HorecaContract.Reservation.PLACES + " INTEGER NOT NULL);");
+		db.execSQL("CREATE TABLE " + HorecaContract.Commande.TABLE_NAME + "(" +
+				HorecaContract.Commande._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				HorecaContract.Commande.USER_ID + " INTEGER NOT NULL, " +
+				HorecaContract.Commande.PLAT_ID + " INTEGER NOT NULL, " +
+				HorecaContract.Commande.TEMPS + " INTEGER NOT NULL, " +
+				HorecaContract.Commande.NOMBRE + " INTEGER NOT NULL);");
 	}	
 	
 	public void populateDatabase(SQLiteDatabase db) {
@@ -125,6 +141,17 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 			db.execSQL("INSERT INTO " + HorecaContract.Ingredient.TABLE_NAME + "(" +
 					HorecaContract.Ingredient.NAME + ") VALUES('" + ingredient_name + "');");
 		}
+		
+		String user_emails[] = {"jean@dupont.com"};
+		String user_names[] = {"Jean Dupont"};
+		String user_passwords[] = {"foobar"};
+		for (int i = 0; i < user_emails.length; i++) {
+			db.execSQL("INSERT INTO " + HorecaContract.User.TABLE_NAME + "(" +
+					HorecaContract.User.EMAIL + ", " + HorecaContract.User.NAME + ", " +
+					HorecaContract.User.PASSWORD + ") VALUES('" +
+					user_emails[i] + "', '" + user_names[i] + "', '" +
+					user_passwords[i] + "');");
+		}
 
 		long contient_plat_ids[] = {4, 4, 5};
 		long contient_ingredient_ids[] = {1, 2, 3};
@@ -159,10 +186,15 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 	}
 	
 	public void deleteDatabase(SQLiteDatabase db) {
+		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Ville.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Horeca.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Plat.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Ingredient.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.User.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Contient.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Ouverture.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Reservation.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Commande.TABLE_NAME);
 	}
 
 }

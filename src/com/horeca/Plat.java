@@ -1,5 +1,6 @@
 package com.horeca;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -60,6 +61,18 @@ public class Plat {
 		}
 		cursor.close();
 	}
+	public void reloadStock(SQLiteDatabase db) {
+		Cursor cursor = getCursor(db,
+				HorecaContract.Plat._ID + " == ?",
+				new String[]{((Long) id).toString()});
+		cursor.moveToFirst();
+		hasStock = !cursor.isNull(HorecaContract.Plat.STOCK_INDEX);
+		if (hasStock) {
+			stock = cursor.getLong(HorecaContract.Plat.STOCK_INDEX);
+		}
+		cursor.close();
+	}
+	
 	public long getId () {
 		return id;
 	}
@@ -87,6 +100,13 @@ public class Plat {
 	}
 	public long getStock() {
 		return stock;
+	}
+	public void setStock(SQLiteDatabase db, long stock) {
+		this.stock = stock;
+	    ContentValues args = new ContentValues();
+	    args.put(HorecaContract.Plat.STOCK, this.stock);
+	    db.update(HorecaContract.Plat.TABLE_NAME, args, HorecaContract.Plat._ID + " = ?",
+	    		new String[]{String.valueOf(this.id)});
 	}
 	public Ingredient[] getIngredients() {
 		return ingredients;

@@ -22,7 +22,17 @@
     <string name="ouverture_fin_label"><b>To:</b></string>
     <string name="ouverture_places_label"><b>Places left: </b></string>
     <string name="reservation_number_label"><b>Amount: </b></string>
-   	<string name="default_reservation_number">1</string>
-    <string name="reservation_button_label"><b>Book</b></string>
+    <string name="default_reservation_number">1</string>
+    <string name="reservation_button_new_label">Book</string>
+    <string name="reservation_button_update_label">Update booking</string>
+    <string name="current_reservation_number_label"><b>Current: </b></string>
+    <string name="delete_reservation_button_label">Delete booking</string>
+    <string name="commande_nombre_label"><b>Amount: </b></string>
+    <string name="default_commande_nombre">1</string>
+    <string name="commande_button_label">Order</string>
+    <string name="current_commandes_button_label">Current orders</string>
+    <string name="commandes_list_label"><b>Orders (click to delete):</b></string>
+    <string name="title_activity_commandes">CommandesActivity</string>
+    <string name="invalid_amount_warning">Invalid amount</string>
 
 </resources>
