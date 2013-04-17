@@ -142,7 +142,12 @@ public class PlatActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View view) {
-		long nombre = Long.parseLong(commande_nombre.getText().toString());
+		long nombre = 0;
+		try {
+			nombre = Long.parseLong(commande_nombre.getText().toString());
+		} catch (NumberFormatException e) {
+			nombre = 0;
+		}
 		if (nombre <= 0 || (plat.hasStock() && nombre > plat.getStock())) {
 			Toast.makeText(this, R.string.invalid_amount_warning, Toast.LENGTH_SHORT).show();
 		} else {

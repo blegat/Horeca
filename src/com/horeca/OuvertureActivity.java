@@ -83,7 +83,12 @@ public class OuvertureActivity extends Activity implements View.OnClickListener 
 		boolean needReload = false;
 
 		if (view == reservation_button) {
-			long places = Long.parseLong(reservation_places.getText().toString());
+			long places = 0;
+			try {
+				places = Long.parseLong(reservation_places.getText().toString());
+			} catch (NumberFormatException e) {
+				places = 0;
+			}
 			if (reservation == null) {
 				if (places <= 0 || (ouverture.hasPlaces() && places > ouverture.getPlaces())) {
 					Toast.makeText(this, R.string.invalid_amount_warning, Toast.LENGTH_SHORT).show();
