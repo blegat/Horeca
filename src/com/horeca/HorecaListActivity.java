@@ -25,10 +25,13 @@ public class HorecaListActivity extends ListActivity {
 		ville = new Ville(b.getLong(MainActivity.VILLE_ID_EXTRA), db);
 		setTitle(String.format(getResources().getString(R.string.title_activity_horeca_list), ville.getName()));
 		
+		Filter filter = new Filter();
+		filter.setVille(ville);
+		
 		// Create the List of restaurants to choose from
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, //this context
 				android.R.layout.simple_list_item_1, //id of the item layout used by default for the individual rows (this id is pre-defined by Android)
-				Horeca.getAllHorecasInVille(db, ville),
+				filter.getMatchingHorecas(db),
 				new String[] { HorecaContract.Horeca.NAME },
 				new int[] { android.R.id.text1 }); // the list of objects to be adapted
 		// to remove deprecation warning, I need to add ", 0" but it is only in API 11 and we need 2.3.3 which is API 10

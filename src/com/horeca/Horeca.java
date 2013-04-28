@@ -10,12 +10,6 @@ public class Horeca {
 	private static String defaultpath="res/drawable/HorecaPict/Default";
 	private static String defaultnamefile="defaultHorecaPicture.jpg";
 	
-	public static Cursor getAllHorecasInVille(SQLiteDatabase db, Ville ville) {
-		return getCursor(db,
-				HorecaContract.Horeca.VILLE_ID + " = ?",
-				new String[]{((Long) ville.getId()).toString()});
-	}
-	
 	private static Cursor getCursor(SQLiteDatabase db, String selection, String[] selectionArgs) {
 		return db.query(HorecaContract.Horeca.TABLE_NAME,
 				HorecaContract.Horeca.COLUMN_NAMES, selection, selectionArgs, null, null, null);
