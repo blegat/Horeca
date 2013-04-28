@@ -75,11 +75,11 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 				HorecaContract.Commande.PLAT_ID + " INTEGER NOT NULL, " +
 				HorecaContract.Commande.TEMPS + " INTEGER NOT NULL, " +
 				HorecaContract.Commande.NOMBRE + " INTEGER NOT NULL);");
-		db.execSQL("CREATE TABLE " + HorecaContract.HorecaPictures.TABLE_NAME + "(" +
-				HorecaContract.HorecaPictures._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				HorecaContract.HorecaPictures.HORECA_ID + " INTEGER NOT NULL, " +
-				HorecaContract.HorecaPictures.PATH_PICTURE + " TEXT NOT NULL, " +
-				HorecaContract.HorecaPictures.NAME_PICTURE + "  TEXT NOT NULL);");
+		db.execSQL("CREATE TABLE " + HorecaContract.Picture.TABLE_NAME + "(" +
+				HorecaContract.Picture._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				HorecaContract.Picture.HORECA_ID + " INTEGER NOT NULL, " +
+				HorecaContract.Picture.PATH + " TEXT NOT NULL, " +
+				HorecaContract.Picture.NAME + "  TEXT NOT NULL);");
 	}	
 	
 	public void populateDatabase(SQLiteDatabase db) {
@@ -200,7 +200,7 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Ouverture.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Reservation.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Commande.TABLE_NAME);
-		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.HorecaPictures.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Picture.TABLE_NAME);
 	}
 
 }

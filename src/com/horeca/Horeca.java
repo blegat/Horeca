@@ -18,7 +18,7 @@ public class Horeca {
 	
 	public static Cursor getAllPicturesForHoreca(SQLiteDatabase db, Horeca H) {
 		return getCursor(db,
-				HorecaContract.HorecaPictures.HORECA_ID + " = ?",
+				HorecaContract.Picture.HORECA_ID + " = ?",
 				new String[]{((Long) H.getId()).toString()});
 	}
 	
@@ -28,20 +28,21 @@ public class Horeca {
 	}
 
 	@SuppressWarnings("null")
-	private static Vector<Image> convertCursorToVectorImage(Cursor cursor){
-		Vector<Image> vecimg = null;
+	private static Vector<Picture> convertCursorToVectorImage(Cursor cursor){
+		Vector<Picture> vecimg = new Vector<Picture>();
 		if(cursor.getCount()==0){
-			Image temp=new Image(defaultpath,defaultnamefile);
+			Picture temp=new Picture(defaultpath,defaultnamefile);
 			vecimg.addElement(temp);
 		}
 		else{
-			do{
-				if(cursor.getCount()==0){
-					Image temp=new Image(cursor);
+			cursor.moveToFirst();
+			while (!cursor.isAfterLast()) {
+				if (cursor.getCount() == 0) {
+					Picture temp = new Picture(cursor);
 					vecimg.addElement(temp);
 				}
 				cursor.moveToNext();
-			}while(cursor.isLast()==false);
+			};
 		}
 		return vecimg;
 	}
@@ -51,7 +52,7 @@ public class Horeca {
 	private Ville ville;
 	private String numtel;
 	private String description;
-	private Vector<Image> Picture_vector;
+	private Vector<Picture> pictures;
 	
 	public Horeca (long id, SQLiteDatabase db) {
 		Cursor cursor = getCursor(db,
@@ -65,7 +66,7 @@ public class Horeca {
 		description = cursor.getString(HorecaContract.Horeca.DESCRIPTION_INDEX);
 		cursor.close();
 		ville = new Ville(ville_id, db);
-		this.Picture_vector=convertCursorToVectorImage(getAllPicturesForHoreca(db,this));
+		this.pictures=convertCursorToVectorImage(Picture.getAllPicturesForHoreca(db,this));
 	}
 	
 	public long getId () {
