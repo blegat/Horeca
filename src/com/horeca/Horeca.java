@@ -23,21 +23,20 @@ public class Horeca {
 
 	@SuppressWarnings("null")
 	private static Vector<Picture> convertCursorToVectorImage(Cursor cursor){
-		Vector<Picture> vecimg = new Vector<Picture>();
+		Vector<Picture> vecimg = new Vector<Picture>(0);
 		if(cursor.getCount()==0){
-			Picture temp=new Picture(defaultpath,defaultnamefile);
-			vecimg.addElement(temp);
+			//Picture temp=new Picture(defaultpath,defaultnamefile);
+			//vecimg.addElement(temp);
 		}
 		else{
 			cursor.moveToFirst();
 			while (!cursor.isAfterLast()) {
-				if (cursor.getCount() == 0) {
-					Picture temp = new Picture(cursor);
-					vecimg.addElement(temp);
-				}
+				Picture temp = new Picture(cursor);
+				vecimg.addElement(temp);
 				cursor.moveToNext();
 			};
 		}
+		cursor.close();
 		return vecimg;
 	}
 	
@@ -80,5 +79,8 @@ public class Horeca {
 	}
 	public String getDescription() {
 		return description;
+	}
+	public Vector<Picture> getVectorImage() {
+		return pictures;
 	}
 }

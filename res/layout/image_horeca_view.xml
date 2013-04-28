@@ -3,21 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+    
     <TextView
-        android:id="@+id/ouverture_item"
+        android:text="@string/menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textIsSelectable="true" >
+        style="@style/simple_text" >
     </TextView>
-    
-    
-    
-    <ImageView
-        android:id="@+id/imageView1"
+    <ListView
+        android:id="@+id/plats_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@drawable/ic_launcher" />
+        android:layout_height="wrap_content" >
+    </ListView>
+        
 
 </LinearLayout>
