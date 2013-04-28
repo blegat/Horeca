@@ -1,18 +1,49 @@
 package com.horeca;
 
+import java.util.Vector;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 public class Horeca {
+	
+	private static String defaultpath="res/drawable/HorecaPict/Default";
+	private static String defaultnamefile="defaultHorecaPicture.jpg";
 	
 	public static Cursor getAllHorecasInVille(SQLiteDatabase db, Ville ville) {
 		return getCursor(db,
 				HorecaContract.Horeca.VILLE_ID + " = ?",
 				new String[]{((Long) ville.getId()).toString()});
 	}
+	
+	public static Cursor getAllPicturesForHoreca(SQLiteDatabase db, Horeca H) {
+		return getCursor(db,
+				HorecaContract.HorecaPictures.HORECA_ID + " = ?",
+				new String[]{((Long) H.getId()).toString()});
+	}
+	
 	private static Cursor getCursor(SQLiteDatabase db, String selection, String[] selectionArgs) {
 		return db.query(HorecaContract.Horeca.TABLE_NAME,
 				HorecaContract.Horeca.COLUMN_NAMES, selection, selectionArgs, null, null, null);
+	}
+
+	@SuppressWarnings("null")
+	private static Vector<Image> convertCursorToVectorImage(Cursor cursor){
+		Vector<Image> vecimg = null;
+		if(cursor.getCount()==0){
+			Image temp=new Image(defaultpath,defaultnamefile);
+			vecimg.addElement(temp);
+		}
+		else{
+			do{
+				if(cursor.getCount()==0){
+					Image temp=new Image(cursor);
+					vecimg.addElement(temp);
+				}
+				cursor.moveToNext();
+			}while(cursor.isLast()==false);
+		}
+		return vecimg;
 	}
 	
 	private long id;
@@ -20,6 +51,7 @@ public class Horeca {
 	private Ville ville;
 	private String numtel;
 	private String description;
+	private Vector<Image> Picture_vector;
 	
 	public Horeca (long id, SQLiteDatabase db) {
 		Cursor cursor = getCursor(db,
@@ -33,6 +65,7 @@ public class Horeca {
 		description = cursor.getString(HorecaContract.Horeca.DESCRIPTION_INDEX);
 		cursor.close();
 		ville = new Ville(ville_id, db);
+		this.Picture_vector=convertCursorToVectorImage(getAllPicturesForHoreca(db,this));
 	}
 	
 	public long getId () {

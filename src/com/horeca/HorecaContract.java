@@ -121,4 +121,16 @@ public class HorecaContract {
 		public static final String[] COLUMN_NAMES = new String[]{_ID,
 			USER_ID, PLAT_ID, TEMPS, NOMBRE};
 	}
+	public static abstract class HorecaPictures implements BaseColumns {
+		public static final String TABLE_NAME = "horecapictures"; 
+		public static final int _ID_INDEX = 0;
+		public static final String HORECA_ID = "horeca_id";
+		public static final int HOREC_ID_INDEX = 1;
+		public static final String PATH_PICTURE = "path_picture";
+		public static final int PATH_PICTURE_INDEX = 2;
+		public static final String NAME_PICTURE = "name_picture";
+		public static final int NAME_PICTURE_INDEX = 3;
+		public static final String[] COLUMN_NAMES = new String[]{_ID,
+			HORECA_ID, PATH_PICTURE, NAME_PICTURE};
+	}
 }
