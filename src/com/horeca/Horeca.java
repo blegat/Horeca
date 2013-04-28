@@ -16,12 +16,6 @@ public class Horeca {
 				new String[]{((Long) ville.getId()).toString()});
 	}
 	
-	public static Cursor getAllPicturesForHoreca(SQLiteDatabase db, Horeca H) {
-		return getCursor(db,
-				HorecaContract.Picture.HORECA_ID + " = ?",
-				new String[]{((Long) H.getId()).toString()});
-	}
-	
 	private static Cursor getCursor(SQLiteDatabase db, String selection, String[] selectionArgs) {
 		return db.query(HorecaContract.Horeca.TABLE_NAME,
 				HorecaContract.Horeca.COLUMN_NAMES, selection, selectionArgs, null, null, null);
