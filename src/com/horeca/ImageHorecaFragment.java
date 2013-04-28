@@ -15,7 +15,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
-
+// Image horeca fragment
 public class ImageHorecaFragment extends Fragment implements ViewBinder {
 	
 	private ListView ouvertures_list = null;
