@@ -13,6 +13,7 @@ public class HorecaListActivity extends ListActivity {
 	
 	private Ville ville;
 	private HorecaType horecaType = null;
+	private PlatType platType = null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,9 @@ public class HorecaListActivity extends ListActivity {
 		ville = new Ville(b.getLong(MainActivity.VILLE_ID_EXTRA), db);
 		if (b.containsKey(MainActivity.HORECATYPE_ID_EXTRA)) {
 			horecaType = new HorecaType(b.getLong(MainActivity.HORECATYPE_ID_EXTRA), db);
-			Log.i("ht", horecaType.getName());
+		}
+		if (b.containsKey(MainActivity.PLATTYPE_ID_EXTRA)) {
+			platType = new PlatType(b.getLong(MainActivity.PLATTYPE_ID_EXTRA), db);
 		}
 		setTitle(String.format(getResources().getString(R.string.title_activity_horeca_list), ville.getName()));
 		
@@ -35,6 +38,9 @@ public class HorecaListActivity extends ListActivity {
 		filter.setVille(ville);
 		if (horecaType != null) {
 			filter.setHorecaType(horecaType);
+		}
+		if (platType != null) {
+			filter.setPlatType(platType);
 		}
 		
 		// Create the List of restaurants to choose from

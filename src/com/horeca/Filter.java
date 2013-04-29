@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 public class Filter {
 	private Ville ville;
 	private HorecaType horecaType = null;
+	private PlatType platType = null;
 	private boolean hasMaxDistance = false;
 	private double maxDistance;
 	
@@ -26,12 +27,22 @@ public class Filter {
 			where = where + " AND " + HorecaContract.HorecaType._ID_Q + " = " + HorecaContract.HorecaTypeJoin.HORECATYPE_ID_Q;
 			where = where + " AND " + HorecaContract.HorecaType._ID_Q + " = " + horecaType.getId();
 		}
+		if (platType != null) {
+			tables = tables + ", " + HorecaContract.Plat.TABLE_NAME_Q + ", " +
+					HorecaContract.PlatType.TABLE_NAME_Q + ", " + HorecaContract.PlatTypeJoin.TABLE_NAME_Q;
+			where = where + " AND " + HorecaContract.Horeca._ID_Q + " = " + HorecaContract.Plat.HORECA_ID_Q;
+			where = where + " AND " + HorecaContract.Plat._ID_Q + " = " + HorecaContract.PlatTypeJoin.PLAT_ID_Q;
+			where = where + " AND " + HorecaContract.PlatType._ID_Q + " = " + HorecaContract.PlatTypeJoin.PLATTYPE_ID_Q;
+			where = where + " AND " + HorecaContract.PlatType._ID_Q + " = " + platType.getId();
+		}
 		if (hasMaxDistance) {
 			where = where + " AND " + distSquared + " < " + String.valueOf(maxDistance*maxDistance);
 		}
-		return db.query(tables,
+		// We need to add UNIQ because the restaurant could have
+		// several plats with the good type
+		return db.query(true, tables,
 				HorecaContract.Horeca.COLUMN_NAMES_Q,
-				where, null, null, null, distSquared + " ASC");
+				where, null, null, null, distSquared + " ASC", null);
 	}
 	
 	public void setVille(Ville ville) {
@@ -39,6 +50,9 @@ public class Filter {
 	}
 	public void setHorecaType(HorecaType horecaType) {
 		this.horecaType = horecaType;
+	}
+	public void setPlatType(PlatType platType) {
+		this.platType = platType;
 	}
 	public void setMaxDistance(double dist) {
 		hasMaxDistance = true;

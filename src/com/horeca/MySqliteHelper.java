@@ -56,6 +56,13 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 				HorecaContract.Plat.PRICE + " INTEGER NOT NULL, " +
 				HorecaContract.Plat.DESCRIPTION + " TEXT, " +
 				HorecaContract.Plat.STOCK + " INTEGER);");
+		db.execSQL("CREATE TABLE " + HorecaContract.PlatType.TABLE_NAME + "(" +
+				HorecaContract.PlatType._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				HorecaContract.PlatType.NAME + " TEXT NOT NULL);");
+		db.execSQL("CREATE TABLE " + HorecaContract.PlatTypeJoin.TABLE_NAME + "(" +
+				HorecaContract.PlatTypeJoin._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				HorecaContract.PlatTypeJoin.PLAT_ID + " INTEGER NOT NULL, " +
+				HorecaContract.PlatTypeJoin.PLATTYPE_ID + " INTEGER NOT NULL);");
 		db.execSQL("CREATE TABLE " + HorecaContract.Ingredient.TABLE_NAME + "(" +
 				HorecaContract.Ingredient._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				HorecaContract.Ingredient.NAME + " TEXT NOT NULL);");
@@ -168,7 +175,23 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 			db.execSQL("INSERT INTO " + HorecaContract.Plat.TABLE_NAME + "(" +
 					column_names + ") VALUES(" + column_values + ");");
 		}
-
+		
+		String plattype_names[] = {"Sandwicherie"};
+		for (int i = 0; i < plattype_names.length; i++) {
+			ContentValues cv = new ContentValues();
+			cv.put(HorecaContract.PlatType.NAME, plattype_names[i]);
+			db.insert(HorecaContract.PlatType.TABLE_NAME, null, cv);
+		}
+		
+		long plattypejoin_plat_ids[] = {6, 7};
+		long plattypejoin_plattype_ids[] = {1, 1};
+		for (int i = 0; i < plattypejoin_plat_ids.length; i++) {
+			ContentValues cv = new ContentValues();
+			cv.put(HorecaContract.PlatTypeJoin.PLAT_ID, plattypejoin_plat_ids[i]);
+			cv.put(HorecaContract.PlatTypeJoin.PLATTYPE_ID, plattypejoin_plattype_ids[i]);
+			db.insert(HorecaContract.PlatTypeJoin.TABLE_NAME, null, cv);
+		}
+		
 		String ingredient_names[] = {"Homard", "Crabe", "Raisin"};
 		for(String ingredient_name : ingredient_names) {
 			db.execSQL("INSERT INTO " + HorecaContract.Ingredient.TABLE_NAME + "(" +
@@ -224,6 +247,8 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.HorecaType.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.HorecaTypeJoin.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Plat.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.PlatType.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.PlatTypeJoin.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Ingredient.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.User.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Contient.TABLE_NAME);
