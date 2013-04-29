@@ -22,34 +22,98 @@ public class HorecaContract {
 			NAME, CODEPOSTAL};
 	}
 	public static abstract class Horeca implements BaseColumns {
+		public static final String Q = "h";
 		public static final String TABLE_NAME = "horecas";
+		public static final String TABLE_NAME_Q = TABLE_NAME + " " + Q;
+		public static final String _ID_Q = Q + "." + _ID;
 		public static final int _ID_INDEX = 0;
 		public static final String NAME = "nom";
+		public static final String NAME_Q = Q + "." + NAME;
 		public static final int NAME_INDEX = 1;
+		public static final String LONGITUDE = "longitude";
+		public static final String LONGITUDE_Q = Q + "." + LONGITUDE;
+		public static final int LONGITUDE_INDEX = 2;
+		public static final String LATITUDE = "latitude";
+		public static final String LATITUDE_Q = Q + "." + LATITUDE;
+		public static final int LATITUDE_INDEX = 3;
 		public static final String VILLE_ID = "ville_id";
-		public static final int VILLE_ID_INDEX = 2;
+		public static final String VILLE_ID_Q = Q + "." + VILLE_ID;
+		public static final int VILLE_ID_INDEX = 4;
 		public static final String NUMTEL = "numtel";
-		public static final int NUMTEL_INDEX = 3;
+		public static final String NUMTEL_Q = Q + "." + NUMTEL;
+		public static final int NUMTEL_INDEX = 5;
 		public static final String DESCRIPTION = "description";
-		public static final int DESCRIPTION_INDEX = 4;
-		public static final String[] COLUMN_NAMES = new String[]{_ID, NAME, VILLE_ID, NUMTEL, DESCRIPTION};
+		public static final String DESCRIPTION_Q = Q + "." + DESCRIPTION;
+		public static final int DESCRIPTION_INDEX = 6;
+		public static final String[] COLUMN_NAMES = new String[]{_ID, NAME, LONGITUDE, LATITUDE, VILLE_ID, NUMTEL, DESCRIPTION};
+		public static final String[] COLUMN_NAMES_Q = new String[]{_ID_Q, NAME_Q, LONGITUDE_Q, LATITUDE_Q, VILLE_ID_Q, NUMTEL_Q, DESCRIPTION_Q};
+	}
+	public static abstract class HorecaType implements BaseColumns {
+		public static final String Q = "ht";
+		public static final String TABLE_NAME = "horecatypes";
+		public static final String TABLE_NAME_Q = TABLE_NAME + " " + Q;
+		public static final String _ID_Q = Q + "." + _ID;
+		public static final int _ID_INDEX = 0;
+		public static final String NAME = "nom";
+		public static final String NAME_Q = Q + "." + NAME;
+		public static final int NAME_INDEX = 1;
+		public static final String[] COLUMN_NAMES = new String[]{_ID, NAME};
+		public static final String[] COLUMN_NAMES_Q = new String[]{_ID_Q, NAME_Q};
+	}
+	public static abstract class HorecaTypeJoin implements BaseColumns {
+		public static final String Q = "htj";
+		public static final String TABLE_NAME = "horecatypejoins";
+		public static final String TABLE_NAME_Q = TABLE_NAME + " " + Q;
+		public static final String HORECA_ID = "horeca_id";
+		public static final String HORECA_ID_Q = Q + "." + HORECA_ID;
+		public static final String HORECATYPE_ID = "horecatype_id";
+		public static final String HORECATYPE_ID_Q = Q + "." + HORECATYPE_ID;
 	}
 	public static abstract class Plat implements BaseColumns {
+		public static final String Q = "p";
 		public static final String TABLE_NAME = "plats";
+		public static final String TABLE_NAME_Q = TABLE_NAME + " " + Q;
+		public static final String _ID_Q = Q + "." + _ID;
 		public static final int _ID_INDEX = 0;
 		public static final String HORECA_ID = "horeca_id";
+		public static final String HORECA_ID_Q = Q + "." + HORECA_ID;
 		public static final int HORECA_ID_INDEX = 1;
 		public static final String NAME = "nom";
+		public static final String NAME_Q = Q + "." + NAME;
 		public static final int NAME_INDEX = 2;
 		public static final String PRICE = "prix";
+		public static final String PRICE_Q = Q + "." + PRICE;
 		public static final int PRICE_INDEX = 3;
 		public static final String DESCRIPTION = "description";
+		public static final String DESCRIPTION_Q = Q + "." + DESCRIPTION;
 		public static final int DESCRIPTION_INDEX = 4;
 		public static final String STOCK = "stock";
+		public static final String STOCK_Q = Q + "." + STOCK;
 		public static final int STOCK_INDEX = 5;
 		public static final String[] COLUMN_NAMES = new String[]{_ID,
 			HORECA_ID, NAME, PRICE,
 			DESCRIPTION, STOCK};
+	}
+	public static abstract class PlatType implements BaseColumns {
+		public static final String Q = "pt";
+		public static final String TABLE_NAME = "plattypes";
+		public static final String TABLE_NAME_Q = TABLE_NAME + " " + Q;
+		public static final String _ID_Q = Q + "." + _ID;
+		public static final int _ID_INDEX = 0;
+		public static final String NAME = "nom";
+		public static final String NAME_Q = Q + "." + NAME;
+		public static final int NAME_INDEX = 1;
+		public static final String[] COLUMN_NAMES = new String[]{_ID, NAME};
+		public static final String[] COLUMN_NAMES_Q = new String[]{_ID_Q, NAME_Q};
+	}
+	public static abstract class PlatTypeJoin implements BaseColumns {
+		public static final String Q = "ptj";
+		public static final String TABLE_NAME = "plattypejoins";
+		public static final String TABLE_NAME_Q = TABLE_NAME + " " + Q;
+		public static final String PLAT_ID = "plat_id";
+		public static final String PLAT_ID_Q = Q + "." + PLAT_ID;
+		public static final String PLATTYPE_ID = "plattype_id";
+		public static final String PLATTYPE_ID_Q = Q + "." + PLATTYPE_ID;
 	}
 	public static abstract class Ingredient implements BaseColumns {
 		public static final String TABLE_NAME = "ingredients";

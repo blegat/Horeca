@@ -1,10 +1,8 @@
 package com.horeca;
 
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;

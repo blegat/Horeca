@@ -15,11 +15,34 @@
 	    <TextView
 	        android:text="@string/ville_spinner_label"
 	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content" />
+	        android:layout_height="wrap_content"
+	        style="@style/simple_text" />
 	    <Spinner
 	        android:id="@+id/ville_spinner"
 	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content" />   
+	        android:layout_height="wrap_content"
+	        style="@style/simple_text" />
+	    <TextView
+	        android:text="@string/horecatype_label"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/simple_text" />
+	    <Spinner
+	        android:id="@+id/horecatype"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/simple_text" />
+	    <TextView
+	        android:text="@string/distance_max_label"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/simple_text" />
+	    <EditText
+	        android:id="@+id/distance_max"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:inputType="number"
+	        style="@style/simple_text" /> 
 	    <Button
 	        android:id="@+id/button_choose_horeca"
 	        android:layout_width="wrap_content"

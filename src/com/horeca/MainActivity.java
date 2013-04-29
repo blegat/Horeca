@@ -11,14 +11,21 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	
 	private Button selectItemButton = null;
 	private long selected_ville_id = -1;
 	private Spinner ville_spinner = null;
+	private long selected_horecatype_id = -1;
+	private Spinner horecatype_spinner = null;
+	private EditText distance_max = null;
 	public static String VILLE_ID_EXTRA = "ville_id";
+	public static String HORECATYPE_ID_EXTRA = "horecatype_id";
+	public static String DISTANCE_MAX_EXTRA = "distance_max";
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +53,18 @@ public class MainActivity extends Activity {
         // Apply the adapter to the spinner
         ville_spinner.setAdapter(adapter);
         
+        horecatype_spinner = (Spinner) findViewById(R.id.horecatype);
+        
+        SimpleCursorAdapter htadapter = new SimpleCursorAdapter(this,
+        		android.R.layout.simple_spinner_item, HorecaType.getAllHorecaTypes(db),
+        		new String[]{HorecaContract.HorecaType.NAME}, new int[] {android.R.id.text1});
+        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        //        R.array.planets_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        htadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        horecatype_spinner.setAdapter(htadapter);
+        
         db.close();
         
         ville_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -60,6 +79,21 @@ public class MainActivity extends Activity {
                 selected_ville_id = -1;
             }
         });
+
+        horecatype_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, 
+                    int pos, long id) {
+                // An item was selected. You can retrieve the selected item using
+                // parent.getItemAtPosition(pos)
+            	selected_horecatype_id = id;
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+                selected_horecatype_id = -1;
+            }
+        });
+        
+        distance_max = (EditText) findViewById(R.id.distance_max);
         
         selectItemButton = (Button) findViewById(R.id.button_choose_horeca);
         selectItemButton.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +101,16 @@ public class MainActivity extends Activity {
         	public void onClick(View arg0) {
         		Intent i = new Intent(MainActivity.this, HorecaListActivity.class);
         		i.putExtra(VILLE_ID_EXTRA, selected_ville_id);
+        		i.putExtra(HORECATYPE_ID_EXTRA, selected_horecatype_id);
+        		String dm = distance_max.getText().toString();
+        		if (!dm.equals("")) {
+        			try {
+        				i.putExtra(DISTANCE_MAX_EXTRA, Double.parseDouble(dm));
+        			} catch (NumberFormatException e) {
+        				Toast.makeText(MainActivity.this, R.string.invalid_distance_max_warning, Toast.LENGTH_SHORT).show();
+        				return;
+        			}
+        		}
         		startActivity(i);
         	}
         });
