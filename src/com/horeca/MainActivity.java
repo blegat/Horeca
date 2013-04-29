@@ -19,6 +19,7 @@ public class MainActivity extends Activity {
 	private long selected_ville_id = -1;
 	private Spinner ville_spinner = null;
 	public static String VILLE_ID_EXTRA = "ville_id";
+	public String menuOpt = "Se connecter";
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,9 @@ public class MainActivity extends Activity {
 		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
 		
 		// Log a user in
-		User.signIn(db, "jean@dupont.com", "foobar");
+		if(User.signIn(db, "jean@dupont.com", "foobar")){
+			menuOpt="Se déconnecter";
+		}
 		Log.i("current_user", User.getCurrentUser().getName());
         
         ville_spinner = (Spinner) findViewById(R.id.ville_spinner);
@@ -76,6 +79,8 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        menu.add(1, 1, 0,"S'inscrire");
+        menu.add(1, 2, 1, menuOpt);
         return true;
     }
 
