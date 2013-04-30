@@ -21,10 +21,12 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int defaulthorecapicture=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f080028;
+        public static final int action_settings=0x7f08002a;
+        public static final int btnChangeImage=0x7f080024;
         public static final int button_choose_horeca=0x7f080007;
         public static final int commande_button=0x7f08001f;
         public static final int commande_date=0x7f08001b;
@@ -39,12 +41,13 @@ public final class R {
         public static final int current_reservation_number_label=0x7f080010;
         public static final int delete_reservation_button=0x7f080012;
         public static final int distance_max=0x7f080006;
-        public static final int horeca_description=0x7f080027;
-        public static final int horeca_description_label=0x7f080026;
+        public static final int horeca_description=0x7f080029;
+        public static final int horeca_description_label=0x7f080028;
         public static final int horeca_name=0x7f080013;
-        public static final int horeca_numtel=0x7f080025;
-        public static final int horeca_numtel_label=0x7f080024;
+        public static final int horeca_numtel=0x7f080027;
+        public static final int horeca_numtel_label=0x7f080026;
         public static final int horecatype=0x7f080004;
+        public static final int imageView1=0x7f080023;
         public static final int ouverture_debut=0x7f080008;
         public static final int ouverture_fin=0x7f080009;
         public static final int ouverture_item=0x7f080022;
@@ -58,7 +61,7 @@ public final class R {
         public static final int plat_price=0x7f080019;
         public static final int plat_stock=0x7f080018;
         public static final int plat_stock_label=0x7f080017;
-        public static final int plats_list=0x7f080023;
+        public static final int plats_list=0x7f080025;
         public static final int plattype=0x7f080005;
         public static final int realtabcontent=0x7f080002;
         public static final int reservation_button=0x7f08000e;

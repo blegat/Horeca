@@ -3,18 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-    <TextView
-        android:text="@string/menu"
+
+    <ImageView
+        android:id="@+id/imageView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/simple_text" >
-    </TextView>
-    <ListView
-        android:id="@+id/plats_list"
+        android:layout_weight="0.63"
+        android:src="@drawable/ic_launcher" />
+
+    <Button
+        android:id="@+id/btnChangeImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ListView>
-        
+        android:layout_height="wrap_content"
+        android:text="Change Image" />
 
 </LinearLayout>
