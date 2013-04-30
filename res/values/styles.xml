@@ -20,6 +20,11 @@
     <style name="simple_text">
   		<item name="android:textSize">20sp</item>
 	</style>
+	
+    <style name="error_text">
+        <item name="android:textSize">18sp</item>
+  		<item name="android:textColor">#ffff0000</item>
+	</style>
     
     <style name="title_text">
   		<item name="android:textSize">24sp</item>

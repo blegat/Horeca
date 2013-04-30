@@ -116,9 +116,13 @@ public class HorecaContract {
 		public static final String PLATTYPE_ID_Q = Q + "." + PLATTYPE_ID;
 	}
 	public static abstract class Ingredient implements BaseColumns {
+		public static final String Q = "i";
 		public static final String TABLE_NAME = "ingredients";
+		public static final String TABLE_NAME_Q = TABLE_NAME + " " + Q;
+		public static final String _ID_Q = Q + "." + _ID;
 		public static final int _ID_INDEX = 0;
 		public static final String NAME = "nom";
+		public static final String NAME_Q = Q + "." + NAME;
 		public static final int NAME_INDEX = 1;
 		public static final String[] COLUMN_NAMES = new String[]{_ID,
 			NAME};
@@ -136,11 +140,16 @@ public class HorecaContract {
 			EMAIL, NAME, PASSWORD};
 	}
 	public static abstract class Contient implements BaseColumns {
+		public static final String Q = "c";
 		public static final String TABLE_NAME = "contients";
+		public static final String TABLE_NAME_Q = TABLE_NAME + " " + Q;
+		public static final String _ID_Q = Q + "." + _ID;
 		public static final int _ID_INDEX = 0;
 		public static final String PLAT_ID = "plat_id";
+		public static final String PLAT_ID_Q = Q + "." + PLAT_ID;
 		public static final int PLAT_ID_INDEX = 1;
 		public static final String INGREDIENT_ID = "ingredient_id";
+		public static final String INGREDIENT_ID_Q = Q + "." + INGREDIENT_ID;
 		public static final int INGREDIENT_ID_INDEX = 2;
 		public static final String[] COLUMN_NAMES = new String[]{_ID,
 			PLAT_ID, INGREDIENT_ID};
