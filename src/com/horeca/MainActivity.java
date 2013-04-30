@@ -42,7 +42,7 @@ public class MainActivity extends Activity {
 		
 		// Log a user in
 		if(User.signIn(db, "jean@dupont.com", "foobar")){
-			menuOpt="Se déconnecter";
+			menuOpt="Se dÃ©connecter";
 		}
 		Log.i("current_user", User.getCurrentUser().getName());
         
