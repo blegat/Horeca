@@ -73,8 +73,9 @@ public final class R {
         public static final int activity_ouverture=0x7f030003;
         public static final int activity_plat=0x7f030004;
         public static final int horaire_view=0x7f030005;
-        public static final int menu_view=0x7f030006;
-        public static final int presentation_view=0x7f030007;
+        public static final int image_horeca_view=0x7f030006;
+        public static final int menu_view=0x7f030007;
+        public static final int presentation_view=0x7f030008;
     }
     public static final class menu {
         public static final int commandes=0x7f070000;
