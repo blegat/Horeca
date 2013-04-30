@@ -29,6 +29,7 @@
 	        style="@style/simple_text" />
 	    <Spinner
 	        android:id="@+id/horecatype"
+	        android:prompt="@string/horecatype_prompt"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        style="@style/simple_text" />

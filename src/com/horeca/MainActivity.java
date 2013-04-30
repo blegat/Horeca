@@ -128,8 +128,12 @@ public class MainActivity extends Activity {
         	public void onClick(View arg0) {
         		Intent i = new Intent(MainActivity.this, HorecaListActivity.class);
         		i.putExtra(VILLE_ID_EXTRA, selected_ville_id);
-        		i.putExtra(HORECATYPE_ID_EXTRA, selected_horecatype_id);
-        		i.putExtra(PLATTYPE_ID_EXTRA, selected_plattype_id);
+        		if (selected_horecatype_id != -1 && selected_horecatype_id != 1) {
+        			i.putExtra(HORECATYPE_ID_EXTRA, selected_horecatype_id);
+        		}
+        		if (selected_plattype_id != -1 && selected_plattype_id != 1) {
+        			i.putExtra(PLATTYPE_ID_EXTRA, selected_plattype_id);
+        		}
         		String dm = distance_max.getText().toString();
         		if (!dm.equals("")) {
         			try {

@@ -5,6 +5,7 @@ import java.util.Calendar;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -126,7 +127,7 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 			db.insert(HorecaContract.Horeca.TABLE_NAME, null, cv);
 		}
 		
-		String horecatype_names[] = {"Fast Food", "Snack"};
+		String horecatype_names[] = {"Any type", "Fast Food", "Snack"};
 		for (int i = 0; i < horecatype_names.length; i++) {
 			ContentValues cv = new ContentValues();
 			cv.put(HorecaContract.HorecaType.NAME, horecatype_names[i]);
@@ -134,7 +135,7 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		}
 		
 		long horecatypejoin_horeca_ids[] = {1, 1, 3};
-		long horecatypejoin_horecatype_ids[] = {1, 2, 2};
+		long horecatypejoin_horecatype_ids[] = {2, 3, 3};
 		for (int i = 0; i < horecatypejoin_horeca_ids.length; i++) {
 			ContentValues cv = new ContentValues();
 			cv.put(HorecaContract.HorecaTypeJoin.HORECA_ID, horecatypejoin_horeca_ids[i]);
@@ -176,7 +177,7 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 					column_names + ") VALUES(" + column_values + ");");
 		}
 		
-		String plattype_names[] = {"Sandwicherie"};
+		String plattype_names[] = {"Any type", "Sandwicherie"};
 		for (int i = 0; i < plattype_names.length; i++) {
 			ContentValues cv = new ContentValues();
 			cv.put(HorecaContract.PlatType.NAME, plattype_names[i]);
@@ -184,7 +185,7 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		}
 		
 		long plattypejoin_plat_ids[] = {6, 7};
-		long plattypejoin_plattype_ids[] = {1, 1};
+		long plattypejoin_plattype_ids[] = {2, 2};
 		for (int i = 0; i < plattypejoin_plat_ids.length; i++) {
 			ContentValues cv = new ContentValues();
 			cv.put(HorecaContract.PlatTypeJoin.PLAT_ID, plattypejoin_plat_ids[i]);
