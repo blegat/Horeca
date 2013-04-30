@@ -13,6 +13,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
@@ -24,10 +25,13 @@ public class MainActivity extends Activity {
 	private Spinner horecatype_spinner = null;
 	private long selected_plattype_id = -1;
 	private Spinner plattype_spinner = null;
+	private EditText ingredient = null;
+	private TextView ingredient_error = null;
 	private EditText distance_max = null;
 	public static String VILLE_ID_EXTRA = "ville_id";
 	public static String HORECATYPE_ID_EXTRA = "horecatype_id";
 	public static String PLATTYPE_ID_EXTRA = "plattype_id";
+	public static String INGREDIENT_NAME_EXTRA = "ingredient_name";
 	public static String DISTANCE_MAX_EXTRA = "distance_max";
 	public String menuOpt = "Se connecter";
 	
@@ -123,6 +127,8 @@ public class MainActivity extends Activity {
             }
         });
         
+        ingredient = (EditText) findViewById(R.id.ingredient);
+        ingredient_error = (TextView) findViewById(R.id.ingredient_error);
         distance_max = (EditText) findViewById(R.id.distance_max);
         
         selectItemButton = (Button) findViewById(R.id.button_choose_horeca);
@@ -130,6 +136,25 @@ public class MainActivity extends Activity {
         	@Override
         	public void onClick(View arg0) {
         		Intent i = new Intent(MainActivity.this, HorecaListActivity.class);
+        		String ingredient_name = ingredient.getText().toString();
+        		if (!ingredient_name.equals("")) {
+        			MySqliteHelper sqliteHelper = new MySqliteHelper(MainActivity.this);
+        			SQLiteDatabase db = sqliteHelper.getReadableDatabase();
+        			String suggestion = Ingredient.getSuggestion(db, ingredient_name, false);
+        			db.close();
+        			if (!suggestion.toLowerCase().equals(ingredient_name.toLowerCase())) {
+        				String error_message = "\"" + ingredient_name + "\" doesn't exists.";
+        				if (suggestion != "") { // "" can be the closest match if it is very different from everything
+        					error_message = error_message + " Did you mean \"" + suggestion + "\"?";
+        				}
+        				ingredient_error.setText(error_message);
+        				Toast.makeText(MainActivity.this, suggestion, Toast.LENGTH_LONG).show();
+        				return;
+        			}
+        			i.putExtra(INGREDIENT_NAME_EXTRA, suggestion);
+        			// suggestion has the good case while ingredient_name might
+        			// not have the good one
+        		}
         		i.putExtra(VILLE_ID_EXTRA, selected_ville_id);
         		if (selected_horecatype_id != -1 && selected_horecatype_id != 1) {
         			i.putExtra(HORECATYPE_ID_EXTRA, selected_horecatype_id);

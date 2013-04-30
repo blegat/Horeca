@@ -26,15 +26,22 @@ public final class R {
     }
     public static final class id {
         public static final int action_settings=0x7f08002a;
+<<<<<<< HEAD
         public static final int btnChangeImage=0x7f080024;
         public static final int button_choose_horeca=0x7f080007;
         public static final int commande_button=0x7f08001f;
         public static final int commande_date=0x7f08001b;
+=======
+        public static final int button_choose_horeca=0x7f080009;
+        public static final int commande_button=0x7f080021;
+        public static final int commande_date=0x7f08001d;
+>>>>>>> 45545f3b86174c1ce4d8938f6b3e72ffe81e40e0
         public static final int commande_item=0x7f080001;
-        public static final int commande_nombre=0x7f08001e;
-        public static final int commande_nombre_label=0x7f08001d;
-        public static final int commande_time=0x7f08001c;
+        public static final int commande_nombre=0x7f080020;
+        public static final int commande_nombre_label=0x7f08001f;
+        public static final int commande_time=0x7f08001e;
         public static final int commandes_list=0x7f080000;
+<<<<<<< HEAD
         public static final int current_commandes_button=0x7f080020;
         public static final int current_reservation_layout=0x7f08000f;
         public static final int current_reservation_number=0x7f080011;
@@ -61,12 +68,41 @@ public final class R {
         public static final int plat_price=0x7f080019;
         public static final int plat_stock=0x7f080018;
         public static final int plat_stock_label=0x7f080017;
+=======
+        public static final int current_commandes_button=0x7f080022;
+        public static final int current_reservation_layout=0x7f080011;
+        public static final int current_reservation_number=0x7f080013;
+        public static final int current_reservation_number_label=0x7f080012;
+        public static final int delete_reservation_button=0x7f080014;
+        public static final int distance_max=0x7f080008;
+        public static final int horeca_description=0x7f080029;
+        public static final int horeca_description_label=0x7f080028;
+        public static final int horeca_name=0x7f080015;
+        public static final int horeca_numtel=0x7f080027;
+        public static final int horeca_numtel_label=0x7f080026;
+        public static final int horecatype=0x7f080004;
+        public static final int ingredient=0x7f080006;
+        public static final int ingredient_error=0x7f080007;
+        public static final int ouverture_debut=0x7f08000a;
+        public static final int ouverture_fin=0x7f08000b;
+        public static final int ouverture_item=0x7f080024;
+        public static final int ouverture_places=0x7f08000d;
+        public static final int ouverture_places_label=0x7f08000c;
+        public static final int ouvertures_list=0x7f080023;
+        public static final int plat_description=0x7f080018;
+        public static final int plat_description_label=0x7f080017;
+        public static final int plat_ingredients=0x7f08001c;
+        public static final int plat_name=0x7f080016;
+        public static final int plat_price=0x7f08001b;
+        public static final int plat_stock=0x7f08001a;
+        public static final int plat_stock_label=0x7f080019;
+>>>>>>> 45545f3b86174c1ce4d8938f6b3e72ffe81e40e0
         public static final int plats_list=0x7f080025;
         public static final int plattype=0x7f080005;
         public static final int realtabcontent=0x7f080002;
-        public static final int reservation_button=0x7f08000e;
-        public static final int reservation_number=0x7f08000d;
-        public static final int reservation_number_label=0x7f08000c;
+        public static final int reservation_button=0x7f080010;
+        public static final int reservation_number=0x7f08000f;
+        public static final int reservation_number_label=0x7f08000e;
         public static final int ville_spinner=0x7f080003;
     }
     public static final class layout {
@@ -91,43 +127,44 @@ public final class R {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
         public static final int button_choose_horeca=0x7f050002;
-        public static final int commande_button_label=0x7f050023;
-        public static final int commande_nombre_label=0x7f050021;
-        public static final int commandes_list_label=0x7f050025;
-        public static final int current_commandes_button_label=0x7f050024;
-        public static final int current_reservation_number_label=0x7f05001f;
-        public static final int default_commande_nombre=0x7f050022;
-        public static final int default_reservation_number=0x7f05001c;
-        public static final int delete_reservation_button_label=0x7f050020;
-        public static final int distance_max_label=0x7f05000a;
-        public static final int horaire=0x7f050016;
-        public static final int horeca_description_label=0x7f05000d;
-        public static final int horeca_numtel_label=0x7f05000c;
+        public static final int commande_button_label=0x7f050024;
+        public static final int commande_nombre_label=0x7f050022;
+        public static final int commandes_list_label=0x7f050026;
+        public static final int current_commandes_button_label=0x7f050025;
+        public static final int current_reservation_number_label=0x7f050020;
+        public static final int default_commande_nombre=0x7f050023;
+        public static final int default_reservation_number=0x7f05001d;
+        public static final int delete_reservation_button_label=0x7f050021;
+        public static final int distance_max_label=0x7f05000b;
+        public static final int horaire=0x7f050017;
+        public static final int horeca_description_label=0x7f05000e;
+        public static final int horeca_numtel_label=0x7f05000d;
         public static final int horecatype_label=0x7f050005;
         public static final int horecatype_placeholder=0x7f050006;
         public static final int horecatype_prompt=0x7f050007;
-        public static final int invalid_amount_warning=0x7f050027;
-        public static final int invalid_distance_max_warning=0x7f05000b;
-        public static final int menu=0x7f050015;
-        public static final int ouverture_debut_label=0x7f050018;
-        public static final int ouverture_fin_label=0x7f050019;
-        public static final int ouverture_places_label=0x7f05001a;
-        public static final int plat_description_label=0x7f050010;
-        public static final int plat_ingredients_label=0x7f050013;
-        public static final int plat_ingredients_none=0x7f050014;
-        public static final int plat_price_currency=0x7f05000f;
-        public static final int plat_price_label=0x7f05000e;
-        public static final int plat_stock_label=0x7f050011;
-        public static final int plat_stock_unknown=0x7f050012;
+        public static final int ingredient_label=0x7f05000a;
+        public static final int invalid_amount_warning=0x7f050028;
+        public static final int invalid_distance_max_warning=0x7f05000c;
+        public static final int menu=0x7f050016;
+        public static final int ouverture_debut_label=0x7f050019;
+        public static final int ouverture_fin_label=0x7f05001a;
+        public static final int ouverture_places_label=0x7f05001b;
+        public static final int plat_description_label=0x7f050011;
+        public static final int plat_ingredients_label=0x7f050014;
+        public static final int plat_ingredients_none=0x7f050015;
+        public static final int plat_price_currency=0x7f050010;
+        public static final int plat_price_label=0x7f05000f;
+        public static final int plat_stock_label=0x7f050012;
+        public static final int plat_stock_unknown=0x7f050013;
         public static final int plattype_label=0x7f050008;
         public static final int plattype_placeholder=0x7f050009;
-        public static final int reservation_button_label=0x7f050028;
-        public static final int reservation_button_new_label=0x7f05001d;
-        public static final int reservation_button_update_label=0x7f05001e;
-        public static final int reservation_number_label=0x7f05001b;
-        public static final int title_activity_commandes=0x7f050026;
+        public static final int reservation_button_label=0x7f050029;
+        public static final int reservation_button_new_label=0x7f05001e;
+        public static final int reservation_button_update_label=0x7f05001f;
+        public static final int reservation_number_label=0x7f05001c;
+        public static final int title_activity_commandes=0x7f050027;
         public static final int title_activity_horeca_list=0x7f050003;
-        public static final int title_activity_ouverture=0x7f050017;
+        public static final int title_activity_ouverture=0x7f050018;
         public static final int ville_spinner_label=0x7f050004;
     }
     public static final class style {
@@ -157,7 +194,8 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f060001;
+        public static final int error_text=0x7f060003;
         public static final int simple_text=0x7f060002;
-        public static final int title_text=0x7f060003;
+        public static final int title_text=0x7f060004;
     }
 }

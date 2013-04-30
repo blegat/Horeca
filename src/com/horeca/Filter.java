@@ -8,6 +8,7 @@ public class Filter {
 	private Ville ville;
 	private HorecaType horecaType = null;
 	private PlatType platType = null;
+	private Ingredient ingredient = null;
 	private boolean hasMaxDistance = false;
 	private double maxDistance;
 	
@@ -27,13 +28,24 @@ public class Filter {
 			where = where + " AND " + HorecaContract.HorecaType._ID_Q + " = " + HorecaContract.HorecaTypeJoin.HORECATYPE_ID_Q;
 			where = where + " AND " + HorecaContract.HorecaType._ID_Q + " = " + horecaType.getId();
 		}
-		if (platType != null) {
-			tables = tables + ", " + HorecaContract.Plat.TABLE_NAME_Q + ", " +
-					HorecaContract.PlatType.TABLE_NAME_Q + ", " + HorecaContract.PlatTypeJoin.TABLE_NAME_Q;
+		if (platType != null || ingredient != null) {
+			// We need the plats
+			tables = tables + ", " + HorecaContract.Plat.TABLE_NAME_Q;
 			where = where + " AND " + HorecaContract.Horeca._ID_Q + " = " + HorecaContract.Plat.HORECA_ID_Q;
+		}
+		if (platType != null) {
+			tables = tables + ", " +
+					HorecaContract.PlatType.TABLE_NAME_Q + ", " + HorecaContract.PlatTypeJoin.TABLE_NAME_Q;
 			where = where + " AND " + HorecaContract.Plat._ID_Q + " = " + HorecaContract.PlatTypeJoin.PLAT_ID_Q;
 			where = where + " AND " + HorecaContract.PlatType._ID_Q + " = " + HorecaContract.PlatTypeJoin.PLATTYPE_ID_Q;
 			where = where + " AND " + HorecaContract.PlatType._ID_Q + " = " + platType.getId();
+		}
+		if (ingredient != null) {
+			tables = tables + ", " + HorecaContract.Contient.TABLE_NAME_Q + ", " +
+					HorecaContract.Ingredient.TABLE_NAME_Q;
+			where = where + " AND " + HorecaContract.Plat._ID_Q + " = " + HorecaContract.Contient.PLAT_ID_Q;
+			where = where + " AND " + HorecaContract.Ingredient._ID_Q + " = " + HorecaContract.Contient.INGREDIENT_ID_Q;
+			where = where + " AND " + HorecaContract.Ingredient.NAME_Q + " = \"" + ingredient.getName() + "\"";
 		}
 		if (hasMaxDistance) {
 			where = where + " AND " + distSquared + " < " + String.valueOf(maxDistance*maxDistance);
@@ -53,6 +65,9 @@ public class Filter {
 	}
 	public void setPlatType(PlatType platType) {
 		this.platType = platType;
+	}
+	public void setIngredient(Ingredient ingredient) {
+		this.ingredient = ingredient;
 	}
 	public void setMaxDistance(double dist) {
 		hasMaxDistance = true;
