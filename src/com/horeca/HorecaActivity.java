@@ -32,7 +32,7 @@ public class HorecaActivity extends FragmentActivity {
         		HoraireFragment.class, null);
         // Affichage de photo d'horeca
         tabHost.addTab(tabHost.newTabSpec("photos").setIndicator("Photos",
-        		getResources().getDrawable(android.R.drawable.ic_menu_today)),
+        		getResources().getDrawable(android.R.drawable.ic_menu_gallery)),
         		ImageHorecaFragment.class, null);
     }
 
