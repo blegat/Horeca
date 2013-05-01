@@ -204,17 +204,19 @@ public class MainActivity extends Activity {
         case 1:
         	startActivity(new Intent(MainActivity.this, SignInActivity.class));
             return true;
+
         case 2:
-        	if(menuOpt.equals("Se connecter")){
-        		//signIn
+        	if(item.getTitle().equals("Se connecter")){
         		menuOpt = "Se deconnecter";
+        		item.setTitle(menuOpt);
         	}
-        	if(menuOpt.equals("Se deconnecter")){
+        	else{
         		User.signOut();
         		menuOpt = "Se connecter";
+        		item.setTitle(menuOpt);
         	}
-        	return true;
-        }
+        return true;
+    	}
         return false;
     }
 }
