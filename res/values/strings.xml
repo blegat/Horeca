@@ -18,6 +18,8 @@
     <string name="invalid_price_max_warning">Invalid price max, leave it empty for no distance max.</string>
     <string name="distance_max_label"><b>Distance max [m]:</b></string>
     <string name="invalid_distance_max_warning">Invalid distance max, leave it empty for no distance max.</string>
+    <string name="gps_warning">GPS coordinate could not be fetched.</string>
+    <string name="horeca_distance_label"><b>Distance: </b></string>
     <string name="horeca_numtel_label"><b>Phone number: </b></string>
     <string name="horeca_description_label"><b>Description:</b></string>
     <string name="plat_price_label"><b>Price: </b></string>

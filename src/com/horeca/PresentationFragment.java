@@ -9,7 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class PresentationFragment extends Fragment {
-	
+	private TextView distance_label = null;
+	private TextView distance = null;
 	private TextView horeca_numtel = null;
 	private TextView horeca_description = null;
 	private TextView horeca_pricerange = null;
@@ -35,6 +36,17 @@ public class PresentationFragment extends Fragment {
 		
 		// it sets the title because it is the default tab
 		getActivity().setTitle(horeca.getName());
+		
+		GPSTracker gps = new GPSTracker(getActivity());
+		distance = (TextView) view.findViewById(R.id.horeca_distance);
+		if (gps.canGetLocation()) {
+			// I cast it to long to get less precision decimals
+			distance.setText(String.valueOf((long) horeca.getDistance(gps)) + " m");
+		} else {
+			distance.setVisibility(View.GONE);
+			distance_label = (TextView) view.findViewById(R.id.horeca_distance_label);
+			distance_label.setVisibility(View.GONE);
+		}
 		
 		horeca_numtel = (TextView) view.findViewById(R.id.horeca_numtel);
 		horeca_numtel.setText(horeca.getNumtel());

@@ -17,14 +17,7 @@ public class Filter {
 	private boolean hasMaxDistance = false;
 	private double maxDistance;
 	
-	public Cursor getMatchingHorecas(SQLiteDatabase db, Context context) {
-		double longitude = Location.getCurrentLongitude(context);
-		double latitude = Location.getCurrentLatitude(context);
-		String distSquared = "(" +
-				HorecaContract.Horeca.LONGITUDE_Q + " - " + longitude + ")*(" +
-				HorecaContract.Horeca.LONGITUDE_Q + " - " + longitude + ")+(" +
-				HorecaContract.Horeca.LATITUDE_Q + " - " + latitude + ")*(" +
-				HorecaContract.Horeca.LATITUDE_Q + " - " + latitude + ")";
+	public Cursor getMatchingHorecas(SQLiteDatabase db, Context context, GPSTracker gps) {
 		String tables = HorecaContract.Horeca.TABLE_NAME_Q;
 		String where = HorecaContract.Horeca.VILLE_ID_Q + " = " + String.valueOf(ville.getId());
 		if (horecaType != null) {
@@ -58,15 +51,26 @@ public class Filter {
 		if (hasMaxPrice) {
 			where = where + " AND " + HorecaContract.Horeca.MIN_PRICE_Q + " <= " + ((long) (maxPrice * 100));
 		}
-		if (hasMaxDistance) {
-			where = where + " AND " + distSquared + " < " + String.valueOf(maxDistance*maxDistance);
+		String sort = null;
+		if (gps != null) {
+			double longitude = gps.getLongitude();
+			double latitude = gps.getLatitude();
+			String distSquared = "(" +
+					HorecaContract.Horeca.LONGITUDE_Q + " / 1000000. - " + longitude + ")*(" +
+					HorecaContract.Horeca.LONGITUDE_Q + " / 1000000. - " + longitude + ")+(" +
+					HorecaContract.Horeca.LATITUDE_Q + " / 1000000. - " + latitude + ")*(" +
+					HorecaContract.Horeca.LATITUDE_Q + " / 1000000. - " + latitude + ")";
+			if (hasMaxDistance) {
+				where = where + " AND " + distSquared + " < " + String.valueOf(maxDistance*maxDistance);
+			}
+			sort = distSquared + " ASC";
 		}
 		Log.i("where", where);
 		// We need to add UNIQ because the restaurant could have
 		// several plats with the good type
 		return db.query(true, tables,
 				HorecaContract.Horeca.COLUMN_NAMES_Q,
-				where, null, null, null, distSquared + " ASC", null);
+				where, null, null, null, sort, null);
 	}
 	
 	public void setVille(Ville ville) {

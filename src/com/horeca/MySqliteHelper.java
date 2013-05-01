@@ -40,8 +40,8 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 				HorecaContract.Horeca.NAME + " TEXT NOT NULL, " +
 				HorecaContract.Horeca.MIN_PRICE + " INTEGER NOT NULL, " +
 				HorecaContract.Horeca.MAX_PRICE + " INTEGER NOT NULL, " +
-				HorecaContract.Horeca.LONGITUDE + " REAL NOT NULL, " +
-				HorecaContract.Horeca.LATITUDE + " REAL NOT NULL, " +
+				HorecaContract.Horeca.LONGITUDE + " INTEGER NOT NULL, " +
+				HorecaContract.Horeca.LATITUDE + " INTEGER NOT NULL, " +
 				HorecaContract.Horeca.VILLE_ID + " INTEGER NOT NULL, " +
 				HorecaContract.Horeca.NUMTEL + " TEXT NOT NULL, " +
 				HorecaContract.Horeca.DESCRIPTION + " TEXT);");
@@ -113,8 +113,8 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		String horeca_names[] = {"Quick", "Longeatude", "Crousty"};
 		long horeca_min_prices[] = {350, 3000, 230};
 		long horeca_max_prices[] = {890, 8900, 380};
-		double horeca_longitudes[] = {50669579, 50664065, 50669155};
-		double horeca_latitudes[] = {4613115, 4619547, 4616412};
+		double horeca_longitudes[] = {4613115, 4619547, 4616412};
+		double horeca_latitudes[] = {50669579, 50664065, 50669155};
 		long horeca_ville_ids[] = {1, 1, 1};
 		String horeca_numtels[] = {"01045424242", "01045007007", "01045454545"};
 		String horeca_descriptions[] = {"Nous, c est le goût !", "Cher mais bon !", null};

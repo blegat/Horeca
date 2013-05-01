@@ -38,6 +38,7 @@ public class Horeca {
 	private String name;
 	private double minPrice;
 	private double maxPrice;
+	public Location location;
 	private Ville ville;
 	private String numtel;
 	private String description;
@@ -52,6 +53,9 @@ public class Horeca {
 		name = cursor.getString(HorecaContract.Horeca.NAME_INDEX);
 		minPrice = cursor.getLong(HorecaContract.Horeca.MIN_PRICE_INDEX) / 100.;
 		maxPrice = cursor.getLong(HorecaContract.Horeca.MAX_PRICE_INDEX) / 100.;
+		double longitude = cursor.getDouble(HorecaContract.Horeca.LONGITUDE_INDEX) / 1e6;
+		double latitude = cursor.getDouble(HorecaContract.Horeca.LATITUDE_INDEX) / 1e6;
+		this.location = new Location(longitude, latitude);
 		long ville_id = cursor.getLong(HorecaContract.Horeca.VILLE_ID_INDEX);
 		numtel = cursor.getString(HorecaContract.Horeca.NUMTEL_INDEX);
 		description = cursor.getString(HorecaContract.Horeca.DESCRIPTION_INDEX);
@@ -71,6 +75,9 @@ public class Horeca {
 	}
 	public double getMaxPrice() {
 		return maxPrice;
+	}
+	public double getDistance(GPSTracker gps) {
+		return location.getDistance(gps);
 	}
 	public Ville getVille() {
 		return ville;

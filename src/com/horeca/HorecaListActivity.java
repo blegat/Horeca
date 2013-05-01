@@ -1,24 +1,30 @@
 package com.horeca;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
-public class HorecaListActivity extends ListActivity {
+public class HorecaListActivity extends Activity {
 	
 	private Ville ville;
 	private HorecaType horecaType = null;
 	private PlatType platType = null;
 	private Ingredient ingredient = null;
 	
+	private TextView gps_warning = null;
+	private ListView horeca_list = null;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_horeca_list);
 		
 		// Open the db
 		MySqliteHelper sqliteHelper = new MySqliteHelper(this);
@@ -59,18 +65,33 @@ public class HorecaListActivity extends ListActivity {
 			filter.setMaxDistance(b.getDouble(MainActivity.DISTANCE_MAX_EXTRA));
 		}
 		
+		Cursor cursor;
+		GPSTracker gps = new GPSTracker(this);
+		gps_warning = (TextView) findViewById(R.id.gps_warning);
+		if (gps.canGetLocation()) {
+			gps_warning.setVisibility(View.GONE);
+			cursor = filter.getMatchingHorecas(db, this, gps);
+		} else {
+			// make sure it is visible even if it should be
+			gps_warning.setVisibility(View.VISIBLE);
+			gps.showSettingsAlert();
+			cursor = filter.getMatchingHorecas(db, this, null);
+		}
+
 		// Create the List of restaurants to choose from
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, //this context
 				android.R.layout.simple_list_item_1, //id of the item layout used by default for the individual rows (this id is pre-defined by Android)
-				filter.getMatchingHorecas(db, this),
+				cursor,
 				new String[] { HorecaContract.Horeca.NAME },
 				new int[] { android.R.id.text1 }); // the list of objects to be adapted
 		// to remove deprecation warning, I need to add ", 0" but it is only in API 11 and we need 2.3.3 which is API 10
 		//db.close(); // too early, the adapter still uses it apparently
-		setListAdapter(adapter);
+		
+		horeca_list = (ListView) findViewById(R.id.horeca_list);
+		horeca_list.setAdapter(adapter);
 		db.close();
 		
-		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		horeca_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 			{
