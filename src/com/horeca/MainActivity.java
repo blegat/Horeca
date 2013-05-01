@@ -1,6 +1,7 @@
 package com.horeca;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -27,11 +28,15 @@ public class MainActivity extends Activity {
 	private Spinner plattype_spinner = null;
 	private EditText ingredient = null;
 	private TextView ingredient_error = null;
+	private EditText price_min = null;
+	private EditText price_max = null;
 	private EditText distance_max = null;
 	public static String VILLE_ID_EXTRA = "ville_id";
 	public static String HORECATYPE_ID_EXTRA = "horecatype_id";
 	public static String PLATTYPE_ID_EXTRA = "plattype_id";
 	public static String INGREDIENT_NAME_EXTRA = "ingredient_name";
+	public static String PRICE_MIN_EXTRA = "price_min";
+	public static String PRICE_MAX_EXTRA = "price_max";
 	public static String DISTANCE_MAX_EXTRA = "distance_max";
 	public String menuOpt = "Se connecter";
 	
@@ -129,6 +134,8 @@ public class MainActivity extends Activity {
         
         ingredient = (EditText) findViewById(R.id.ingredient);
         ingredient_error = (TextView) findViewById(R.id.ingredient_error);
+        price_min = (EditText) findViewById(R.id.price_min);
+        price_max = (EditText) findViewById(R.id.price_max);
         distance_max = (EditText) findViewById(R.id.distance_max);
         
         selectItemButton = (Button) findViewById(R.id.button_choose_horeca);
@@ -162,18 +169,25 @@ public class MainActivity extends Activity {
         		if (selected_plattype_id != -1 && selected_plattype_id != 1) {
         			i.putExtra(PLATTYPE_ID_EXTRA, selected_plattype_id);
         		}
-        		String dm = distance_max.getText().toString();
-        		if (!dm.equals("")) {
-        			try {
-        				i.putExtra(DISTANCE_MAX_EXTRA, Double.parseDouble(dm));
-        			} catch (NumberFormatException e) {
-        				Toast.makeText(MainActivity.this, R.string.invalid_distance_max_warning, Toast.LENGTH_SHORT).show();
-        				return;
-        			}
-        		}
+        		include_number(price_min, PRICE_MIN_EXTRA, i, R.string.invalid_price_min_warning, MainActivity.this);
+        		include_number(price_max, PRICE_MAX_EXTRA, i, R.string.invalid_price_max_warning, MainActivity.this);
+        		include_number(distance_max, DISTANCE_MAX_EXTRA, i, R.string.invalid_distance_max_warning, MainActivity.this);
         		startActivity(i);
         	}
         });
+    }
+    
+    private static void include_number(EditText et, String extra, Intent i, int warning, Context c) {
+		String input = et.getText().toString();
+		if (!input.equals("")) {
+			Log.i(extra, input);
+			try {
+				i.putExtra(extra, Double.parseDouble(input));
+			} catch (NumberFormatException e) {
+				Toast.makeText(c, warning, Toast.LENGTH_SHORT).show();
+				return;
+			}
+		}
     }
     
     @Override

@@ -30,23 +30,29 @@ public class HorecaContract {
 		public static final String NAME = "nom";
 		public static final String NAME_Q = Q + "." + NAME;
 		public static final int NAME_INDEX = 1;
+		public static final String MIN_PRICE = "minprice";
+		public static final String MIN_PRICE_Q = Q + "." + MIN_PRICE;
+		public static final int MIN_PRICE_INDEX = 2;
+		public static final String MAX_PRICE = "maxprice";
+		public static final String MAX_PRICE_Q = Q + "." + MAX_PRICE;
+		public static final int MAX_PRICE_INDEX = 3;
 		public static final String LONGITUDE = "longitude";
 		public static final String LONGITUDE_Q = Q + "." + LONGITUDE;
-		public static final int LONGITUDE_INDEX = 2;
+		public static final int LONGITUDE_INDEX = 4;
 		public static final String LATITUDE = "latitude";
 		public static final String LATITUDE_Q = Q + "." + LATITUDE;
-		public static final int LATITUDE_INDEX = 3;
+		public static final int LATITUDE_INDEX = 5;
 		public static final String VILLE_ID = "ville_id";
 		public static final String VILLE_ID_Q = Q + "." + VILLE_ID;
-		public static final int VILLE_ID_INDEX = 4;
+		public static final int VILLE_ID_INDEX = 6;
 		public static final String NUMTEL = "numtel";
 		public static final String NUMTEL_Q = Q + "." + NUMTEL;
-		public static final int NUMTEL_INDEX = 5;
+		public static final int NUMTEL_INDEX = 7;
 		public static final String DESCRIPTION = "description";
 		public static final String DESCRIPTION_Q = Q + "." + DESCRIPTION;
-		public static final int DESCRIPTION_INDEX = 6;
-		public static final String[] COLUMN_NAMES = new String[]{_ID, NAME, LONGITUDE, LATITUDE, VILLE_ID, NUMTEL, DESCRIPTION};
-		public static final String[] COLUMN_NAMES_Q = new String[]{_ID_Q, NAME_Q, LONGITUDE_Q, LATITUDE_Q, VILLE_ID_Q, NUMTEL_Q, DESCRIPTION_Q};
+		public static final int DESCRIPTION_INDEX = 8;
+		public static final String[] COLUMN_NAMES = new String[]{_ID, NAME, MIN_PRICE, MAX_PRICE, LONGITUDE, LATITUDE, VILLE_ID, NUMTEL, DESCRIPTION};
+		public static final String[] COLUMN_NAMES_Q = new String[]{_ID_Q, NAME_Q, MIN_PRICE_Q, MAX_PRICE_Q, LONGITUDE_Q, LATITUDE_Q, VILLE_ID_Q, NUMTEL_Q, DESCRIPTION_Q};
 	}
 	public static abstract class HorecaType implements BaseColumns {
 		public static final String Q = "ht";

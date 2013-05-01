@@ -36,6 +36,8 @@ public class Horeca {
 	
 	private long id;
 	private String name;
+	private double minPrice;
+	private double maxPrice;
 	private Ville ville;
 	private String numtel;
 	private String description;
@@ -48,6 +50,8 @@ public class Horeca {
 		cursor.moveToFirst();
 		this.id = cursor.getLong(HorecaContract.Horeca._ID_INDEX);
 		name = cursor.getString(HorecaContract.Horeca.NAME_INDEX);
+		minPrice = cursor.getLong(HorecaContract.Horeca.MIN_PRICE_INDEX) / 100.;
+		maxPrice = cursor.getLong(HorecaContract.Horeca.MAX_PRICE_INDEX) / 100.;
 		long ville_id = cursor.getLong(HorecaContract.Horeca.VILLE_ID_INDEX);
 		numtel = cursor.getString(HorecaContract.Horeca.NUMTEL_INDEX);
 		description = cursor.getString(HorecaContract.Horeca.DESCRIPTION_INDEX);
@@ -61,6 +65,12 @@ public class Horeca {
 	}
 	public String getName() {
 		return name;
+	}
+	public double getMinPrice() {
+		return minPrice;
+	}
+	public double getMaxPrice() {
+		return maxPrice;
 	}
 	public Ville getVille() {
 		return ville;

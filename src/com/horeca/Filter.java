@@ -3,12 +3,17 @@ package com.horeca;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class Filter {
 	private Ville ville;
 	private HorecaType horecaType = null;
 	private PlatType platType = null;
 	private Ingredient ingredient = null;
+	private boolean hasMinPrice = false;
+	private double minPrice;
+	private boolean hasMaxPrice = false;
+	private double maxPrice;
 	private boolean hasMaxDistance = false;
 	private double maxDistance;
 	
@@ -47,9 +52,16 @@ public class Filter {
 			where = where + " AND " + HorecaContract.Ingredient._ID_Q + " = " + HorecaContract.Contient.INGREDIENT_ID_Q;
 			where = where + " AND " + HorecaContract.Ingredient.NAME_Q + " = \"" + ingredient.getName() + "\"";
 		}
+		if (hasMinPrice) {
+			where = where + " AND " + HorecaContract.Horeca.MAX_PRICE_Q + " >= " + ((long) (minPrice * 100));
+		}
+		if (hasMaxPrice) {
+			where = where + " AND " + HorecaContract.Horeca.MIN_PRICE_Q + " <= " + ((long) (maxPrice * 100));
+		}
 		if (hasMaxDistance) {
 			where = where + " AND " + distSquared + " < " + String.valueOf(maxDistance*maxDistance);
 		}
+		Log.i("where", where);
 		// We need to add UNIQ because the restaurant could have
 		// several plats with the good type
 		return db.query(true, tables,
@@ -68,6 +80,14 @@ public class Filter {
 	}
 	public void setIngredient(Ingredient ingredient) {
 		this.ingredient = ingredient;
+	}
+	public void setMinPrice(double price) {
+		hasMinPrice = true;
+		minPrice = price;
+	}
+	public void setMaxPrice(double price) {
+		hasMaxPrice = true;
+		maxPrice = price;
 	}
 	public void setMaxDistance(double dist) {
 		hasMaxDistance = true;

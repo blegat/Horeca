@@ -12,6 +12,7 @@ public class PresentationFragment extends Fragment {
 	
 	private TextView horeca_numtel = null;
 	private TextView horeca_description = null;
+	private TextView horeca_pricerange = null;
 	private Horeca horeca = null;
 	
     @Override
@@ -45,6 +46,8 @@ public class PresentationFragment extends Fragment {
 			view.findViewById(R.id.horeca_description_label).setVisibility(View.GONE);
 			horeca_description.setVisibility(View.GONE);
 		}
+		horeca_pricerange = (TextView) view.findViewById(R.id.horeca_pricerange);
+		horeca_pricerange.setText("You can eat here from " + horeca.getMinPrice() + " € to " + horeca.getMaxPrice() + " €.");
 		return view;
     }
 }

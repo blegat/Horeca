@@ -38,6 +38,8 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		db.execSQL("CREATE TABLE " + HorecaContract.Horeca.TABLE_NAME + "(" +
 				HorecaContract.Horeca._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				HorecaContract.Horeca.NAME + " TEXT NOT NULL, " +
+				HorecaContract.Horeca.MIN_PRICE + " INTEGER NOT NULL, " +
+				HorecaContract.Horeca.MAX_PRICE + " INTEGER NOT NULL, " +
 				HorecaContract.Horeca.LONGITUDE + " REAL NOT NULL, " +
 				HorecaContract.Horeca.LATITUDE + " REAL NOT NULL, " +
 				HorecaContract.Horeca.VILLE_ID + " INTEGER NOT NULL, " +
@@ -109,6 +111,8 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 					ville_names[i] + "', '" + ville_codepostals[i] + "');");
 		}
 		String horeca_names[] = {"Quick", "Longeatude", "Crousty"};
+		long horeca_min_prices[] = {350, 3000, 230};
+		long horeca_max_prices[] = {890, 8900, 380};
 		double horeca_longitudes[] = {50669579, 50664065, 50669155};
 		double horeca_latitudes[] = {4613115, 4619547, 4616412};
 		long horeca_ville_ids[] = {1, 1, 1};
@@ -117,6 +121,8 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		for(int i = 0; i < horeca_names.length; i++) {
 			ContentValues cv = new ContentValues();
 			cv.put(HorecaContract.Horeca.NAME, horeca_names[i]);
+			cv.put(HorecaContract.Horeca.MIN_PRICE, horeca_min_prices[i]);
+			cv.put(HorecaContract.Horeca.MAX_PRICE, horeca_max_prices[i]);
 			cv.put(HorecaContract.Horeca.LONGITUDE, horeca_longitudes[i]);
 			cv.put(HorecaContract.Horeca.LATITUDE, horeca_latitudes[i]);
 			cv.put(HorecaContract.Horeca.VILLE_ID, horeca_ville_ids[i]);

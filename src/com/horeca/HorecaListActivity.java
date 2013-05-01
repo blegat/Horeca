@@ -49,6 +49,15 @@ public class HorecaListActivity extends ListActivity {
 		if (ingredient != null) {
 			filter.setIngredient(ingredient);
 		}
+		if (b.containsKey(MainActivity.PRICE_MIN_EXTRA)) {
+			filter.setMinPrice(b.getDouble(MainActivity.PRICE_MIN_EXTRA));
+		}
+		if (b.containsKey(MainActivity.PRICE_MAX_EXTRA)) {
+			filter.setMaxPrice(b.getDouble(MainActivity.PRICE_MAX_EXTRA));
+		}
+		if (b.containsKey(MainActivity.DISTANCE_MAX_EXTRA)) {
+			filter.setMaxDistance(b.getDouble(MainActivity.DISTANCE_MAX_EXTRA));
+		}
 		
 		// Create the List of restaurants to choose from
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, //this context

@@ -60,6 +60,28 @@
 	        android:layout_height="wrap_content"
 	        style="@style/error_text" />
 	    <TextView
+	        android:text="@string/price_min_label"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/simple_text" />
+	    <EditText
+	        android:id="@+id/price_min"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:inputType="number"
+	        style="@style/simple_text" /> 
+	    <TextView
+	        android:text="@string/price_max_label"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/simple_text" />
+	    <EditText
+	        android:id="@+id/price_max"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:inputType="number"
+	        style="@style/simple_text" />
+	    <TextView
 	        android:text="@string/distance_max_label"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"

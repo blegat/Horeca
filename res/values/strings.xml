@@ -12,6 +12,10 @@
     <string name="plattype_label"><b>Plat type:</b></string>
     <string name="plattype_placeholder">Any type</string>
     <string name="ingredient_label"><b>Ingredient wanted (blank means none):</b></string>
+    <string name="price_min_label"><b>Price min [€]:</b></string>
+    <string name="invalid_price_min_warning">Invalid price min, leave it empty for no distance max.</string>
+    <string name="price_max_label"><b>Price max [€]:</b></string>
+    <string name="invalid_price_max_warning">Invalid price max, leave it empty for no distance max.</string>
     <string name="distance_max_label"><b>Distance max [m]:</b></string>
     <string name="invalid_distance_max_warning">Invalid distance max, leave it empty for no distance max.</string>
     <string name="horeca_numtel_label"><b>Phone number: </b></string>
