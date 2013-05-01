@@ -20,12 +20,15 @@ public class User {
 			return false;
 		}
 	}
+	public static void signOut(){
+		current_user = null;
+	}
 	private static Cursor getCursor(SQLiteDatabase db, String selection, String[] selectionArgs) {
 		return db.query(HorecaContract.User.TABLE_NAME,
 				HorecaContract.User.COLUMN_NAMES, selection, selectionArgs, null, null, null);
 	}
-	
-	
+
+
 	private long id;
 	private String email;
 	private String name;
@@ -48,7 +51,7 @@ public class User {
 		this.password = cursor.getString(HorecaContract.User.PASSWORD_INDEX);
 		cursor.close();
 	}
-	
+
 	public long getId () {
 		return id;
 	}

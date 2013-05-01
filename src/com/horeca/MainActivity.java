@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -18,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-	
+
 	private Button selectItemButton = null;
 	private long selected_ville_id = -1;
 	private Spinner ville_spinner = null;
@@ -39,24 +40,24 @@ public class MainActivity extends Activity {
 	public static String PRICE_MAX_EXTRA = "price_max";
 	public static String DISTANCE_MAX_EXTRA = "distance_max";
 	public String menuOpt = "Se connecter";
-	
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
 		// Open the db
 		MySqliteHelper sqliteHelper = new MySqliteHelper(this);
 		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
-		
+
 		// Log a user in
 		if(User.signIn(db, "jean@dupont.com", "foobar")){
 			menuOpt="Se déconnecter";
 		}
 		Log.i("current_user", User.getCurrentUser().getName());
-        
+
         ville_spinner = (Spinner) findViewById(R.id.ville_spinner);
-        
+
         // Create an ArrayAdapter using the string array and a default spinner layout
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
         		android.R.layout.simple_spinner_item, Ville.getAllVilles(db),
@@ -67,9 +68,9 @@ public class MainActivity extends Activity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         ville_spinner.setAdapter(adapter);
-        
+
         horecatype_spinner = (Spinner) findViewById(R.id.horecatype);
-        
+
         SimpleCursorAdapter htadapter = new SimpleCursorAdapter(this,
         		android.R.layout.simple_spinner_item, HorecaType.getAllHorecaTypes(db),
         		new String[]{HorecaContract.HorecaType.NAME}, new int[] {android.R.id.text1});
@@ -81,7 +82,7 @@ public class MainActivity extends Activity {
         horecatype_spinner.setAdapter(htadapter);
 
         plattype_spinner = (Spinner) findViewById(R.id.plattype);
-        
+
         SimpleCursorAdapter ptadapter = new SimpleCursorAdapter(this,
         		android.R.layout.simple_spinner_item, PlatType.getAllPlatTypes(db),
         		new String[]{HorecaContract.PlatType.NAME}, new int[] {android.R.id.text1});
@@ -91,11 +92,11 @@ public class MainActivity extends Activity {
         ptadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         plattype_spinner.setAdapter(ptadapter);
-        
+
         db.close();
-        
+
         ville_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, 
+            public void onItemSelected(AdapterView<?> parent, View view,
                     int pos, long id) {
                 // An item was selected. You can retrieve the selected item using
                 // parent.getItemAtPosition(pos)
@@ -108,7 +109,7 @@ public class MainActivity extends Activity {
         });
 
         horecatype_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, 
+            public void onItemSelected(AdapterView<?> parent, View view,
                     int pos, long id) {
                 // An item was selected. You can retrieve the selected item using
                 // parent.getItemAtPosition(pos)
@@ -120,7 +121,7 @@ public class MainActivity extends Activity {
             }
         });
         plattype_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, 
+            public void onItemSelected(AdapterView<?> parent, View view,
                     int pos, long id) {
                 // An item was selected. You can retrieve the selected item using
                 // parent.getItemAtPosition(pos)
@@ -131,13 +132,13 @@ public class MainActivity extends Activity {
                 selected_plattype_id = -1;
             }
         });
-        
+
         ingredient = (EditText) findViewById(R.id.ingredient);
         ingredient_error = (TextView) findViewById(R.id.ingredient_error);
         price_min = (EditText) findViewById(R.id.price_min);
         price_max = (EditText) findViewById(R.id.price_max);
         distance_max = (EditText) findViewById(R.id.distance_max);
-        
+
         selectItemButton = (Button) findViewById(R.id.button_choose_horeca);
         selectItemButton.setOnClickListener(new View.OnClickListener() {
         	@Override
@@ -176,7 +177,7 @@ public class MainActivity extends Activity {
         	}
         });
     }
-    
+
     private static void include_number(EditText et, String extra, Intent i, int warning, Context c) {
 		String input = et.getText().toString();
 		if (!input.equals("")) {
@@ -189,7 +190,7 @@ public class MainActivity extends Activity {
 			}
 		}
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -198,5 +199,22 @@ public class MainActivity extends Activity {
         menu.add(1, 2, 1, menuOpt);
         return true;
     }
-
+ public boolean onOptionsItemSelected(MenuItem item) {
+    	switch (item.getItemId()) {
+        case 1:
+        	startActivity(new Intent(MainActivity.this, SignInActivity.class));
+            return true;
+        case 2:
+        	if(menuOpt.equals("Se connecter")){
+        		//signIn
+        		menuOpt = "Se deconnecter";
+        	}
+        	if(menuOpt.equals("Se deconnecter")){
+        		User.signOut();
+        		menuOpt = "Se connecter";
+        	}
+        	return true;
+        }
+        return false;
+    }
 }
