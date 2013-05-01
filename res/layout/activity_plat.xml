@@ -40,15 +40,15 @@
 	   	    android:id="@+id/plat_description_label"
 	   	    android:text="@string/plat_description_label"
 	   	    android:textIsSelectable="true"
-	      		android:layout_width="wrap_content"
-	      		android:layout_height="wrap_content"
-	      		style="@style/simple_text" />
+	      	android:layout_width="wrap_content"
+	      	android:layout_height="wrap_content"
+	      	style="@style/simple_text" />
 	   	<TextView
 	   	    android:id="@+id/plat_description"
 	   	    android:textIsSelectable="true"
-	      		android:layout_width="wrap_content"
-	      		android:layout_height="wrap_content"
-	      		style="@style/simple_text" />
+	      	android:layout_width="wrap_content"
+	      	android:layout_height="wrap_content"
+	      	style="@style/simple_text" />
 	   	<RelativeLayout
 	   	    android:layout_width="match_parent"
 	   	    android:layout_height="wrap_content" >
