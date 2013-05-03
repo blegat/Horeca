@@ -2,8 +2,12 @@ package com.horeca;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class Picture {
+	
+	private String path;
+	private String namefile;
 	
 	public Picture(String p,String nf){
 		this.path = p;
@@ -11,9 +15,11 @@ public class Picture {
 	}
 
 	public static Cursor getAllPicturesForHoreca(SQLiteDatabase db, Horeca horeca) {
+		Log.e("Horeca",String.valueOf(horeca.getId()));
 		return getCursor(db,
 				HorecaContract.Picture.HORECA_ID + " = ?",
 				new String[]{((Long) horeca.getId()).toString()});
+	    
 	}
 	
 	private static Cursor getCursor(SQLiteDatabase db, String selection, String[] selectionArgs) {
@@ -31,8 +37,5 @@ public class Picture {
 	public String getNameFile()
 	{return this.namefile;}
 	public String getCompletePath()
-	{return this.path+this+namefile;}
-	
-	private String path;
-	private String namefile;
+	{return this.path+this.namefile;}
 }

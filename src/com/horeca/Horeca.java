@@ -4,11 +4,12 @@ import java.util.Vector;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class Horeca {
 	
-	private static String defaultpath="res/drawable/HorecaPict/Default";
-	private static String defaultnamefile="defaultHorecaPicture.jpg";
+	private static String defaultpath="http://www.direct-signaletique.com/";
+	private static String defaultnamefile="I-Grande-2995-panneaux-d-interdiction-pic-234.net.jpg";
 	
 	private static Cursor getCursor(SQLiteDatabase db, String selection, String[] selectionArgs) {
 		return db.query(HorecaContract.Horeca.TABLE_NAME,
@@ -19,8 +20,8 @@ public class Horeca {
 	private static Vector<Picture> convertCursorToVectorImage(Cursor cursor){
 		Vector<Picture> vecimg = new Vector<Picture>(0);
 		if(cursor.getCount()==0){
-			//Picture temp=new Picture(defaultpath,defaultnamefile);
-			//vecimg.addElement(temp);
+			Picture temp=new Picture(defaultpath,defaultnamefile);
+			vecimg.addElement(temp);
 		}
 		else{
 			cursor.moveToFirst();

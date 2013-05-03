@@ -1,10 +1,16 @@
 package com.horeca;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Vector;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.util.Log;
 import android.view.View.OnClickListener;
 
 import android.database.Cursor;
@@ -13,6 +19,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,13 +35,12 @@ public class ImageHorecaFragment extends Fragment implements ViewBinder {
 
 	ImageView image;
 	Button button;
-	int pictureIndex;
+	static int pictureIndex=0;
+	int maxIndex;
 	Horeca horeca;
-	Vector<Picture> vecPic;
+	protected Vector<Picture> vecPic;
 	
-	public Vector<Picture> buildVectorImages(){
-		Vector<Picture> VecImg = null;
-		
+	public void buildVectorImages(){
 		MySqliteHelper sqliteHelper = new MySqliteHelper(getActivity());
 		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
 		
@@ -44,9 +50,7 @@ public class ImageHorecaFragment extends Fragment implements ViewBinder {
 		horeca = new Horeca(horeca_id, db);
 		db.close();
 		
-		VecImg=horeca.getVectorImage();
-		
-		return VecImg;
+		this.vecPic=horeca.getVectorImage();
 	}
 	
 
@@ -55,30 +59,29 @@ public class ImageHorecaFragment extends Fragment implements ViewBinder {
 	    
 	}
 	
+	@SuppressLint("NewApi")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	    View contentView = inflater.inflate(R.layout.image_horeca_view, container, false);
+	    
+	    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); 
+	    StrictMode.setThreadPolicy(policy);
 
 	    image = (ImageView) contentView.findViewById(R.id.imageView1);
-	    
-	    String pathAndName="drawable-mdpi/ic_launcher";
-	    //String pathAndName = "/drawable/ic_laucher.png";
-	    
-	    
-	    InputStream inputstream = getClass().getResourceAsStream(pathAndName);
-	    image.setImageDrawable(Drawable.createFromStream(inputstream, ""));
-	    
-	    //image.setImageResource(R.drawable.defaulthorecapicture);
-	    
-	    
 	    buildVectorImages();
+	    maxIndex=vecPic.size();
+	    
+		
+	    //"http://www.reklampub.com/wp-content/uploads/2012/10/quick.jpg"
+	    downloadImage(this.vecPic.get(0).getCompletePath());
 	    
 	    button = (Button) contentView.findViewById(R.id.btnChangeImage);
 		button.setOnClickListener(new OnClickListener() {
  
 			@Override
 			public void onClick(View arg0) {
-				image.setImageResource(R.drawable.defaulthorecapicture);
+				pictureIndex++;
+				downloadImage(vecPic.get(pictureIndex%maxIndex).getCompletePath());
 			}
  
 		});
@@ -90,77 +93,24 @@ public class ImageHorecaFragment extends Fragment implements ViewBinder {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	private void downloadImage(String imageURL) {
 
-	/*
-	@SuppressWarnings("deprecation")
-	private Gallery gallery;
-	private ImageView imgView;
-	private Vector<Picture> VectorImages;
-	private Drawable mNoImage;
-	private Horeca horeca;
-	private ListView listview;
-	
-	public Vector<Picture> buildVectorImages(){
-		Vector<Picture> VecImg = null;
-		
-		MySqliteHelper sqliteHelper = new MySqliteHelper(getActivity());
-		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
-		
-		// On get l'horeca actuel
-		Bundle b = getActivity().getIntent().getExtras();
-		long horeca_id = b.getLong("horeca_id");
-		horeca = new Horeca(horeca_id, db);
-		db.close();
-		
-		VecImg=horeca.getVectorImage();
-		
-		return VecImg;
-	}
+		Bitmap bitmap = null;
 
-	@Override
-	public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	
-	@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, 
-         Bundle savedInstanceState) {
-		// Open the db
-				MySqliteHelper sqliteHelper = new MySqliteHelper(getActivity());
-				SQLiteDatabase db = sqliteHelper.getReadableDatabase();
-				
-				// Get the horeca from which to take the plats
-				// specified by the HorecaListActivity calling this activity
-				Bundle b = getActivity().getIntent().getExtras();
-				long horeca_id = b.getLong("horeca_id");
-				horeca = new Horeca(horeca_id, db);
-				
-				// Get the menu
-				Cursor cursor = Picture.getAllPicturesForHoreca(db, horeca);
-				
-				View view = inflater.inflate(R.layout.image_horeca_view, container, false);
-				
-				// Display the menu in a list
-				@SuppressWarnings("deprecation")
-				SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(), //this context
-						android.R.layout.simple_list_item_1, //id of the item layout used by default for the individual rows (this id is pre-defined by Android)
-						//android.R.id.list,
-						//R.id.plats_list,
-						cursor,
-						new String[] { HorecaContract.Plat.NAME },
-						new int[] { android.R.id.text1 }); // the list of objects to be adapted
-				// to remove deprecation warning, I need to add ", 0" but it is only in API 11 and we need 2.3.3 which is API 10
-				
-				listview = (ListView) view.findViewById(R.id.plats_list);
-				listview.setAdapter(adapter);
-				
-				db.close();
+		try {
 
-		        return view;
-	}
-	
-	*/
-	
+		URL urlImage = new URL(imageURL);
+		HttpURLConnection connection = (HttpURLConnection) urlImage.openConnection();
+		InputStream inputStream = connection.getInputStream();
+		bitmap = BitmapFactory.decodeStream(inputStream);
+		image.setImageBitmap(bitmap);
+
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		}
 }

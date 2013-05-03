@@ -133,6 +133,18 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 			db.insert(HorecaContract.Horeca.TABLE_NAME, null, cv);
 		}
 		
+		String picturesPath[] = {"http://www.reklampub.com/wp-content/uploads/2012/10/","http://www.autogrill.be/Backend/Data/FlashImages/"};
+		String picturesName[] = {"quick.jpg","000054.jpg"};
+		long horecaID_s[] = {1,1};
+		for(int i = 0; i < picturesPath.length; i++) {
+			ContentValues cv = new ContentValues();
+			cv.put(HorecaContract.Picture.HORECA_ID, horecaID_s[i]);
+			cv.put(HorecaContract.Picture.PATH, picturesPath[i]);
+			cv.put(HorecaContract.Picture.NAME, picturesName[i]);
+			db.insert(HorecaContract.Picture.TABLE_NAME, null, cv);
+		}
+		
+		
 		String horecatype_names[] = {"Any type", "Fast Food", "Snack"};
 		for (int i = 0; i < horecatype_names.length; i++) {
 			ContentValues cv = new ContentValues();
