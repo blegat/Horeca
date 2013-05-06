@@ -15,7 +15,6 @@ public class Picture {
 	}
 
 	public static Cursor getAllPicturesForHoreca(SQLiteDatabase db, Horeca horeca) {
-		Log.e("Horeca",String.valueOf(horeca.getId()));
 		return getCursor(db,
 				HorecaContract.Picture.HORECA_ID + " = ?",
 				new String[]{((Long) horeca.getId()).toString()});

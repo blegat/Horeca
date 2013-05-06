@@ -34,6 +34,9 @@ public class HorecaActivity extends FragmentActivity {
         tabHost.addTab(tabHost.newTabSpec("photos").setIndicator("Photos",
         		getResources().getDrawable(android.R.drawable.ic_menu_gallery)),
         		ImageHorecaFragment.class, null);
+        tabHost.addTab(tabHost.newTabSpec("label").setIndicator("Label",
+        		getResources().getDrawable(android.R.drawable.ic_menu_gallery)),
+        		LabelFragment.class, null);
     }
 
 	@Override
@@ -42,5 +45,4 @@ public class HorecaActivity extends FragmentActivity {
 		getMenuInflater().inflate(R.menu.horeca, menu);
 		return true;
 	}
-
 }

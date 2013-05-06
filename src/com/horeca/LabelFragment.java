@@ -29,18 +29,25 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class ImageHorecaFragment extends Fragment implements ViewBinder {
-
-	ImageView image;
-	Button button;
-	static int pictureIndex=0;
-	int maxIndex;
-	Horeca horeca;
-	protected Vector<Picture> vecPic;
+public class LabelFragment extends Fragment implements ViewBinder {
 	
-	public void buildVectorImages(){
+	private Vector<Label> vecLabel;
+	private Horeca horeca;
+	ImageView image;
+	TextView descriptionView;
+	@Override
+	public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@SuppressLint("NewApi")
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View contentView = inflater.inflate(R.layout.label_horeca_view, container, false);
+		
 		MySqliteHelper sqliteHelper = new MySqliteHelper(getActivity());
 		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
 		
@@ -50,48 +57,18 @@ public class ImageHorecaFragment extends Fragment implements ViewBinder {
 		horeca = new Horeca(horeca_id, db);
 		db.close();
 		
-		this.vecPic=horeca.getVectorImage();
-	}
-	
-
-	public void Retrieve(String pathAndName)
-	   {
-	    
-	}
-	
-	@SuppressLint("NewApi")
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-	    View contentView = inflater.inflate(R.layout.image_horeca_view, container, false);
-	    
-	    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); 
-	    StrictMode.setThreadPolicy(policy);
-
-	    image = (ImageView) contentView.findViewById(R.id.imageView1);
-	    buildVectorImages();
-	    maxIndex=vecPic.size();
-	    
+		this.vecLabel=horeca.getVectorLabel();
 		
-	    //"http://www.reklampub.com/wp-content/uploads/2012/10/quick.jpg"
-	    downloadImage(this.vecPic.get(0).getCompletePath());
-	    
-	    button = (Button) contentView.findViewById(R.id.btnChangeImage);
-		button.setOnClickListener(new OnClickListener() {
- 
-			@Override
-			public void onClick(View arg0) {
-				pictureIndex++;
-				downloadImage(vecPic.get(pictureIndex%maxIndex).getCompletePath());
-			}
- 
-		});
-
+		this.image = (ImageView) contentView.findViewById(R.id.imageView1);
+		this.descriptionView = (TextView) contentView.findViewById(R.id.descriptionLabel);
+		descriptionView.setText(vecLabel.get(0).getDescription());
+		
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); 
+	    StrictMode.setThreadPolicy(policy);
+	    Log.e("LabelFragment",vecLabel.get(0).getPicture().getCompletePath());
+		downloadImage(vecLabel.get(0).getPicture().getCompletePath());
+		
 	    return contentView;
-	}
-	
-	public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 	
 	private void downloadImage(String imageURL) {
@@ -113,4 +90,5 @@ public class ImageHorecaFragment extends Fragment implements ViewBinder {
 		}
 
 		}
+
 }

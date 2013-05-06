@@ -100,6 +100,15 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 				HorecaContract.Picture.HORECA_ID + " INTEGER NOT NULL, " +
 				HorecaContract.Picture.PATH + " TEXT NOT NULL, " +
 				HorecaContract.Picture.NAME + "  TEXT NOT NULL);");
+		db.execSQL("CREATE TABLE " + HorecaContract.Label.TABLE_NAME + "(" +
+				HorecaContract.Label._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				HorecaContract.Label.PATH + " TEXT NOT NULL, " +
+				HorecaContract.Label.NAME + "  TEXT NOT NULL, " +
+				HorecaContract.Label.DESCRIPTIONLABEL + "  TEXT NOT NULL);");
+		db.execSQL("CREATE TABLE " + HorecaContract.LabelJoinHoreca.TABLE_NAME + "(" +
+				HorecaContract.LabelJoinHoreca._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				HorecaContract.LabelJoinHoreca.HORECA_ID + " INTEGER NOT NULL, " +
+				HorecaContract.LabelJoinHoreca.LABEL_ID + "  INTEGER NOT NULL);");
 	}	
 	
 	public void populateDatabase(SQLiteDatabase db) {
@@ -142,6 +151,26 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 			cv.put(HorecaContract.Picture.PATH, picturesPath[i]);
 			cv.put(HorecaContract.Picture.NAME, picturesName[i]);
 			db.insert(HorecaContract.Picture.TABLE_NAME, null, cv);
+		}
+		
+		String labelPicPath[] = {"https://encrypted-tbn0.gstatic.com/images?q=tbn:","http://www.autogrill.be/Backend/Data/FlashImages/"};
+		String labelPicName[] = {"ANd9GcS4J-bXI3jjTQZgtCUtMiX95nO5HC73ChWafb9BC0vB8kz5dh-9","000054.jpg"};
+		String labelDescription[] = {"Une description","Une autre description"};
+		for(int i = 0; i < labelPicPath.length; i++) {
+			ContentValues cv = new ContentValues();
+			cv.put(HorecaContract.Label.PATH, labelPicPath[i]);
+			cv.put(HorecaContract.Label.NAME, labelPicName[i]);
+			cv.put(HorecaContract.Label.DESCRIPTIONLABEL, labelDescription[i]);
+			db.insert(HorecaContract.Label.TABLE_NAME, null, cv);
+		}
+		
+		long labelId[] = {0,1};
+		long horecaId[] = {2,2};
+		for(int i = 0; i < labelId.length; i++) {
+			ContentValues cv = new ContentValues();
+			cv.put(HorecaContract.LabelJoinHoreca.HORECA_ID, horecaId[i]);
+			cv.put(HorecaContract.LabelJoinHoreca.LABEL_ID, labelId[i]);
+			db.insert(HorecaContract.LabelJoinHoreca.TABLE_NAME, null, cv);
 		}
 		
 		
@@ -275,6 +304,8 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Reservation.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Commande.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Picture.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Label.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.LabelJoinHoreca.TABLE_NAME);
 	}
 
 }

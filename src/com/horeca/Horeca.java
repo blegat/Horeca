@@ -44,6 +44,7 @@ public class Horeca {
 	private String numtel;
 	private String description;
 	private Vector<Picture> pictures;
+	private Vector<Label> labels;
 	
 	public Horeca (long id, SQLiteDatabase db) {
 		Cursor cursor = getCursor(db,
@@ -63,6 +64,7 @@ public class Horeca {
 		cursor.close();
 		ville = new Ville(ville_id, db);
 		this.pictures=convertCursorToVectorImage(Picture.getAllPicturesForHoreca(db,this));
+		this.labels=Label.getVectorLabelForHoreca(db,this);
 	}
 	
 	public long getId () {
@@ -94,5 +96,8 @@ public class Horeca {
 	}
 	public Vector<Picture> getVectorImage() {
 		return pictures;
+	}
+	public Vector<Label> getVectorLabel() {
+		return labels;
 	}
 }

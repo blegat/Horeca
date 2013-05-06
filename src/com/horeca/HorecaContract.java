@@ -212,4 +212,27 @@ public class HorecaContract {
 		public static final String[] COLUMN_NAMES = new String[]{_ID,
 			HORECA_ID, PATH, NAME};
 	}
+	public static abstract class Label implements BaseColumns {
+		public static final String TABLE_NAME = "ImageDescriptionLabel"; 
+		public static final int _ID_INDEX = 0;
+		public static final String PATH = "path_picture";
+		public static final int PATH_INDEX = 1;
+		public static final String NAME = "name_picture";
+		public static final int NAME_INDEX = 2;
+		public static final String DESCRIPTIONLABEL = "descriptionlabel";
+		public static final int DESCRIPTION_INDEX = 3;
+		public static final String[] COLUMN_NAMES = new String[]{_ID,
+		 PATH, NAME ,DESCRIPTIONLABEL};
+	}
+	public static abstract class LabelJoinHoreca implements BaseColumns {
+		public static final String TABLE_NAME = "LabelJoinHoreca"; 
+		public static final int _ID_INDEX = 0;
+		public static final String HORECA_ID = "horeca_id";
+		public static final int HORECA_ID_INDEX = 1;
+		public static final String LABEL_ID = "label_id";
+		public static final int LABEL_ID_INDEX = 2;
+		
+		public static final String[] COLUMN_NAMES = new String[]{_ID,
+			HORECA_ID, LABEL_ID};
+	}
 }
