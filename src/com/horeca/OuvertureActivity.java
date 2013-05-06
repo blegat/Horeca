@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class OuvertureActivity extends Activity implements View.OnClickListener {
+public class OuvertureActivity extends MyActivity implements View.OnClickListener {
 
 	private TextView ouverture_debut = null;
 	private TextView ouverture_fin = null;
@@ -132,13 +132,6 @@ public class OuvertureActivity extends Activity implements View.OnClickListener 
 	public void updateButtonsForNoReservation() {
 		reservation_button.setText(R.string.reservation_button_new_label);
 		current_reservation_layout.setVisibility(View.GONE);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.plat, menu);
-		return true;
 	}
 
 }

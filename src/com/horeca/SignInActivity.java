@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class SignInActivity extends Activity {
+public class SignInActivity extends MyActivity {
 	private EditText mot_de_passe_txt = null;
 	private TextView password_error = null;
 	private EditText mail_txt = null;
@@ -37,6 +37,7 @@ public class SignInActivity extends Activity {
         		} else {
         			mail_error.setVisibility(View.GONE);
         			password_error.setVisibility(View.GONE);
+        			finish();
         		}
             }
         });

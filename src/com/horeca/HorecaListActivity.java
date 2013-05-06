@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-public class HorecaListActivity extends Activity {
+public class HorecaListActivity extends MyActivity {
 	
 	private Ville ville;
 	private HorecaType horecaType = null;

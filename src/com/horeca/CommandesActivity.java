@@ -14,7 +14,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 
-public class CommandesActivity extends Activity implements ViewBinder, AdapterView.OnItemClickListener {
+public class CommandesActivity extends MyActivity implements ViewBinder, AdapterView.OnItemClickListener {
 	
 	private SimpleCursorAdapter adapter = null;
 	private ListView commandes_list = null;
@@ -93,12 +93,4 @@ public class CommandesActivity extends Activity implements ViewBinder, AdapterVi
     	((TextView) view).setText(temps.toString());
         return true;
     }
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.commandes, menu);
-		return true;
-	}
-
 }

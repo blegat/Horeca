@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-public class PlatActivity extends Activity implements OnClickListener {
+public class PlatActivity extends MyActivity implements OnClickListener {
 
 	private TextView horeca_name = null;
 	private TextView plat_name = null;
@@ -163,13 +163,6 @@ public class PlatActivity extends Activity implements OnClickListener {
 		
 			db.close();
 		}
-	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.plat, menu);
-		return true;
 	}
 
 }
