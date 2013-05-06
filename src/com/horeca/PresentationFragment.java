@@ -42,7 +42,7 @@ public class PresentationFragment extends Fragment {
 		
 		GPSTracker gps = new GPSTracker(getActivity());
 		distance = (TextView) view.findViewById(R.id.horeca_distance);
-		if (gps.canGetLocation()) {
+		if (gps.getLocation() != null) {
 			// I cast it to long to get less precision decimals
 			distance.setText(String.valueOf((long) horeca.getDistance(gps)) + " m");
 		} else {
