@@ -85,7 +85,7 @@ public class ImageHorecaFragment extends Fragment implements ViewBinder {
 			}
  
 		});
-
+	    
 	    return contentView;
 	}
 	

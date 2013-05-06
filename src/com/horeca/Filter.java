@@ -65,6 +65,7 @@ public class Filter {
 			}
 			sort = distSquared + " ASC";
 		}
+		where = where + " ORDER BY IS_FAVORITE  DESC";
 		Log.i("where", where);
 		// We need to add UNIQ because the restaurant could have
 		// several plats with the good type

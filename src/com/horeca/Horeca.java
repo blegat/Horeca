@@ -43,8 +43,8 @@ public class Horeca {
 	private Ville ville;
 	private String numtel;
 	private String description;
+	private int isFavorite;
 	private Vector<Picture> pictures;
-	private Vector<Label> labels;
 	
 	public Horeca (long id, SQLiteDatabase db) {
 		Cursor cursor = getCursor(db,
@@ -61,10 +61,10 @@ public class Horeca {
 		long ville_id = cursor.getLong(HorecaContract.Horeca.VILLE_ID_INDEX);
 		numtel = cursor.getString(HorecaContract.Horeca.NUMTEL_INDEX);
 		description = cursor.getString(HorecaContract.Horeca.DESCRIPTION_INDEX);
+		isFavorite = cursor.getInt(HorecaContract.Horeca.IS_FAVORITE_INDEX);
 		cursor.close();
 		ville = new Ville(ville_id, db);
 		this.pictures=convertCursorToVectorImage(Picture.getAllPicturesForHoreca(db,this));
-		this.labels=Label.getVectorLabelForHoreca(db,this);
 	}
 	
 	public long getId () {
@@ -94,10 +94,10 @@ public class Horeca {
 	public String getDescription() {
 		return description;
 	}
+	public boolean getIsFavorite(){
+		return isFavorite==1;	
+	}
 	public Vector<Picture> getVectorImage() {
 		return pictures;
-	}
-	public Vector<Label> getVectorLabel() {
-		return labels;
 	}
 }

@@ -51,9 +51,13 @@ public class HorecaContract {
 		public static final String DESCRIPTION = "description";
 		public static final String DESCRIPTION_Q = Q + "." + DESCRIPTION;
 		public static final int DESCRIPTION_INDEX = 8;
-		public static final String[] COLUMN_NAMES = new String[]{_ID, NAME, MIN_PRICE, MAX_PRICE, LONGITUDE, LATITUDE, VILLE_ID, NUMTEL, DESCRIPTION};
-		public static final String[] COLUMN_NAMES_Q = new String[]{_ID_Q, NAME_Q, MIN_PRICE_Q, MAX_PRICE_Q, LONGITUDE_Q, LATITUDE_Q, VILLE_ID_Q, NUMTEL_Q, DESCRIPTION_Q};
+		public static final String IS_FAVORITE = "is_favorite";
+		public static final String IS_FAVORITE_Q = Q+ "." + IS_FAVORITE;
+		public static final int IS_FAVORITE_INDEX=9;
+		public static final String[] COLUMN_NAMES = new String[]{_ID, NAME, MIN_PRICE, MAX_PRICE, LONGITUDE, LATITUDE, VILLE_ID, NUMTEL, DESCRIPTION, IS_FAVORITE};
+		public static final String[] COLUMN_NAMES_Q = new String[]{_ID_Q, NAME_Q, MIN_PRICE_Q, MAX_PRICE_Q, LONGITUDE_Q, LATITUDE_Q, VILLE_ID_Q, NUMTEL_Q, DESCRIPTION_Q, IS_FAVORITE_Q};
 	}
+	
 	public static abstract class HorecaType implements BaseColumns {
 		public static final String Q = "ht";
 		public static final String TABLE_NAME = "horecatypes";
@@ -211,28 +215,5 @@ public class HorecaContract {
 		public static final int NAME_INDEX = 3;
 		public static final String[] COLUMN_NAMES = new String[]{_ID,
 			HORECA_ID, PATH, NAME};
-	}
-	public static abstract class Label implements BaseColumns {
-		public static final String TABLE_NAME = "ImageDescriptionLabel"; 
-		public static final int _ID_INDEX = 0;
-		public static final String PATH = "path_picture";
-		public static final int PATH_INDEX = 1;
-		public static final String NAME = "name_picture";
-		public static final int NAME_INDEX = 2;
-		public static final String DESCRIPTIONLABEL = "descriptionlabel";
-		public static final int DESCRIPTION_INDEX = 3;
-		public static final String[] COLUMN_NAMES = new String[]{_ID,
-		 PATH, NAME ,DESCRIPTIONLABEL};
-	}
-	public static abstract class LabelJoinHoreca implements BaseColumns {
-		public static final String TABLE_NAME = "LabelJoinHoreca"; 
-		public static final int _ID_INDEX = 0;
-		public static final String HORECA_ID = "horeca_id";
-		public static final int HORECA_ID_INDEX = 1;
-		public static final String LABEL_ID = "label_id";
-		public static final int LABEL_ID_INDEX = 2;
-		
-		public static final String[] COLUMN_NAMES = new String[]{_ID,
-			HORECA_ID, LABEL_ID};
 	}
 }
