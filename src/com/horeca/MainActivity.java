@@ -51,7 +51,7 @@ public class MainActivity extends Activity {
 		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
 
 		// Log a user in
-		if(User.signIn(db, "jean@dupont.com", "foobar")){
+		if (0 == User.signIn(db, "jean@dupont.com", "foobar")){
 			menuOpt="Se déconnecter";
 		}
 		Log.i("current_user", User.getCurrentUser().getName());
