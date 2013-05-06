@@ -199,12 +199,11 @@ public class MainActivity extends Activity {
         menu.add(1, 2, 1, menuOpt);
         return true;
     }
- public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
     	switch (item.getItemId()) {
         case 1:
-        	startActivity(new Intent(MainActivity.this, SignInActivity.class));
+        	startActivity(new Intent(this, SignInActivity.class));
             return true;
-
         case 2:
         	if(item.getTitle().equals("Se connecter")){
         		menuOpt = "Se deconnecter";

@@ -11,9 +11,22 @@ public class User {
 	public static User getCurrentUser() {
 		return current_user;
 	}
+	public static String signUp(SQLiteDatabase db, String email, String name, String password, String passwordConfirmation) {
+		if (password != passwordConfirmation) {
+			return "Passwords do not match";
+		}
+		User user = new User(email, db);
+		if (user.exists) {
+			return "Email already taken";
+		} else {
+			user.name = name;
+			user.password = password; // hash it
+			return null;
+		}
+	}
 	public static boolean signIn(SQLiteDatabase db, String email, String password) {
 		current_user = new User(email, db);
-		if (current_user.passwordEquals(password)) {
+		if (current_user.exists && current_user.passwordEquals(password)) {
 			return true;
 		} else {
 			current_user = null;
@@ -30,6 +43,7 @@ public class User {
 
 
 	private long id;
+	private boolean exists;
 	private String email;
 	private String name;
 	private String password; // TODO secure it
@@ -44,11 +58,17 @@ public class User {
 	}
 	private User (String email, SQLiteDatabase db) {
 		Cursor cursor = getCursor(db, HorecaContract.User.EMAIL + " = ?", new String[]{email});
-		cursor.moveToFirst();
-		this.id = cursor.getLong(HorecaContract.User._ID_INDEX);
-		this.email = cursor.getString(HorecaContract.User.EMAIL_INDEX);
-		this.name = cursor.getString(HorecaContract.User.NAME_INDEX);
-		this.password = cursor.getString(HorecaContract.User.PASSWORD_INDEX);
+		if (cursor.getCount() == 0) {
+			exists = false;
+			this.email = email;
+		} else {
+			exists = true;
+			cursor.moveToFirst();
+			this.id = cursor.getLong(HorecaContract.User._ID_INDEX);
+			this.email = cursor.getString(HorecaContract.User.EMAIL_INDEX);
+			this.name = cursor.getString(HorecaContract.User.NAME_INDEX);
+			this.password = cursor.getString(HorecaContract.User.PASSWORD_INDEX);
+		}
 		cursor.close();
 	}
 
@@ -64,5 +84,8 @@ public class User {
 	private boolean passwordEquals(String password) {
 		// TODO secure it
 		return this.password.equals(password);
+	}
+	private void save(SQLiteDatabase db) {
+		
 	}
 }
