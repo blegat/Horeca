@@ -51,7 +51,7 @@ public class Filter {
 		if (hasMaxPrice) {
 			where = where + " AND " + HorecaContract.Horeca.MIN_PRICE_Q + " <= " + ((long) (maxPrice * 100));
 		}
-		String sort = null;
+		String sort = HorecaContract.Horeca.IS_FAVORITE_Q + " DESC";
 		if (gps != null) {
 			double longitude = gps.getLongitude();
 			double latitude = gps.getLatitude();
@@ -63,9 +63,8 @@ public class Filter {
 			if (hasMaxDistance) {
 				where = where + " AND " + distSquared + " < " + String.valueOf(maxDistance*maxDistance);
 			}
-			sort = distSquared + " ASC";
+			sort += ", " + distSquared + " ASC";
 		}
-		where = where + " ORDER BY IS_FAVORITE  DESC";
 		Log.i("where", where);
 		// We need to add UNIQ because the restaurant could have
 		// several plats with the good type
