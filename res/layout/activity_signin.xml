@@ -24,7 +24,16 @@
 	        android:layout_height="wrap_content"
 	        style="@style/simple_text" />
 	    <TextView
+	        android:textIsSelectable="true"
+	        android:id="@+id/mail_error"
+	        android:text="@string/unused_email"
+	        android:visibility="gone"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/error_text" />
+	    <TextView
 	        android:text="@string/mot_de_passe"
+	        android:textIsSelectable="true"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        style="@style/simple_text" />
@@ -33,6 +42,14 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        style="@style/simple_text" />
+	    <TextView
+	        android:textIsSelectable="true"
+	        android:id="@+id/password_error"
+	        android:text="@string/wrong_password"
+	        android:visibility="gone"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/error_text" />
 	    <Button
 	        android:id="@+id/sign_in_button"
 	        android:text="@string/sign_in_button"

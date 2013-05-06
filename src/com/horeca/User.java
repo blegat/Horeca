@@ -3,6 +3,7 @@ package com.horeca;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class User {
 	public static int SUCCESS = 0;
@@ -90,6 +91,7 @@ public class User {
 	}
 	private boolean passwordEquals(String password) {
 		// TODO secure it
+		Log.i("eq", this.password + "?" + password + "?");
 		return this.password.equals(password);
 	}
 	private void save(SQLiteDatabase db) {

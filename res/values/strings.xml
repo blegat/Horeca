@@ -4,7 +4,9 @@
     <string name="app_name">Horeca</string>
     <string name="title_sign_in">Sign in</string>
     <string name="mail"><b>Email address:</b></string>
+    <string name="unused_email">There is no user with this email</string>
     <string name="mot_de_passe"><b>Password:</b></string>
+    <string name="wrong_password">Wrong password.</string>
     <string name="sign_in_button">Sign in</string>
     <string name="action_settings">Settings</string>
     <string name="button_choose_horeca">Choose new horeca</string>
