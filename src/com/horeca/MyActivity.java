@@ -32,6 +32,8 @@ public class MyActivity extends Activity {
     	Log.i("Menu", String.valueOf(item.getItemId()));
     	switch (item.getItemId()) {
     	case R.id.action_signUp:
+    			startActivity(new Intent(this,SignUpActivity.class));
+    			
             return true;
         case R.id.action_signInOut:
         	if (User.isSignedIn()) {

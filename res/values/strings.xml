@@ -3,11 +3,13 @@
 
     <string name="app_name">Horeca</string>
     <string name="title_sign_in">Sign in</string>
+    <string name="title_sign_up">Sign up</string>
     <string name="mail"><b>Email address:</b></string>
     <string name="unused_email">There is no user with this email</string>
     <string name="mot_de_passe"><b>Password:</b></string>
     <string name="wrong_password">Wrong password.</string>
     <string name="sign_in_button">Sign in</string>
+     <string name="sign_up_button">Sign up</string>
     <string name="action_signUp">Sign up</string>
     <string name="action_signIn">Sign in</string>
     <string name="action_signOut">Sign out</string>
