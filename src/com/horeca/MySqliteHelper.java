@@ -44,7 +44,9 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 				HorecaContract.Horeca.LATITUDE + " INTEGER NOT NULL, " +
 				HorecaContract.Horeca.VILLE_ID + " INTEGER NOT NULL, " +
 				HorecaContract.Horeca.NUMTEL + " TEXT NOT NULL, " +
-				HorecaContract.Horeca.DESCRIPTION + " TEXT);");
+				HorecaContract.Horeca.DESCRIPTION + " TEXT, " +
+				HorecaContract.Horeca.IS_FAVORITE + " INTEGER); ");
+				//HorecaContract.Horeca.DESCRIPTION + " TEXT);");
 		db.execSQL("CREATE TABLE " + HorecaContract.HorecaType.TABLE_NAME + "(" +
 				HorecaContract.HorecaType._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				HorecaContract.HorecaType.NAME + " TEXT NOT NULL);");
@@ -127,6 +129,7 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		long horeca_ville_ids[] = {1, 1, 1};
 		String horeca_numtels[] = {"01045424242", "01045007007", "01045454545"};
 		String horeca_descriptions[] = {"Nous, c est le goût !", "Cher mais bon !", null};
+		int horeca_is_favorite[] = {0,1,0};
 		for(int i = 0; i < horeca_names.length; i++) {
 			ContentValues cv = new ContentValues();
 			cv.put(HorecaContract.Horeca.NAME, horeca_names[i]);
@@ -139,6 +142,7 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 			if (horeca_descriptions[i] != null) {
 				cv.put(HorecaContract.Horeca.DESCRIPTION, horeca_descriptions[i]);
 			}
+			cv.put(HorecaContract.Horeca.IS_FAVORITE, horeca_is_favorite[i]);
 			db.insert(HorecaContract.Horeca.TABLE_NAME, null, cv);
 		}
 		

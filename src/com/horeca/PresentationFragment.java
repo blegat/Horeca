@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class PresentationFragment extends Fragment {
@@ -60,6 +62,14 @@ public class PresentationFragment extends Fragment {
 		}
 		horeca_pricerange = (TextView) view.findViewById(R.id.horeca_pricerange);
 		horeca_pricerange.setText("You can eat here from " + horeca.getMinPrice() + " € to " + horeca.getMaxPrice() + " €.");
+		ImageButton favorite=(ImageButton)view.findViewById(R.id.favorite);
+	    favorite.setOnClickListener(new AdapterView.OnClickListener(){
+	    	@Override
+	    	public void onClick(View v){
+	    		int i;
+	    		}
+	    });
+		
 		return view;
     }
 }

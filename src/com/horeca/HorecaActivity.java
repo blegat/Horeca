@@ -4,6 +4,10 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.view.Menu;
+import android.widget.Button;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.content.Intent;
 
 public class HorecaActivity extends FragmentActivity {
 
@@ -37,6 +41,13 @@ public class HorecaActivity extends FragmentActivity {
         tabHost.addTab(tabHost.newTabSpec("label").setIndicator("Label",
         		getResources().getDrawable(android.R.drawable.ic_menu_gallery)),
         		LabelFragment.class, null);
+     //   Button favorite=(Button)findViewById(R.id.favorite);
+    //	favorite.setOnClickListener(new OnClickListener(){
+    //	@Override
+    	//	public void onClick(View v){
+    		//int i;
+    	//	}
+    	//});
     }
 
 	@Override
