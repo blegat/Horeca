@@ -16,6 +16,7 @@ public class PresentationFragment extends Fragment {
 	private TextView horeca_numtel = null;
 	private TextView horeca_description = null;
 	private TextView horeca_pricerange = null;
+	private ImageButton favorite = null;
 	private Horeca horeca = null;
 	
     @Override
@@ -62,12 +63,21 @@ public class PresentationFragment extends Fragment {
 		}
 		horeca_pricerange = (TextView) view.findViewById(R.id.horeca_pricerange);
 		horeca_pricerange.setText("You can eat here from " + horeca.getMinPrice() + " € to " + horeca.getMaxPrice() + " €.");
-		ImageButton favorite=(ImageButton)view.findViewById(R.id.favorite);
+		favorite=(ImageButton)view.findViewById(R.id.favorite);
+		if (horeca.getIsFavorite()) {
+			favorite.setImageResource(R.drawable.star_on);
+		} else {
+			favorite.setImageResource(R.drawable.star_off);
+		}
 	    favorite.setOnClickListener(new AdapterView.OnClickListener(){
 	    	@Override
 	    	public void onClick(View v){
-	    		int i;
+	    		if (horeca.getIsFavorite()) {
+	    			favorite.setImageResource(R.drawable.star_off);
+	    		} else {
+	    			favorite.setImageResource(R.drawable.star_on);
 	    		}
+	    	}
 	    });
 		
 		return view;
