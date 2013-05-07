@@ -34,11 +34,23 @@ public class Commande {
 		return new Commande(id, user, plat, temps, nombre);
 	}
 	
+	
 	private long id;
 	private User user;
 	private Plat plat;
 	private Date temps;
 	private long nombre;
+	
+	public Commande (Cursor cursor) {
+		
+		this.temps = new Date(cursor.getLong(HorecaContract.Commande.TEMPS_INDEX));
+		this.nombre = cursor.getLong(HorecaContract.Commande.NOMBRE_INDEX);
+		/*
+		name = cursor.getString(HorecaContract.Horeca.NAME_INDEX);
+		minPrice = cursor.getLong(HorecaContract.Horeca.MIN_PRICE_INDEX) / 100.;
+		*/
+	}
+	
 	public Commande(SQLiteDatabase db, long id) {
 		Cursor cursor = getCursor(db, HorecaContract.Commande._ID + " = ?",
 				new String[]{String.valueOf(id)});
