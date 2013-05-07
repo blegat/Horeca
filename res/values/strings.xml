@@ -22,9 +22,11 @@
     <string name="action_signIn">Sign in</string>
     <string name="action_signOut">Sign out</string>
     <string name="action_profile">Profile</string>
-    <string name="button_choose_horeca">Choose new restaurant</string>
+    
+    <string name="button_choose_horeca">Search for a restaurant</string>
     <string name="title_activity_horeca_list">Restaurants in %1$s</string>
     <string name="ville_spinner_label"><b>City:</b></string>
+    <string name="ville_prompt">Restaurant type:</string>
     <string name="horecatype_label"><b>Restaurant type*:</b></string>
     <string name="horecatype_placeholder">Any type</string>
     <string name="horecatype_prompt">Restaurant type:</string>
@@ -39,12 +41,21 @@
     <string name="distance_max_label"><b>Distance max [m]*:</b></string>
     <string name="invalid_distance_max_warning">Invalid distance max, leave it empty for no distance max.</string>
     <string name="asterics_explanation">* Optional</string>
+    
+    <string name="presentation_tab">Presentation</string>
+    <string name="menu_tab">Menu</string>
+    <string name="picture_tab">Picture</string>
+    <string name="label_tab">Label</string>
+    <string name="book_tab">Book</string>
+    
     <string name="gps_warning">GPS coordinate could not be fetched.</string>
     <string name="horeca_list_message">Pick a restaurant</string>
     <string name="horeca_distance_label"><b>Distance: </b></string>
     <string name="horeca_numtel_label"><b>Phone number: </b></string>
+    <string name="horeca_horaire_label"><b>Open hours:</b></string>
     <string name="horeca_description_label"><b>Description:</b></string>
     <string name="horeca_favorite_description"><b>Is this restaurant one of your favorite?</b></string>
+    
     <string name="plat_price_label"><b>Price: </b></string>
     <string name="plat_price_currency"> €</string>
     <string name="plat_description_label"><b>Description:</b></string>

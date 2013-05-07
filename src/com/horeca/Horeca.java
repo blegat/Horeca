@@ -40,6 +40,7 @@ public class Horeca {
 	public Location location;
 	private Ville ville;
 	private String numtel;
+	private String horaire;
 	private String description;
 	private int isFavorite;
 	private Vector<Picture> pictures;
@@ -54,6 +55,7 @@ public class Horeca {
 		double latitude = cursor.getDouble(HorecaContract.Horeca.LATITUDE_INDEX) / 1e6;
 		this.location = new Location(longitude, latitude);
 		numtel = cursor.getString(HorecaContract.Horeca.NUMTEL_INDEX);
+		horaire = cursor.getString(HorecaContract.Horeca.HORAIRE_INDEX);
 		description = cursor.getString(HorecaContract.Horeca.DESCRIPTION_INDEX);
 		isFavorite = cursor.getInt(HorecaContract.Horeca.IS_FAVORITE_INDEX);
 		// /!\ ville, pictures and label not accessible, don't call getVille after this constructor
@@ -73,6 +75,7 @@ public class Horeca {
 		this.location = new Location(longitude, latitude);
 		long ville_id = cursor.getLong(HorecaContract.Horeca.VILLE_ID_INDEX);
 		numtel = cursor.getString(HorecaContract.Horeca.NUMTEL_INDEX);
+		horaire = cursor.getString(HorecaContract.Horeca.HORAIRE_INDEX);
 		description = cursor.getString(HorecaContract.Horeca.DESCRIPTION_INDEX);
 		isFavorite = cursor.getInt(HorecaContract.Horeca.IS_FAVORITE_INDEX);
 		cursor.close();
@@ -101,6 +104,12 @@ public class Horeca {
 	}
 	public String getNumtel() {
 		return numtel;
+	}
+	public boolean hasHoraire() {
+		return horaire != null;
+	}
+	public String getHoraire() {
+		return horaire;
 	}
 	public boolean hasDescription() {
 		return description != null;

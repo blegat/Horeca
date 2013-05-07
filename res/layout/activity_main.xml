@@ -19,6 +19,7 @@
 	        style="@style/simple_text" />
 	    <Spinner
 	        android:id="@+id/ville_spinner"
+	        android:prompt="@string/horecatype_prompt"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        style="@style/simple_text" />
@@ -40,6 +41,7 @@
 	        style="@style/simple_text" />
 	    <Spinner
 	        android:id="@+id/plattype"
+	        android:prompt="@string/plattype_prompt"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        style="@style/simple_text" />

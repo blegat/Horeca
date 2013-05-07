@@ -43,6 +43,7 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 				HorecaContract.Horeca.LATITUDE + " INTEGER NOT NULL, " +
 				HorecaContract.Horeca.VILLE_ID + " INTEGER NOT NULL, " +
 				HorecaContract.Horeca.NUMTEL + " TEXT NOT NULL, " +
+				HorecaContract.Horeca.HORAIRE + " TEXT, " +
 				HorecaContract.Horeca.DESCRIPTION + " TEXT, " +
 				HorecaContract.Horeca.IS_FAVORITE + " INTEGER); ");
 				//HorecaContract.Horeca.DESCRIPTION + " TEXT);");
@@ -127,9 +128,10 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		double horeca_latitudes[] = {50669579, 50664065, 50669155};
 		long horeca_ville_ids[] = {1, 1, 1};
 		String horeca_numtels[] = {"01045424242", "01045007007", "01045454545"};
+		String horeca_horaires[] = {"24/24 7/7.", null, "Every day from 8h to 16h."};
 		String horeca_descriptions[] = {"Nous, c est le goût !", "Cher mais bon !", null};
 		int horeca_is_favorite[] = {0,1,0};
-		for(int i = 0; i < horeca_names.length; i++) {
+		for (int i = 0; i < horeca_names.length; i++) {
 			ContentValues cv = new ContentValues();
 			cv.put(HorecaContract.Horeca.NAME, horeca_names[i]);
 			cv.put(HorecaContract.Horeca.MIN_PRICE, horeca_min_prices[i]);
@@ -138,6 +140,9 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 			cv.put(HorecaContract.Horeca.LATITUDE, horeca_latitudes[i]);
 			cv.put(HorecaContract.Horeca.VILLE_ID, horeca_ville_ids[i]);
 			cv.put(HorecaContract.Horeca.NUMTEL, horeca_numtels[i]);
+			if (horeca_horaires[i] != null) {
+				cv.put(HorecaContract.Horeca.HORAIRE, horeca_horaires[i]);
+			}
 			if (horeca_descriptions[i] != null) {
 				cv.put(HorecaContract.Horeca.DESCRIPTION, horeca_descriptions[i]);
 			}
@@ -148,7 +153,7 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		String picturesPath[] = {"http://www.reklampub.com/wp-content/uploads/2012/10/","http://www.autogrill.be/Backend/Data/FlashImages/"};
 		String picturesName[] = {"quick.jpg","000054.jpg"};
 		long horecaID_s[] = {1,1};
-		for(int i = 0; i < picturesPath.length; i++) {
+		for (int i = 0; i < picturesPath.length; i++) {
 			ContentValues cv = new ContentValues();
 			cv.put(HorecaContract.Picture.HORECA_ID, horecaID_s[i]);
 			cv.put(HorecaContract.Picture.PATH, picturesPath[i]);
@@ -159,7 +164,7 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		String labelPicPath[] = {"https://encrypted-tbn0.gstatic.com/images?q=tbn:","http://www.autogrill.be/Backend/Data/FlashImages/"};
 		String labelPicName[] = {"ANd9GcS4J-bXI3jjTQZgtCUtMiX95nO5HC73ChWafb9BC0vB8kz5dh-9","000054.jpg"};
 		String labelDescription[] = {"Une description","Une autre description"};
-		for(int i = 0; i < labelPicPath.length; i++) {
+		for (int i = 0; i < labelPicPath.length; i++) {
 			ContentValues cv = new ContentValues();
 			cv.put(HorecaContract.Label.PATH, labelPicPath[i]);
 			cv.put(HorecaContract.Label.NAME, labelPicName[i]);
@@ -167,9 +172,9 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 			db.insert(HorecaContract.Label.TABLE_NAME, null, cv);
 		}
 		
-		long labelId[] = {0,1};
-		long horecaId[] = {2,2};
-		for(int i = 0; i < labelId.length; i++) {
+		long labelId[] = {0, 1};
+		long horecaId[] = {2, 2};
+		for (int i = 0; i < labelId.length; i++) {
 			ContentValues cv = new ContentValues();
 			cv.put(HorecaContract.LabelJoinHoreca.HORECA_ID, horecaId[i]);
 			cv.put(HorecaContract.LabelJoinHoreca.LABEL_ID, labelId[i]);

@@ -14,6 +14,7 @@ public class PresentationFragment extends Fragment {
 	private TextView distance_label = null;
 	private TextView distance = null;
 	private TextView horeca_numtel = null;
+	private TextView horeca_horaire = null;
 	private TextView horeca_description = null;
 	private TextView horeca_pricerange = null;
 	private ImageButton favorite = null;
@@ -53,7 +54,15 @@ public class PresentationFragment extends Fragment {
 		
 		horeca_numtel = (TextView) view.findViewById(R.id.horeca_numtel);
 		horeca_numtel.setText(horeca.getNumtel());
-        
+
+		horeca_horaire = (TextView) view.findViewById(R.id.horeca_horaire);
+		if (horeca.hasHoraire()) {
+			horeca_horaire.setText(horeca.getHoraire());
+		} else {
+			view.findViewById(R.id.horeca_horaire_label).setVisibility(View.GONE);
+			horeca_horaire.setVisibility(View.GONE);
+		}
+		
 		horeca_description = (TextView) view.findViewById(R.id.horeca_description);
 		if (horeca.hasDescription()) {
 			horeca_description.setText(horeca.getDescription());
@@ -61,6 +70,7 @@ public class PresentationFragment extends Fragment {
 			view.findViewById(R.id.horeca_description_label).setVisibility(View.GONE);
 			horeca_description.setVisibility(View.GONE);
 		}
+		
 		horeca_pricerange = (TextView) view.findViewById(R.id.horeca_pricerange);
 		horeca_pricerange.setText("You can eat here from " + horeca.getMinPrice() + " € to " + horeca.getMaxPrice() + " €.");
 		favorite=(ImageButton)view.findViewById(R.id.favorite);

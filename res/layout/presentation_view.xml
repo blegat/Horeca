@@ -46,6 +46,19 @@
 	       		style="@style/simple_text" />
     	</RelativeLayout>
     	<TextView
+    	    android:id="@+id/horeca_horaire_label"
+    	    android:text="@string/horeca_horaire_label"
+    	    android:textIsSelectable="true"
+       		android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		style="@style/simple_text" />
+    	<TextView
+    	    android:id="@+id/horeca_horaire"
+    	    android:textIsSelectable="true"
+       		android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		style="@style/simple_text" />
+    	<TextView
     	    android:id="@+id/horeca_description_label"
     	    android:text="@string/horeca_description_label"
     	    android:textIsSelectable="true"

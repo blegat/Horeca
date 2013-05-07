@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class Filter {
+	private String LIMIT = "30"; // maximum number of restaurant to be selected
+	
 	private Ville ville;
 	private HorecaType horecaType = null;
 	private PlatType platType = null;
@@ -70,7 +72,7 @@ public class Filter {
 		// several plats with the good type
 		return db.query(true, tables,
 				HorecaContract.Horeca.COLUMN_NAMES_Q,
-				where, null, null, null, sort, null);
+				where, null, null, null, sort, LIMIT);
 	}
 	
 	public void setVille(Ville ville) {

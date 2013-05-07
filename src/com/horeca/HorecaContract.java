@@ -48,14 +48,17 @@ public class HorecaContract {
 		public static final String NUMTEL = "numtel";
 		public static final String NUMTEL_Q = Q + "." + NUMTEL;
 		public static final int NUMTEL_INDEX = 7;
+		public static final String HORAIRE = "horaire";
+		public static final String HORAIRE_Q = Q + "." + HORAIRE;
+		public static final int HORAIRE_INDEX = 8;
 		public static final String DESCRIPTION = "description";
 		public static final String DESCRIPTION_Q = Q + "." + DESCRIPTION;
-		public static final int DESCRIPTION_INDEX = 8;
+		public static final int DESCRIPTION_INDEX = 9;
 		public static final String IS_FAVORITE = "is_favorite";
-		public static final String IS_FAVORITE_Q = Q+ "." + IS_FAVORITE;
-		public static final int IS_FAVORITE_INDEX = 9;
-		public static final String[] COLUMN_NAMES = new String[]{_ID, NAME, MIN_PRICE, MAX_PRICE, LONGITUDE, LATITUDE, VILLE_ID, NUMTEL, DESCRIPTION, IS_FAVORITE};
-		public static final String[] COLUMN_NAMES_Q = new String[]{_ID_Q, NAME_Q, MIN_PRICE_Q, MAX_PRICE_Q, LONGITUDE_Q, LATITUDE_Q, VILLE_ID_Q, NUMTEL_Q, DESCRIPTION_Q, IS_FAVORITE_Q};
+		public static final String IS_FAVORITE_Q = Q + "." + IS_FAVORITE;
+		public static final int IS_FAVORITE_INDEX = 10;
+		public static final String[] COLUMN_NAMES = new String[]{_ID, NAME, MIN_PRICE, MAX_PRICE, LONGITUDE, LATITUDE, VILLE_ID, NUMTEL, HORAIRE, DESCRIPTION, IS_FAVORITE};
+		public static final String[] COLUMN_NAMES_Q = new String[]{_ID_Q, NAME_Q, MIN_PRICE_Q, MAX_PRICE_Q, LONGITUDE_Q, LATITUDE_Q, VILLE_ID_Q, NUMTEL_Q, HORAIRE_Q, DESCRIPTION_Q, IS_FAVORITE_Q};
 	}
 	
 	public static abstract class HorecaType implements BaseColumns {

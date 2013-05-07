@@ -7,12 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MyActivity extends Activity {
-	/*@Override
-	protected void onResume() {
-		invalidateOptionsMenu(); // necessary for android 3.0 and higher
-		// However, it is not available before android 3.0
-		// So the menu won't be refreshed for android 3.0
-	}*/
+
 	private boolean signedIn = false;
 	private MenuItem signUp = null;
 	private MenuItem signIn = null;
