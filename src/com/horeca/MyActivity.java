@@ -13,6 +13,7 @@ public class MyActivity extends Activity {
 		// However, it is not available before android 3.0
 		// So the menu won't be refreshed for android 3.0
 	}*/
+	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -39,6 +40,7 @@ public class MyActivity extends Activity {
         	if (User.isSignedIn()) {
         		User.signOut();
         		item.setTitle(R.string.action_signIn);
+        		signOut();
         	} else {
         		startActivity(new Intent(this, SignInActivity.class));
         	}
@@ -47,5 +49,9 @@ public class MyActivity extends Activity {
         	return true;
     	}
         return false;
+    }
+    
+    // Override to refresh display when the user signout !!! (example in PlatActivity)
+    protected void signOut() {
     }
 }
