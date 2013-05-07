@@ -25,7 +25,7 @@ public class Commande {
 		ContentValues cv = new ContentValues();
 		cv.put(HorecaContract.Commande.USER_ID, user.getId());
 		cv.put(HorecaContract.Commande.PLAT_ID, plat.getId());
-		cv.put(HorecaContract.Commande.TEMPS, temps.getDate()+"/"+(temps.getMonth()+1)+" "+temps.getHours()+"h"+temps.getMinutes());
+		cv.put(HorecaContract.Commande.TEMPS, temps.getTime());
 		cv.put(HorecaContract.Commande.NOMBRE, nombre);
 		long id = db.insert(HorecaContract.Commande.TABLE_NAME, null, cv);
 		if (plat.hasStock()) {

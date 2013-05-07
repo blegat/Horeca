@@ -1,6 +1,5 @@
 package com.horeca;
 
-import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;

@@ -4,8 +4,11 @@ import java.util.Vector;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+//<<<<<<< HEAD
 import android.util.Log;
 import android.content.ContentValues;
+//=======
+//>>>>>>> c8236c01685c0275fa3cb4cd2954f5478c1a46e6
 
 public class Horeca {
 	

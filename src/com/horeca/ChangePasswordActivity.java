@@ -1,7 +1,6 @@
 package com.horeca;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -24,7 +23,7 @@ public class ChangePasswordActivity extends MyActivity {
 		nouveau_mdp = (EditText) findViewById(R.id.nouveau_mdp);
 		confirmation_mdp = (EditText) findViewById(R.id.password_confirmation);
 		password_error=(TextView) findViewById(R.id.password_err);
-		password_error2=(TextView) findViewById(R.id.password_err2);
+	//	password_error2=(TextView) findViewById(R.id.password_err2);
 	    button = (Button) findViewById(R.id.change_pass_button);
 	    button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
@@ -51,4 +50,3 @@ public class ChangePasswordActivity extends MyActivity {
             });
 	}
 }
-

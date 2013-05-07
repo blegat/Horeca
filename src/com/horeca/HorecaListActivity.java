@@ -5,13 +5,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.CursorAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 public class HorecaListActivity extends MyActivity {
@@ -109,7 +108,7 @@ public class HorecaListActivity extends MyActivity {
 	
 	public class HorecaListCursorAdapter extends CursorAdapter {
 		public HorecaListCursorAdapter(Context context, Cursor c) {
-			super(context, c);
+			super(context, c, FLAG_REGISTER_CONTENT_OBSERVER);
 		}
 	 
 		@Override
