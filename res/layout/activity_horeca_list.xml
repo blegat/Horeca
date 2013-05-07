@@ -10,7 +10,8 @@
     <TextView
         android:text="@string/horeca_list_message"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        style="@style/simple_text" />
     <TextView
         android:id="@+id/gps_warning"
         android:text="@string/gps_warning"
