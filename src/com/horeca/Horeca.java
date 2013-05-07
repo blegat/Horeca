@@ -52,6 +52,20 @@ public class Horeca {
 	private Vector<Label> labels;
 	private boolean isFavorite;
 	
+	public Horeca (Cursor cursor) {
+		this.id = cursor.getLong(HorecaContract.Horeca._ID_INDEX);
+		name = cursor.getString(HorecaContract.Horeca.NAME_INDEX);
+		minPrice = cursor.getLong(HorecaContract.Horeca.MIN_PRICE_INDEX) / 100.;
+		maxPrice = cursor.getLong(HorecaContract.Horeca.MAX_PRICE_INDEX) / 100.;
+		double longitude = cursor.getDouble(HorecaContract.Horeca.LONGITUDE_INDEX) / 1e6;
+		double latitude = cursor.getDouble(HorecaContract.Horeca.LATITUDE_INDEX) / 1e6;
+		this.location = new Location(longitude, latitude);
+		numtel = cursor.getString(HorecaContract.Horeca.NUMTEL_INDEX);
+		description = cursor.getString(HorecaContract.Horeca.DESCRIPTION_INDEX);
+		isFavorite = cursor.getInt(HorecaContract.Horeca.IS_FAVORITE_INDEX);
+		// /!\ ville, pictures and label not accessible, don't call getVille after this constructor
+	}
+	
 	public Horeca (long id, SQLiteDatabase db) {
 		Cursor cursor = getCursor(db,
 				HorecaContract.Horeca._ID + " == ?",
