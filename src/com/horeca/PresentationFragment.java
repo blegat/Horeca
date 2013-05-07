@@ -10,13 +10,14 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class PresentationFragment extends Fragment {
+public class PresentationFragment extends Fragment implements AdapterView.OnClickListener {
 	private TextView distance_label = null;
 	private TextView distance = null;
 	private TextView horeca_numtel = null;
 	private TextView horeca_horaire = null;
 	private TextView horeca_description = null;
 	private TextView horeca_pricerange = null;
+	private TextView favorite_label = null;
 	private ImageButton favorite = null;
 	private Horeca horeca = null;
 	
@@ -73,30 +74,40 @@ public class PresentationFragment extends Fragment {
 		
 		horeca_pricerange = (TextView) view.findViewById(R.id.horeca_pricerange);
 		horeca_pricerange.setText("You can eat here from " + horeca.getMinPrice() + " € to " + horeca.getMaxPrice() + " €.");
-		favorite=(ImageButton)view.findViewById(R.id.favorite);
-		if (horeca.isFavorite()) {
-			favorite.setImageResource(R.drawable.star_on);
-		} else {
-			favorite.setImageResource(R.drawable.star_off);
-		}
-	    favorite.setOnClickListener(new AdapterView.OnClickListener(){
-	    	@Override
-	    	public void onClick(View v){
-	    		if (horeca.isFavorite()) {
-	    			favorite.setImageResource(R.drawable.star_off);
-	    			MySqliteHelper sqliteHelper = new MySqliteHelper(getActivity());
-	    			SQLiteDatabase db = sqliteHelper.getReadableDatabase();
-	    			horeca.removeFavorite(db);
-	    			db.close();
-	    		} else {
-	    			MySqliteHelper sqliteHelper = new MySqliteHelper(getActivity());
-	    			SQLiteDatabase db = sqliteHelper.getReadableDatabase();
-	    			favorite.setImageResource(R.drawable.star_on);
-	    			horeca.setFavorite(db);
-	    			db.close();
-	    		}
-	    	}
-	    });
+		
+		favorite_label = (TextView) view.findViewById(R.id.horeca_is_favorite);
+		favorite = (ImageButton) view.findViewById(R.id.favorite);
 		return view;
     }
+    
+    public void onResume() {
+    	super.onResume();
+    	if (User.isSignedIn()) {
+    		if (horeca.isFavorite()) {
+    			favorite.setImageResource(R.drawable.star_on);
+    		} else {
+    			favorite.setImageResource(R.drawable.star_off);
+    		}
+    		favorite.setOnClickListener(this);
+    	} else {
+    		favorite_label.setVisibility(View.GONE);
+    		favorite.setVisibility(View.GONE);
+    	}
+    }
+    
+	public void onClick(View v){
+		if (horeca.isFavorite()) {
+			favorite.setImageResource(R.drawable.star_off);
+			MySqliteHelper sqliteHelper = new MySqliteHelper(getActivity());
+			SQLiteDatabase db = sqliteHelper.getReadableDatabase();
+			horeca.removeFavorite(db);
+			db.close();
+		} else {
+			MySqliteHelper sqliteHelper = new MySqliteHelper(getActivity());
+			SQLiteDatabase db = sqliteHelper.getReadableDatabase();
+			favorite.setImageResource(R.drawable.star_on);
+			horeca.setFavorite(db);
+			db.close();
+		}
+	}
 }

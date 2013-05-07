@@ -90,12 +90,14 @@ public class Horeca {
 		ville = new Ville(ville_id, db);
 		this.pictures=convertCursorToVectorImage(Picture.getAllPicturesForHoreca(db,this));
 		this.labels=Label.getVectorLabelForHoreca(db,this);
-		Cursor cursorF = getFavoriteCursor(db, HorecaContract.UserFavoriteHoreca.USER_ID + "= ? AND "+
+		if (User.isSignedIn()) {
+			Cursor cursorF = getFavoriteCursor(db, HorecaContract.UserFavoriteHoreca.USER_ID + "= ? AND "+
 				HorecaContract.UserFavoriteHoreca.HORECA_ID + "= ?",
 				new String[]{String.valueOf(User.getCurrentUser().getId()),String.valueOf(this.getId())});
-		cursorF.moveToFirst();
-		isFavorite=(cursorF.getCount()==1);
-		cursorF.close();
+			cursorF.moveToFirst();
+			isFavorite=(cursorF.getCount()==1);
+			cursorF.close();
+		}
 	}
 	public void setFavorite(SQLiteDatabase db){
 		ContentValues cv = new ContentValues();

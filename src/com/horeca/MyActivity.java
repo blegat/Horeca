@@ -15,17 +15,20 @@ public class MyActivity extends Activity {
 	private MenuItem profile = null;
 	
 	public void refreshMenuSigning() {
-        if (User.isSignedIn()) {
-        	signUp.setVisible(false);
-        	signIn.setVisible(false);
-        	signOut.setVisible(true);
-        	profile.setVisible(true);
-        } else {
-        	signUp.setVisible(true);
-        	signIn.setVisible(true);
-        	signOut.setVisible(false);
-        	profile.setVisible(false);
-        }
+		if (signUp != null) { // Sometimes they become null again, so let's just ignore it
+			                  // weird bug...
+			if (User.isSignedIn()) {
+				signUp.setVisible(false);
+				signIn.setVisible(false);
+				signOut.setVisible(true);
+				profile.setVisible(true);
+			} else {
+				signUp.setVisible(true);
+				signIn.setVisible(true);
+				signOut.setVisible(false);
+				profile.setVisible(false);
+			}
+		}
 	}
 	
     @Override
