@@ -28,6 +28,7 @@ public class SignInActivity extends MyActivity {
         		MySqliteHelper sqliteHelper = new MySqliteHelper(SignInActivity.this);
         		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
         		int err = User.signIn(db, mail_txt.getText().toString(), mot_de_passe_txt.getText().toString());
+        		db.close();
         		if (err == User.INVALID_EMAIL) {
         			mail_error.setVisibility(View.VISIBLE);
         			password_error.setVisibility(View.GONE);

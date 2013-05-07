@@ -31,7 +31,7 @@
             android:name="com.horeca.SignInActivity"
             android:label="@string/title_sign_in" >
         </activity>
-         <activity
+        <activity
             android:name="com.horeca.SignUpActivity"
             android:label="@string/title_sign_up" >
         </activity>

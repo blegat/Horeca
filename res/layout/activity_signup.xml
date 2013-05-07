@@ -22,18 +22,7 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        style="@style/simple_text" />
-	     <TextView
-	        android:text="@string/mot_de_passe"
-	        android:textIsSelectable="true"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        style="@style/simple_text" />
-	    <EditText
-	        android:id="@+id/mot_de_passe"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        style="@style/simple_text" />
-	     <TextView
+	    <TextView
 	        android:text="@string/name"
 	        android:textIsSelectable="true"
 	        android:layout_width="match_parent"
@@ -41,6 +30,17 @@
 	        style="@style/simple_text" />
 	    <EditText
 	        android:id="@+id/name"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/simple_text" />
+	    <TextView
+	        android:text="@string/mot_de_passe"
+	        android:textIsSelectable="true"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/simple_text" />
+	    <EditText
+	        android:id="@+id/mot_de_passe"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        style="@style/simple_text" />
