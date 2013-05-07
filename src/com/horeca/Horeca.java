@@ -62,7 +62,7 @@ public class Horeca {
 		this.location = new Location(longitude, latitude);
 		numtel = cursor.getString(HorecaContract.Horeca.NUMTEL_INDEX);
 		description = cursor.getString(HorecaContract.Horeca.DESCRIPTION_INDEX);
-		isFavorite = cursor.getInt(HorecaContract.Horeca.IS_FAVORITE_INDEX);
+		//isFavorite = cursor.getInt(HorecaContract.Horeca.IS_FAVORITE_INDEX);
 		// /!\ ville, pictures and label not accessible, don't call getVille after this constructor
 	}
 	
