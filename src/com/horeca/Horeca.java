@@ -21,7 +21,6 @@ public class Horeca {
 				HorecaContract.UserFavoriteHoreca.COLUMN_NAMES, selection, selectionArgs, null, null, null);
 	}
 
-	@SuppressWarnings("null")
 	private static Vector<Picture> convertCursorToVectorImage(Cursor cursor){
 		Vector<Picture> vecimg = new Vector<Picture>(0);
 		if(cursor.getCount()==0){

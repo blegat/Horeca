@@ -1,6 +1,5 @@
 package com.horeca;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -9,27 +8,20 @@ import java.net.URL;
 import java.util.Vector;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.util.Log;
-import android.view.View.OnClickListener;
-
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
-import android.widget.Toast;
 
 public class ImageHorecaFragment extends Fragment implements ViewBinder {
 
