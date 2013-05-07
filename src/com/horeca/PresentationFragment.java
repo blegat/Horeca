@@ -35,7 +35,7 @@ public class PresentationFragment extends Fragment {
 		horeca = new Horeca(b.getLong("horeca_id"), db);
 		
 		// close db
-		db.close();
+		 db.close();
 		
 		// it sets the title because it is the default tab
 		getActivity().setTitle(horeca.getName());
@@ -64,7 +64,7 @@ public class PresentationFragment extends Fragment {
 		horeca_pricerange = (TextView) view.findViewById(R.id.horeca_pricerange);
 		horeca_pricerange.setText("You can eat here from " + horeca.getMinPrice() + " € to " + horeca.getMaxPrice() + " €.");
 		favorite=(ImageButton)view.findViewById(R.id.favorite);
-		if (horeca.getIsFavorite()) {
+		if (horeca.isFavorite()) {
 			favorite.setImageResource(R.drawable.star_on);
 		} else {
 			favorite.setImageResource(R.drawable.star_off);
@@ -72,14 +72,21 @@ public class PresentationFragment extends Fragment {
 	    favorite.setOnClickListener(new AdapterView.OnClickListener(){
 	    	@Override
 	    	public void onClick(View v){
-	    		if (horeca.getIsFavorite()) {
+	    		if (horeca.isFavorite()) {
 	    			favorite.setImageResource(R.drawable.star_off);
+	    			MySqliteHelper sqliteHelper = new MySqliteHelper(getActivity());
+	    			SQLiteDatabase db = sqliteHelper.getReadableDatabase();
+	    			horeca.removeFavorite(db);
+	    			db.close();
 	    		} else {
+	    			MySqliteHelper sqliteHelper = new MySqliteHelper(getActivity());
+	    			SQLiteDatabase db = sqliteHelper.getReadableDatabase();
 	    			favorite.setImageResource(R.drawable.star_on);
+	    			horeca.setFavorite(db);
+	    			db.close();
 	    		}
 	    	}
 	    });
-		
 		return view;
     }
 }

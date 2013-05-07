@@ -49,7 +49,7 @@ public class PlatActivity extends Activity implements OnClickListener {
 		// Get the plat from the db
 		plat = new Plat(id, db);
 		
-		// close the db, exerything has been loaded in the constructor of Plat
+		// close the db, everything has been loaded in the constructor of Plat
 		db.close();
 		
 		// Set the title of the activity

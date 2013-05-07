@@ -5,6 +5,7 @@ import java.util.Vector;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.content.ContentValues;
 
 public class Horeca {
 	
@@ -14,6 +15,10 @@ public class Horeca {
 	private static Cursor getCursor(SQLiteDatabase db, String selection, String[] selectionArgs) {
 		return db.query(HorecaContract.Horeca.TABLE_NAME,
 				HorecaContract.Horeca.COLUMN_NAMES, selection, selectionArgs, null, null, null);
+	}
+	private static Cursor getFavoriteCursor(SQLiteDatabase db, String selection, String[] selectionArgs) {
+		return db.query(HorecaContract.UserFavoriteHoreca.TABLE_NAME,
+				HorecaContract.UserFavoriteHoreca.COLUMN_NAMES, selection, selectionArgs, null, null, null);
 	}
 
 	@SuppressWarnings("null")
@@ -43,9 +48,9 @@ public class Horeca {
 	private Ville ville;
 	private String numtel;
 	private String description;
-	private int isFavorite;
 	private Vector<Picture> pictures;
 	private Vector<Label> labels;
+	private boolean isFavorite;
 	
 	public Horeca (long id, SQLiteDatabase db) {
 		Cursor cursor = getCursor(db,
@@ -62,13 +67,30 @@ public class Horeca {
 		long ville_id = cursor.getLong(HorecaContract.Horeca.VILLE_ID_INDEX);
 		numtel = cursor.getString(HorecaContract.Horeca.NUMTEL_INDEX);
 		description = cursor.getString(HorecaContract.Horeca.DESCRIPTION_INDEX);
-		isFavorite = cursor.getInt(HorecaContract.Horeca.IS_FAVORITE_INDEX);
 		cursor.close();
 		ville = new Ville(ville_id, db);
 		this.pictures=convertCursorToVectorImage(Picture.getAllPicturesForHoreca(db,this));
 		this.labels=Label.getVectorLabelForHoreca(db,this);
+		Cursor cursorF = getFavoriteCursor(db, HorecaContract.UserFavoriteHoreca.USER_ID + "= ? AND "+
+				HorecaContract.UserFavoriteHoreca.HORECA_ID + "= ?",
+				new String[]{String.valueOf(User.getCurrentUser().getId()),String.valueOf(this.getId())});
+		cursorF.moveToFirst();
+		isFavorite=(cursorF.getCount()==1);
+		cursorF.close();
 	}
-	
+	public void setFavorite(SQLiteDatabase db){
+		ContentValues cv = new ContentValues();
+		cv.put(HorecaContract.UserFavoriteHoreca.USER_ID, String.valueOf(User.getCurrentUser().getId()));
+		cv.put(HorecaContract.UserFavoriteHoreca.HORECA_ID, String.valueOf(this.getId()));
+		db.insert(HorecaContract.UserFavoriteHoreca.TABLE_NAME, null, cv);
+		isFavorite=true;
+	}
+	public void removeFavorite(SQLiteDatabase db){
+		String where = HorecaContract.UserFavoriteHoreca.USER_ID + " = ? AND " + HorecaContract.UserFavoriteHoreca.HORECA_ID + " = ?";
+		String whereargs[] = {String.valueOf(User.getCurrentUser().getId()),String.valueOf(this.getId())};
+		db.delete(HorecaContract.UserFavoriteHoreca.TABLE_NAME,where,whereargs);
+		isFavorite=false;
+	}
 	public long getId () {
 		return id;
 	}
@@ -96,13 +118,13 @@ public class Horeca {
 	public String getDescription() {
 		return description;
 	}
-	public boolean getIsFavorite(){
-		return isFavorite==1;	
-	}
 	public Vector<Picture> getVectorImage() {
 		return pictures;
 	}
 	public Vector<Label> getVectorLabel() {
 		return labels;
+	}
+	public boolean isFavorite(){
+		return isFavorite;
 	}
 }

@@ -18,7 +18,7 @@ public class Filter {
 	private double maxDistance;
 	
 	public Cursor getMatchingHorecas(SQLiteDatabase db, Context context, GPSTracker gps) {
-		String tables = HorecaContract.Horeca.TABLE_NAME_Q;
+		String tables = HorecaContract.Horeca.TABLE_NAME_Q + ", " + HorecaContract.UserFavoriteHoreca.TABLE_NAME_Q;
 		String where = HorecaContract.Horeca.VILLE_ID_Q + " = " + String.valueOf(ville.getId());
 		if (horecaType != null) {
 			tables = tables + ", " + HorecaContract.HorecaType.TABLE_NAME_Q + ", " + HorecaContract.HorecaTypeJoin.TABLE_NAME_Q;
@@ -51,7 +51,10 @@ public class Filter {
 		if (hasMaxPrice) {
 			where = where + " AND " + HorecaContract.Horeca.MIN_PRICE_Q + " <= " + ((long) (maxPrice * 100));
 		}
-		String sort = HorecaContract.Horeca.IS_FAVORITE_Q + " DESC";
+		String sort = "(SELECT COUNT(*) FROM " + HorecaContract.UserFavoriteHoreca.TABLE_NAME_Q 
+				+ " WHERE " + HorecaContract.UserFavoriteHoreca.HORECA_ID_Q + " = " 
+				+ HorecaContract.Horeca._ID_Q +" AND " + HorecaContract.UserFavoriteHoreca.USER_ID_Q 
+				+ " = " + String.valueOf(User.getCurrentUser().getId()  + ") DESC");
 		if (gps != null) {
 			double longitude = gps.getLongitude();
 			double latitude = gps.getLatitude();
@@ -63,14 +66,16 @@ public class Filter {
 			if (hasMaxDistance) {
 				where = where + " AND " + distSquared + " < " + String.valueOf(maxDistance*maxDistance);
 			}
-			sort += ", " + distSquared + " ASC";
+			sort = ", " + distSquared + " ASC";
 		}
 		Log.i("where", where);
 		// We need to add UNIQ because the restaurant could have
 		// several plats with the good type
+		//String order =  "(SELECT COUNT(*) FROM " + HorecaContract.UserFavoriteHoreca.TABLE_NAME + " WHERE " + HorecaContract.UserFavoriteHoreca.HORECA_ID + " = " + HorecaContract.Horeca._ID +" AND " + HorecaContract.UserFavoriteHoreca.USER_ID + " = " + String.valueOf(User.getCurrentUser().getId()  + ") DESC");
 		return db.query(true, tables,
 				HorecaContract.Horeca.COLUMN_NAMES_Q,
 				where, null, null, null, sort, null);
+				//where, null, null, null, null, null);
 	}
 	
 	public void setVille(Ville ville) {
