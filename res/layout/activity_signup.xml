@@ -50,6 +50,7 @@
 	        style="@style/simple_text" />
 	    <EditText
 	        android:id="@+id/mot_de_passe"
+	        android:inputType="textPassword"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        style="@style/simple_text" />
@@ -61,6 +62,7 @@
 	        style="@style/simple_text" />
 	    <EditText
 	        android:id="@+id/password_confirmation"
+	        android:inputType="textPassword"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        style="@style/simple_text" />
