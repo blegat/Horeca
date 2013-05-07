@@ -9,6 +9,7 @@ public class User {
 	public static int SUCCESS = 0;
 	public static int INVALID_EMAIL = 1;
 	public static int INVALID_PASSWORD = 2;
+	public static int PASSWORD_DOESNT_MATCH = 3;
 	private static User current_user = null;
 	public static boolean isSignedIn() {
 		return current_user != null;
@@ -18,16 +19,19 @@ public class User {
 	}
 	public static String signUp(SQLiteDatabase db, String email, String name, String password, String passwordConfirmation) {
 		if (!password.equals(passwordConfirmation)) {
-			return "Passwords do not match";
+			return "Passwords do not match"; // TODO change to
+			// return PASSWORD_DOESNT_MATCH;
 		}
 		User user = new User(email, db);
 		if (user.exists) {
-			return "Email already taken";
+			return "Email already taken"; // TODO change to
+			// return INVALID_EMAIL;
 		} else {
 			user.name = name;
 			user.password = password; // hash it
 			user.save(db);
-			return null;
+			return null; // TODO change to
+			// return SUCCESS;
 		}
 	}
 	public static int signIn(SQLiteDatabase db, String email, String password) {
@@ -101,5 +105,19 @@ public class User {
 		cv.put(HorecaContract.User.PASSWORD, password);
 		this.id = db.insert(HorecaContract.User.TABLE_NAME, null, cv);
 		this.exists = true;
+	}
+	public int updatePassword(SQLiteDatabase db, String currentPassword,
+			String newPassword, String newPasswordConfirmation) {
+		if (!passwordEquals(currentPassword)) {
+			return INVALID_PASSWORD;
+		} else if (newPassword.equals(newPasswordConfirmation)) {
+			return PASSWORD_DOESNT_MATCH;
+		} else {
+		    ContentValues cv = new ContentValues();
+		    cv.put(HorecaContract.User.PASSWORD, currentPassword);
+		    db.update(HorecaContract.User.TABLE_NAME, cv, HorecaContract.User._ID + " = ?",
+		    		new String[]{String.valueOf(this.id)});
+			return SUCCESS;
+		}
 	}
 }
