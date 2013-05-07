@@ -7,15 +7,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 public class Ouverture {
+	private static String LIMIT = "30"; // max number of ouvertures to be displayed
 	
 	public static Cursor getAllOuverturesInHoreca(SQLiteDatabase db, Horeca horeca) {
 		return getCursor(db,
 				HorecaContract.Ouverture.HORECA_ID + " = ?",
-				new String[]{((Long) horeca.getId()).toString()});
+				new String[]{((Long) horeca.getId()).toString()}, LIMIT);
 	}
-	private static Cursor getCursor(SQLiteDatabase db, String selection, String[] selectionArgs) {
+	private static Cursor getCursor(SQLiteDatabase db, String selection, String[] selectionArgs, String limit) {
 		return db.query(HorecaContract.Ouverture.TABLE_NAME,
-				HorecaContract.Ouverture.COLUMN_NAMES, selection, selectionArgs, null, null, null);
+				HorecaContract.Ouverture.COLUMN_NAMES, selection, selectionArgs, null, null, null, limit);
 	}
 	
 	private Horeca horeca;
@@ -25,10 +26,21 @@ public class Ouverture {
 	private boolean hasPlaces;
 	private long places;
 	
+	public Ouverture (Cursor cursor) {
+		this.id = cursor.getLong(HorecaContract.Ouverture._ID_INDEX);
+		long horeca_id = cursor.getLong(HorecaContract.Ouverture.HORECA_ID_INDEX);
+		debut = cursor.getLong(HorecaContract.Ouverture.DEBUT_INDEX);
+		fin = cursor.getLong(HorecaContract.Ouverture.FIN_INDEX);
+		hasPlaces = !cursor.isNull(HorecaContract.Ouverture.PLACES_INDEX);
+		if (hasPlaces) {
+			places = cursor.getLong(HorecaContract.Ouverture.PLACES_INDEX);
+		}
+		// /!\ no horeca set here because we have no db but only used in HoraireFragment so ok
+	}	
 	public Ouverture (long id, SQLiteDatabase db) {
 		Cursor cursor = getCursor(db,
 				HorecaContract.Ouverture._ID + " == ?",
-				new String[]{((Long) id).toString()});
+				new String[]{((Long) id).toString()}, null);
 		cursor.moveToFirst();
 		this.id = cursor.getLong(HorecaContract.Ouverture._ID_INDEX);
 		long horeca_id = cursor.getLong(HorecaContract.Ouverture.HORECA_ID_INDEX);
@@ -44,7 +56,7 @@ public class Ouverture {
 	public void reloadPlaces(SQLiteDatabase db) {
 		Cursor cursor = getCursor(db,
 				HorecaContract.Ouverture._ID + " == ?",
-				new String[]{((Long) id).toString()});
+				new String[]{((Long) id).toString()}, null);
 		cursor.moveToFirst();
 		hasPlaces = !cursor.isNull(HorecaContract.Ouverture.PLACES_INDEX);
 		if (hasPlaces) {
