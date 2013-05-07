@@ -17,7 +17,7 @@ public class User {
 		return current_user;
 	}
 	public static String signUp(SQLiteDatabase db, String email, String name, String password, String passwordConfirmation) {
-		if (password != passwordConfirmation) {
+		if (!password.equals(passwordConfirmation)) {
 			return "Passwords do not match";
 		}
 		User user = new User(email, db);

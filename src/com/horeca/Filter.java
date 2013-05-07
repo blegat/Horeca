@@ -71,12 +71,10 @@ public class Filter {
 		Log.i("where", where);
 		// We need to add UNIQ because the restaurant could have
 		// several plats with the good type
-		//String order =  "(SELECT COUNT(*) FROM " + HorecaContract.UserFavoriteHoreca.TABLE_NAME + " WHERE " + HorecaContract.UserFavoriteHoreca.HORECA_ID + " = " + HorecaContract.Horeca._ID +" AND " + HorecaContract.UserFavoriteHoreca.USER_ID + " = " + String.valueOf(User.getCurrentUser().getId()  + ") DESC");
 		return db.query(true, tables,
 				HorecaContract.Horeca.COLUMN_NAMES_Q,
 				where, null, null, null, sort, null);
-				//where, null, null, null, null, null);
-	}
+		}
 	
 	public void setVille(Ville ville) {
 		this.ville = ville;
