@@ -54,13 +54,24 @@ public class HorecaContract {
 		public static final String DESCRIPTION = "description";
 		public static final String DESCRIPTION_Q = Q + "." + DESCRIPTION;
 		public static final int DESCRIPTION_INDEX = 9;
-		public static final String IS_FAVORITE = "is_favorite";
-		public static final String IS_FAVORITE_Q = Q + "." + IS_FAVORITE;
-		public static final int IS_FAVORITE_INDEX = 10;
-		public static final String[] COLUMN_NAMES = new String[]{_ID, NAME, MIN_PRICE, MAX_PRICE, LONGITUDE, LATITUDE, VILLE_ID, NUMTEL, HORAIRE, DESCRIPTION, IS_FAVORITE};
-		public static final String[] COLUMN_NAMES_Q = new String[]{_ID_Q, NAME_Q, MIN_PRICE_Q, MAX_PRICE_Q, LONGITUDE_Q, LATITUDE_Q, VILLE_ID_Q, NUMTEL_Q, HORAIRE_Q, DESCRIPTION_Q, IS_FAVORITE_Q};
+		public static final String[] COLUMN_NAMES = new String[]{_ID, NAME, MIN_PRICE, MAX_PRICE, LONGITUDE, LATITUDE, VILLE_ID, NUMTEL, HORAIRE, DESCRIPTION};
+		public static final String[] COLUMN_NAMES_Q = new String[]{_ID_Q, NAME_Q, MIN_PRICE_Q, MAX_PRICE_Q, LONGITUDE_Q, LATITUDE_Q, VILLE_ID_Q, NUMTEL_Q, HORAIRE_Q, DESCRIPTION_Q};
 	}
-	
+	public static abstract class UserFavoriteHoreca implements BaseColumns{
+		public static final String Q = "ufh";
+		public static final String TABLE_NAME = "userfavoritehoreca";
+		public static final String TABLE_NAME_Q = TABLE_NAME + " "+ Q;
+		public static final String _ID_Q = Q + "." + _ID;
+		public static final int _ID_INDEX = 0;
+		public static final String USER_ID = "user_id";
+		public static final String USER_ID_Q = Q + "." + USER_ID;
+		public static final int USER_ID_INDEX = 1;
+		public static final String HORECA_ID = "horeca_id";
+		public static final String HORECA_ID_Q = Q + "." + "horeca_id";
+		public static final int HORECA_ID_INDEX = 2;
+		public static final String[] COLUMN_NAMES = new String[]{_ID,USER_ID, HORECA_ID};
+		public static final String[] COLUMN_NAMES_Q = new String[]{_ID_Q,USER_ID_Q, HORECA_ID_Q};
+	}
 	public static abstract class HorecaType implements BaseColumns {
 		public static final String Q = "ht";
 		public static final String TABLE_NAME = "horecatypes";

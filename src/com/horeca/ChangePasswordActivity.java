@@ -22,7 +22,7 @@ public class ChangePasswordActivity extends MyActivity {
 		nouveau_mdp = (EditText) findViewById(R.id.nouveau_mdp);
 		confirmation_mdp = (EditText) findViewById(R.id.password_confirmation);
 		password_error=(TextView) findViewById(R.id.password_err);
-		password_error2=(TextView) findViewById(R.id.password_err2);
+	//	password_error2=(TextView) findViewById(R.id.password_err2);
 	    button = (Button) findViewById(R.id.change_pass_button);
 	    button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
