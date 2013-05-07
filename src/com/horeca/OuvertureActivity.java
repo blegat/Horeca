@@ -15,6 +15,7 @@ public class OuvertureActivity extends MyActivity implements View.OnClickListene
 	private TextView ouverture_debut = null;
 	private TextView ouverture_fin = null;
 	private TextView ouverture_places = null;
+	private View reservation_layout = null;
 	private EditText reservation_places = null;
 	private Button reservation_button = null;
 	private View current_reservation_layout = null;
@@ -37,7 +38,6 @@ public class OuvertureActivity extends MyActivity implements View.OnClickListene
 		
 		// Get the plat from the db
 		ouverture = new Ouverture(id, db);
-		reservation = Reservation.getReservationForOuverture(db, ouverture);
 		
 		// close the db, exerything has been loaded in the constructor of Plat
 		db.close();
@@ -58,13 +58,31 @@ public class OuvertureActivity extends MyActivity implements View.OnClickListene
 			ouverture_places.setVisibility(View.GONE);
 		}
 		
+		reservation_layout = findViewById(R.id.reservation_layout);
 		reservation_places = (EditText) findViewById(R.id.reservation_number);
 		reservation_button = (Button) findViewById(R.id.reservation_button);
-		reservation_button.setOnClickListener(this);
 		
 		current_reservation_layout = findViewById(R.id.current_reservation_layout);
 		current_reservation_places = (TextView) findViewById(R.id.current_reservation_number);
 		delete_reservation_button = (Button) findViewById(R.id.delete_reservation_button);
+		refreshSigning();
+	}
+	
+	@Override
+	protected void notifySignedIn() {
+		// Open the db
+		MySqliteHelper sqliteHelper = new MySqliteHelper(this);
+		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
+		
+		reservation = Reservation.getReservationForOuverture(db, ouverture);
+		
+		// close the db, exerything has been loaded in the constructor of Plat
+		db.close();
+		
+		reservation_layout.setVisibility(View.VISIBLE);
+		current_reservation_layout.setVisibility(View.VISIBLE);
+		
+		reservation_button.setOnClickListener(this);
 		delete_reservation_button.setOnClickListener(this);
 		
 		if (reservation == null) {
@@ -72,6 +90,12 @@ public class OuvertureActivity extends MyActivity implements View.OnClickListene
 		} else {
 			updateButtonsForReservation();
 		}
+	}
+	
+	@Override
+	protected void notifySignedOut() {
+		reservation_layout.setVisibility(View.GONE);
+		current_reservation_layout.setVisibility(View.GONE);
 	}
 	
 	@Override
