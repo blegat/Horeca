@@ -5,6 +5,7 @@ import java.util.Date;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import java.util.ArrayList;
 
 public class Commande {
 	/*
@@ -24,7 +25,7 @@ public class Commande {
 		ContentValues cv = new ContentValues();
 		cv.put(HorecaContract.Commande.USER_ID, user.getId());
 		cv.put(HorecaContract.Commande.PLAT_ID, plat.getId());
-		cv.put(HorecaContract.Commande.TEMPS, temps.getTime());
+		cv.put(HorecaContract.Commande.TEMPS, temps.getDate()+"/"+(temps.getMonth()+1)+" "+temps.getHours()+"h"+temps.getMinutes());
 		cv.put(HorecaContract.Commande.NOMBRE, nombre);
 		long id = db.insert(HorecaContract.Commande.TABLE_NAME, null, cv);
 		if (plat.hasStock()) {
@@ -80,4 +81,15 @@ public class Commande {
 		db.delete(HorecaContract.Commande.TABLE_NAME, HorecaContract.Commande._ID + " = ?",
 				new String[]{String.valueOf(id)});
 	}
+	public static ArrayList<String> getAllCommandsTime(SQLiteDatabase db, Plat plat) //renvoie une liste contenant l'heure de chaque commande
+	    {
+	        ArrayList<String> times = new ArrayList<String>(); //nouvelle instance
+	        Cursor c = getAllCommandeForPlat(db, plat);
+	        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) 
+	        {
+	        	String s = "Commande n. " + c.getString(0) + "   Date : " + c.getString(3) + "   Nombre : " + c.getString(4);
+	            times.add(s); // on rajoute le temps a la liste
+	        }
+	        return times; 
+	    }
 }
