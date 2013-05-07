@@ -34,23 +34,21 @@ public class SignUpActivity extends MyActivity {
             	// On évite de garder la db ouverte trop longtemps
         		MySqliteHelper sqliteHelper = new MySqliteHelper(SignUpActivity.this);
         		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
-        		String message = User.signUp(db, new_email, new_name, new_psw, new_pswC);
-        		if(message.equals("Email already taken"))
-        		{
+        		int err = User.signUp(db, new_email, new_name, new_psw, new_pswC);
+        		db.close();
+        		if (err == User.INVALID_EMAIL) {
         			password_err.setVisibility(View.GONE);
         			mail_err.setVisibility(View.VISIBLE);
         		}
-        		else if(message.equals("Passwords do not match")){
+        		else if (err == User.PASSWORDS_DONT_MATCH) {
         				mail_err.setVisibility(View.GONE);
         				password_err.setVisibility(View.VISIBLE);
         		}
-        		else
-        		{
+        		else {
         			mail_err.setVisibility(View.GONE);
     				password_err.setVisibility(View.GONE);
     				finish();
         		}
-        		db.close();
         	}
         });
 	}
