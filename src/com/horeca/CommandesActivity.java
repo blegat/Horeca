@@ -1,5 +1,6 @@
 package com.horeca;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import android.app.Activity;
@@ -9,14 +10,18 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 
-public class CommandesActivity extends Activity implements ViewBinder, AdapterView.OnItemClickListener {
+public class CommandesActivity extends MyActivity implements ViewBinder, AdapterView.OnItemClickListener {
 	
-	private SimpleCursorAdapter adapter = null;
+	//private SimpleCursorAdapter adapter = null;
+	private ArrayAdapter<String> adapter2 = null;
+	private ArrayList<String> list_commande = new ArrayList<String>();
+	
 	private ListView commandes_list = null;
 	
 	private Plat plat = null;
@@ -44,37 +49,40 @@ public class CommandesActivity extends Activity implements ViewBinder, AdapterVi
 		setContentView(R.layout.activity_commandes);
 		
 		commandes_list = (ListView) findViewById(R.id.commandes_list);
-
+/*
 		adapter = new SimpleCursorAdapter(this, //this context
 				android.R.layout.simple_list_item_1, //id of the item layout used by default for the individual rows (this id is pre-defined by Android)
 				//android.R.id.list,
 				//R.id.plats_list,
 				Commande.getAllCommandeForPlat(db, plat),
-				new String[] { HorecaContract.Commande.TEMPS },
-				new int[] { android.R.id.text1 }); // the list of objects to be adapted
+				new String[] { HorecaContract.Commande.NOMBRE },
+				new int[] { android.R.id.text1 }); // the list of objects to be adapted //android.R.id.text1
 		// to remove deprecation warning, I need to add ", 0" but it is only in API 11 and we need 2.3.3 which is API 10
 		
 		adapter.setViewBinder(this);
+		*/
+		list_commande = Commande.getAllCommandsTime(db,plat);
+		adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list_commande);
 		
-		commandes_list.setAdapter(adapter);
+		commandes_list.setAdapter(adapter2);
 		
 		db.close();
 		
-		commandes_list.setOnItemClickListener(this);
+		commandes_list.setOnItemClickListener(this); 
 	}
-	
+	/*
 	private void refreshCommandesList() {
 		// Open the db
 		MySqliteHelper sqliteHelper = new MySqliteHelper(this);
 		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
 		
 		adapter.changeCursorAndColumns(Commande.getAllCommandeForPlat(db, plat),
-					new String[] { HorecaContract.Commande.TEMPS },
+					new String[] { HorecaContract.Commande.NOMBRE },
 					new int[] { android.R.id.text1 });
 				
 		db.close();
 	}
-	
+	*/
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
@@ -84,7 +92,7 @@ public class CommandesActivity extends Activity implements ViewBinder, AdapterVi
 		Commande commande = new Commande(db, id);
 		commande.destroy(db);
 		db.close();
-		refreshCommandesList();
+		//refreshCommandesList();
 	}
 	
     @Override
@@ -93,12 +101,4 @@ public class CommandesActivity extends Activity implements ViewBinder, AdapterVi
     	((TextView) view).setText(temps.toString());
         return true;
     }
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.commandes, menu);
-		return true;
-	}
-
 }

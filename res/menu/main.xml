@@ -1,9 +1,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_signUp"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:title="@string/action_signUp"/>
+    <item
+        android:id="@+id/action_signInOut"
+        android:orderInCategory="200"
+        android:showAsAction="never"
+        android:title="@string/action_signIn"/>
+    <item
+        android:id="@+id/action_profile"
+        android:orderInCategory="300"
+        android:showAsAction="never"
+        android:title="@string/action_profile"/>
 
 </menu>

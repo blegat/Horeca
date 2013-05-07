@@ -12,8 +12,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-	    
-	    <TextView
+        
+	    <TextView 
 	        android:text="@string/mail"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
@@ -25,12 +25,23 @@
 	        style="@style/simple_text" />
 	    <TextView
 	        android:textIsSelectable="true"
-	        android:id="@+id/mail_error"
-	        android:text="@string/unused_email"
+	        android:id="@+id/mail_err"
+	        android:text="@string/mail_taken"
 	        android:visibility="gone"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        style="@style/error_text" />
+	    <TextView
+	        android:text="@string/name"
+	        android:textIsSelectable="true"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/simple_text" />
+	    <EditText
+	        android:id="@+id/name"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/simple_text" />
 	    <TextView
 	        android:text="@string/mot_de_passe"
 	        android:textIsSelectable="true"
@@ -43,18 +54,31 @@
 	        android:layout_height="wrap_content"
 	        style="@style/simple_text" />
 	    <TextView
+	        android:text="@string/password_confirmation"
 	        android:textIsSelectable="true"
-	        android:id="@+id/password_error"
-	        android:text="@string/wrong_password"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/simple_text" />
+	    <EditText
+	        android:id="@+id/password_confirmation"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/simple_text" />
+	   <TextView
+	        android:textIsSelectable="true"
+	        android:id="@+id/password_err"
+	        android:text="@string/wrong_password_confirmation"
 	        android:visibility="gone"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        style="@style/error_text" />
+	    
 	    <Button
-	        android:id="@+id/sign_in_button"
-	        android:text="@string/sign_in_button"
+	        android:id="@+id/sign_up_button"
+	        android:text="@string/sign_up_button"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        style="@style/simple_text"/>
-	</LinearLayout>
+	    
+</LinearLayout>
 </ScrollView>

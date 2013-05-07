@@ -3,11 +3,10 @@ package com.horeca;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.Menu;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -17,7 +16,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-public class PlatActivity extends Activity implements OnClickListener {
+public class PlatActivity extends MyActivity implements OnClickListener {
 
 	private TextView horeca_name = null;
 	private TextView plat_name = null;
@@ -26,9 +25,11 @@ public class PlatActivity extends Activity implements OnClickListener {
 	private TextView plat_stock = null;
 	private TextView plat_ingredients = null;
 	
+	private View commande_sep = null;
 	private DatePicker commande_date = null;
 	private TimePicker commande_time = null;
 	private EditText commande_nombre = null;
+	private TextView commande_nombre_label = null;
 	private Button commande_button = null;
 	private Button current_commandes_button = null;
 	
@@ -96,23 +97,48 @@ public class PlatActivity extends Activity implements OnClickListener {
 			plat_ingredients.setText(text.toString());
 		}
 		
+		commande_sep = (View) findViewById(R.id.commande_sep);
+		commande_date = (DatePicker) findViewById(R.id.commande_date);
+		commande_time = (TimePicker) findViewById(R.id.commande_time);
+		commande_nombre_label = (TextView) findViewById(R.id.commande_nombre_label);
+		commande_nombre = (EditText) findViewById(R.id.commande_nombre);
+		commande_button = (Button) findViewById(R.id.commande_button);
+		current_commandes_button = (Button) findViewById(R.id.current_commandes_button);
+		refreshSigning();
+	}
+	
+	@Override
+	protected void notifySignedOut() {
+		commande_sep.setVisibility(View.GONE);
+		commande_date.setVisibility(View.GONE);
+		commande_time.setVisibility(View.GONE);
+		commande_nombre_label.setVisibility(View.GONE);
+		commande_nombre.setVisibility(View.GONE);
+		commande_button.setVisibility(View.GONE);
+		current_commandes_button.setVisibility(View.GONE);
+	}
+	
+	@Override
+	protected void notifySignedIn() {
+		commande_sep.setVisibility(View.VISIBLE);
+		commande_date.setVisibility(View.VISIBLE);
+		commande_time.setVisibility(View.VISIBLE);
+		commande_nombre_label.setVisibility(View.VISIBLE);
+		commande_nombre.setVisibility(View.VISIBLE);
+		commande_button.setVisibility(View.VISIBLE);
+		current_commandes_button.setVisibility(View.VISIBLE);
+		
 		Calendar cal=Calendar.getInstance();
-
 		int year=cal.get(Calendar.YEAR);
 		int month=cal.get(Calendar.MONTH);
 		int day=cal.get(Calendar.DAY_OF_MONTH);
 		int hour=cal.get(Calendar.HOUR_OF_DAY);
 		int minute=cal.get(Calendar.MINUTE);
-
-		commande_date = (DatePicker) findViewById(R.id.commande_date);
+		
 		commande_date.updateDate(year, month, day);
-		commande_time = (TimePicker) findViewById(R.id.commande_time);
 		commande_time.setCurrentHour(hour);
 		commande_time.setCurrentMinute(minute);
-		commande_nombre = (EditText) findViewById(R.id.commande_nombre);
-		commande_button = (Button) findViewById(R.id.commande_button);
 		commande_button.setOnClickListener(this);
-		current_commandes_button = (Button) findViewById(R.id.current_commandes_button);
 		current_commandes_button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -130,7 +156,8 @@ public class PlatActivity extends Activity implements OnClickListener {
 		}
 	}
 	
-	protected void onRestart() {
+	@Override
+	public void onRestart() {
 		super.onRestart();
 		MySqliteHelper sqliteHelper = new MySqliteHelper(this);
 		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
@@ -163,13 +190,6 @@ public class PlatActivity extends Activity implements OnClickListener {
 		
 			db.close();
 		}
-	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.plat, menu);
-		return true;
 	}
 
 }

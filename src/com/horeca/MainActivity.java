@@ -1,14 +1,11 @@
 package com.horeca;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -18,7 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class MainActivity extends MyActivity {
 
 	private Button selectItemButton = null;
 	private long selected_ville_id = -1;
@@ -39,7 +36,6 @@ public class MainActivity extends Activity {
 	public static String PRICE_MIN_EXTRA = "price_min";
 	public static String PRICE_MAX_EXTRA = "price_max";
 	public static String DISTANCE_MAX_EXTRA = "distance_max";
-	public String menuOpt = "Se connecter";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +45,6 @@ public class MainActivity extends Activity {
 		// Open the db
 		MySqliteHelper sqliteHelper = new MySqliteHelper(this);
 		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
-
-		// Log a user in
-		if(User.signIn(db, "jean@dupont.com", "foobar")){
-			menuOpt="Se déconnecter";
-		}
-		Log.i("current_user", User.getCurrentUser().getName());
 
         ville_spinner = (Spinner) findViewById(R.id.ville_spinner);
 
@@ -189,34 +179,5 @@ public class MainActivity extends Activity {
 				return;
 			}
 		}
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        menu.add(1, 1, 0,"S'inscrire");
-        menu.add(1, 2, 1, menuOpt);
-        return true;
-    }
- public boolean onOptionsItemSelected(MenuItem item) {
-    	switch (item.getItemId()) {
-        case 1:
-        	startActivity(new Intent(MainActivity.this, SignInActivity.class));
-            return true;
-
-        case 2:
-        	if(item.getTitle().equals("Se connecter")){
-        		menuOpt = "Se deconnecter";
-        		item.setTitle(menuOpt);
-        	}
-        	else{
-        		User.signOut();
-        		menuOpt = "Se connecter";
-        		item.setTitle(menuOpt);
-        	}
-        return true;
-    	}
-        return false;
     }
 }
