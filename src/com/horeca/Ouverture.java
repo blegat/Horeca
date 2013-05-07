@@ -55,7 +55,7 @@ public class Ouverture {
 	
 	private String timestampToString(long ts) {
     	Date d = new Date(ts);
-    	return d.toString();
+    	return Utils.dateToString(d);
 	}
 	public long getId () {
 		return id;

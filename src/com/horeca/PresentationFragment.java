@@ -44,7 +44,7 @@ public class PresentationFragment extends Fragment {
 		distance = (TextView) view.findViewById(R.id.horeca_distance);
 		if (gps.getLocation() != null) {
 			// I cast it to long to get less precision decimals
-			distance.setText(String.valueOf((long) horeca.getDistance(gps)) + " m");
+			distance.setText(String.valueOf(Utils.distanceToString(horeca.getDistance(gps))));
 		} else {
 			distance.setVisibility(View.GONE);
 			distance_label = (TextView) view.findViewById(R.id.horeca_distance_label);

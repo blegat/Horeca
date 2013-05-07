@@ -1,17 +1,21 @@
 package com.horeca;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 public class HorecaListActivity extends MyActivity {
+	GPSTracker gps;
 	
 	private Ville ville;
 	private HorecaType horecaType = null;
@@ -66,7 +70,7 @@ public class HorecaListActivity extends MyActivity {
 		}
 		
 		Cursor cursor;
-		GPSTracker gps = new GPSTracker(this);
+		gps = new GPSTracker(this);
 		gps_warning = (TextView) findViewById(R.id.gps_warning);
 		if (gps.canGetLocation()) {
 			gps_warning.setVisibility(View.GONE);
@@ -79,16 +83,16 @@ public class HorecaListActivity extends MyActivity {
 		}
 
 		// Create the List of restaurants to choose from
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, //this context
+		/*SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, //this context
 				android.R.layout.simple_list_item_1, //id of the item layout used by default for the individual rows (this id is pre-defined by Android)
 				cursor,
 				new String[] { HorecaContract.Horeca.NAME },
-				new int[] { android.R.id.text1 }); // the list of objects to be adapted
+				new int[] { android.R.id.text1 });*/ // the list of objects to be adapted
 		// to remove deprecation warning, I need to add ", 0" but it is only in API 11 and we need 2.3.3 which is API 10
 		//db.close(); // too early, the adapter still uses it apparently
 		
 		horeca_list = (ListView) findViewById(R.id.horeca_list);
-		horeca_list.setAdapter(adapter);
+		horeca_list.setAdapter(new HorecaListCursorAdapter(this, cursor));
 		db.close();
 		
 		horeca_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -101,6 +105,33 @@ public class HorecaListActivity extends MyActivity {
         		startActivity(i);
 			}
 		});
+	}
+	
+	public class HorecaListCursorAdapter extends CursorAdapter {
+		public HorecaListCursorAdapter(Context context, Cursor c) {
+			super(context, c);
+		}
+	 
+		@Override
+		public void bindView(View view, Context context, Cursor cursor) {
+			Horeca horeca = new Horeca(cursor);
+			TextView name = (TextView) view.findViewById(R.id.horeca_item_name);
+			name.setText(horeca.getName());
+			TextView distance = (TextView) view.findViewById(R.id.horeca_item_distance);
+			if (gps.getLocation() != null) {
+				distance.setText(Utils.distanceToString(horeca.getDistance(gps)));
+			} else {
+				distance.setVisibility(View.GONE);
+			}
+		}
+	 
+		@Override
+		public View newView(Context context, Cursor cursor, ViewGroup parent) {
+			LayoutInflater inflater = LayoutInflater.from(context);
+			View v = inflater.inflate(R.layout.horeca_item, parent, false);
+			bindView(v, context, cursor);
+			return v;
+		}
 	}
 
 }
