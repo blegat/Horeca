@@ -13,6 +13,7 @@ public class MyActivity extends Activity {
 		// However, it is not available before android 3.0
 		// So the menu won't be refreshed for android 3.0
 	}*/
+	private boolean signedIn = false;
 	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -40,7 +41,7 @@ public class MyActivity extends Activity {
         	if (User.isSignedIn()) {
         		User.signOut();
         		item.setTitle(R.string.action_signIn);
-        		signOut();
+        		refreshSigning();
         	} else {
         		startActivity(new Intent(this, SignInActivity.class));
         	}
@@ -51,7 +52,29 @@ public class MyActivity extends Activity {
         return false;
     }
     
-    // Override to refresh display when the user signout !!! (example in PlatActivity)
-    protected void signOut() {
+    @Override
+    public void onRestart() {
+    	super.onRestart();
+    	refreshSigning();
+    }
+    
+    protected void refreshSigning() {
+		boolean before = signedIn;
+		signedIn = User.isSignedIn();
+		Log.i("coucou", String.valueOf(before) + "|" + String.valueOf(signedIn));
+		if (before != signedIn) {
+			if (signedIn) {
+				notifySignedIn();
+			} else {
+				notifySignedOut();
+			}
+		}
+    }
+    
+    // Override to refresh display when the user sign out !!! (example in PlatActivity)
+    protected void notifySignedOut() {
+    }
+    // Override to refresh display when the user sign in !!! (example in PlatActivity)
+    protected void notifySignedIn() {
     }
 }

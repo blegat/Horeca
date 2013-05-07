@@ -25,7 +25,6 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 	private TextView plat_stock = null;
 	private TextView plat_ingredients = null;
 	
-	private boolean signedIn = false;
 	private View commande_sep = null;
 	private DatePicker commande_date = null;
 	private TimePicker commande_time = null;
@@ -105,62 +104,49 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 		commande_nombre = (EditText) findViewById(R.id.commande_nombre);
 		commande_button = (Button) findViewById(R.id.commande_button);
 		current_commandes_button = (Button) findViewById(R.id.current_commandes_button);
-		refreshCommande();
-	}
-	
-	public void onResume() {
-		super.onResume();
-		refreshCommande();
+		refreshSigning();
 	}
 	
 	@Override
-	protected void signOut() {
-		refreshCommande();
+	protected void notifySignedOut() {
+		commande_sep.setVisibility(View.GONE);
+		commande_date.setVisibility(View.GONE);
+		commande_time.setVisibility(View.GONE);
+		commande_nombre_label.setVisibility(View.GONE);
+		commande_nombre.setVisibility(View.GONE);
+		commande_button.setVisibility(View.GONE);
+		current_commandes_button.setVisibility(View.GONE);
 	}
 	
-	private void refreshCommande() {
-		boolean before = signedIn;
-		signedIn = User.isSignedIn();
-		Log.i("coucou", String.valueOf(before) + "|" + String.valueOf(signedIn));
-		if (before != signedIn) {
-			if (signedIn) {
-				commande_sep.setVisibility(View.VISIBLE);
-				commande_date.setVisibility(View.VISIBLE);
-				commande_time.setVisibility(View.VISIBLE);
-				commande_nombre_label.setVisibility(View.VISIBLE);
-				commande_nombre.setVisibility(View.VISIBLE);
-				commande_button.setVisibility(View.VISIBLE);
-				current_commandes_button.setVisibility(View.VISIBLE);
-				signedIn = true;
-				Calendar cal=Calendar.getInstance();
-	
-				int year=cal.get(Calendar.YEAR);
-				int month=cal.get(Calendar.MONTH);
-				int day=cal.get(Calendar.DAY_OF_MONTH);
-				int hour=cal.get(Calendar.HOUR_OF_DAY);
-				int minute=cal.get(Calendar.MINUTE);
-				commande_date.updateDate(year, month, day);
-				commande_time.setCurrentHour(hour);
-				commande_time.setCurrentMinute(minute);
-				commande_button.setOnClickListener(this);
-				current_commandes_button.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						Intent i = new Intent(PlatActivity.this, CommandesActivity.class);
-						i.putExtra("_id", plat.getId());
-						startActivity(i);
-					}
-				});
-			} else {
-				commande_sep.setVisibility(View.GONE);
-				commande_date.setVisibility(View.GONE);
-				commande_time.setVisibility(View.GONE);
-				commande_nombre_label.setVisibility(View.GONE);
-				commande_nombre.setVisibility(View.GONE);
-				commande_button.setVisibility(View.GONE);
-				current_commandes_button.setVisibility(View.GONE);
+	@Override
+	protected void notifySignedIn() {
+		commande_sep.setVisibility(View.VISIBLE);
+		commande_date.setVisibility(View.VISIBLE);
+		commande_time.setVisibility(View.VISIBLE);
+		commande_nombre_label.setVisibility(View.VISIBLE);
+		commande_nombre.setVisibility(View.VISIBLE);
+		commande_button.setVisibility(View.VISIBLE);
+		current_commandes_button.setVisibility(View.VISIBLE);
+		
+		Calendar cal=Calendar.getInstance();
+		int year=cal.get(Calendar.YEAR);
+		int month=cal.get(Calendar.MONTH);
+		int day=cal.get(Calendar.DAY_OF_MONTH);
+		int hour=cal.get(Calendar.HOUR_OF_DAY);
+		int minute=cal.get(Calendar.MINUTE);
+		
+		commande_date.updateDate(year, month, day);
+		commande_time.setCurrentHour(hour);
+		commande_time.setCurrentMinute(minute);
+		commande_button.setOnClickListener(this);
+		current_commandes_button.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent i = new Intent(PlatActivity.this, CommandesActivity.class);
+				i.putExtra("_id", plat.getId());
+				startActivity(i);
 			}
-		}
+		});
 	}
 	
 	private void refreshStock(SQLiteDatabase db) {
@@ -170,13 +156,13 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 		}
 	}
 	
-	protected void onRestart() {
+	@Override
+	public void onRestart() {
 		super.onRestart();
 		MySqliteHelper sqliteHelper = new MySqliteHelper(this);
 		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
 		
 		refreshStock(db);
-		refreshCommande();
 		
 		db.close();
 	}
