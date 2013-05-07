@@ -1,5 +1,7 @@
 package com.horeca;
 
+import java.util.Locale;
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -140,7 +142,7 @@ public class MainActivity extends MyActivity {
         			SQLiteDatabase db = sqliteHelper.getReadableDatabase();
         			String suggestion = Ingredient.getSuggestion(db, ingredient_name, false);
         			db.close();
-        			if (!suggestion.toLowerCase().equals(ingredient_name.toLowerCase())) {
+        			if (!suggestion.toLowerCase(Locale.getDefault()).equals(ingredient_name.toLowerCase())) {
         				String error_message = "\"" + ingredient_name + "\" doesn't exists.";
         				if (suggestion != "") { // "" can be the closest match if it is very different from everything
         					error_message = error_message + " Did you mean \"" + suggestion + "\"?";
