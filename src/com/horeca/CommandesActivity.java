@@ -119,7 +119,7 @@ public class CommandesActivity extends MyActivity implements ViewBinder, Adapter
 			TextView name = (TextView) view.findViewById(R.id.commande_item_time);
 			name.setText(Utils.dateToString(commande.getTemps()));
 			TextView nombre = (TextView) view.findViewById(R.id.commande_item_nombre);
-			nombre.setText((int)commande.getNombre());
+			nombre.setText(String.valueOf(commande.getNombre()));
 		}
 	 
 		@Override
