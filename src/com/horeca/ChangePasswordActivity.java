@@ -1,7 +1,6 @@
 package com.horeca;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +14,6 @@ public class ChangePasswordActivity extends MyActivity {
 	EditText nouveau_mdp = null;
 	EditText confirmation_mdp = null;
 	TextView password_error = null;
-	private long id;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_changepassword);
