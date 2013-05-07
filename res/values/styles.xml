@@ -29,5 +29,9 @@
     <style name="title_text">
   		<item name="android:textSize">24sp</item>
 	</style>
+    
+    <style name="item_text">
+  		<item name="android:textSize">24sp</item>
+	</style>
 
 </resources>
