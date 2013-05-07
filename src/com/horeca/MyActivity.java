@@ -14,21 +14,35 @@ public class MyActivity extends Activity {
 		// So the menu won't be refreshed for android 3.0
 	}*/
 	private boolean signedIn = false;
+	private MenuItem signUp = null;
+	private MenuItem signIn = null;
+	private MenuItem signOut = null;
+	private MenuItem profile = null;
+	
+	public void refreshMenuSigning() {
+        if (User.isSignedIn()) {
+        	signUp.setVisible(false);
+        	signIn.setVisible(false);
+        	signOut.setVisible(true);
+        	profile.setVisible(true);
+        } else {
+        	signUp.setVisible(true);
+        	signIn.setVisible(true);
+        	signOut.setVisible(false);
+        	profile.setVisible(false);
+        }
+	}
 	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        menu.findItem(R.id.action_signInOut).setTitle(User.isSignedIn() ? R.string.action_signIn : R.string.action_signOut);
+        signUp = menu.findItem(R.id.action_signUp);
+        signIn = menu.findItem(R.id.action_signIn);
+        signOut = menu.findItem(R.id.action_signOut);
+        profile = menu.findItem(R.id.action_profile);
+        refreshMenuSigning();
         return true;
-    }
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-    	// automatically calls each time a menu is displayed for android < 3.0
-    	// need invalidate for android >= 3.0
-	    MenuItem item = menu.findItem(R.id.action_signInOut);
-	    item.setTitle(User.isSignedIn() ? R.string.action_signOut : R.string.action_signIn);
-	    return super.onPrepareOptionsMenu(menu);
     }
     public boolean onOptionsItemSelected(MenuItem item) {
     	Log.i("Menu", String.valueOf(item.getItemId()));
@@ -37,14 +51,12 @@ public class MyActivity extends Activity {
     			startActivity(new Intent(this, SignUpActivity.class));
     			
             return true;
-        case R.id.action_signInOut:
-        	if (User.isSignedIn()) {
-        		User.signOut();
-        		item.setTitle(R.string.action_signIn);
-        		refreshSigning();
-        	} else {
-        		startActivity(new Intent(this, SignInActivity.class));
-        	}
+        case R.id.action_signIn:
+    		startActivity(new Intent(this, SignInActivity.class));
+        case R.id.action_signOut:
+        	User.signOut();
+        	refreshMenuSigning();
+        	refreshSigning();
         	return true;
         case R.id.action_profile:
         	//	startActivity(new Intent(this, ProfileActivity.class));
@@ -62,8 +74,8 @@ public class MyActivity extends Activity {
     protected void refreshSigning() {
 		boolean before = signedIn;
 		signedIn = User.isSignedIn();
-		Log.i("coucou", String.valueOf(before) + "|" + String.valueOf(signedIn));
 		if (before != signedIn) {
+			refreshMenuSigning();
 			if (signedIn) {
 				notifySignedIn();
 			} else {
