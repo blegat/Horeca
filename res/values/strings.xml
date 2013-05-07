@@ -9,7 +9,7 @@
     <string name="wrong_password_confirmation">Passwords do not match</string>
     <string name="unused_email">There is no user with this email</string>
     <string name="mot_de_passe"><b>Password:</b></string>
-    <string name="password_confirmation">Password confirmation</string>
+    <string name="password_confirmation"><b>Password confirmation</b></string>
     <string name="wrong_password">Wrong password.</string>
     <string name="sign_in_button">Sign in</string>
      <string name="sign_up_button">Sign up</string>
@@ -63,7 +63,7 @@
     <string name="title_activity_commandes">CommandesActivity</string>
     <string name="invalid_amount_warning">Invalid amount</string>
     <string name="horeca_is_favorite">Is favorite:</string>
-    <string name="name">Name</string>
+    <string name="name"><b>Name</b></string>
     <string name="address">Address</string>
 
 </resources>
