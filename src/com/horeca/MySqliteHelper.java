@@ -32,87 +32,92 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 	public void createDatabase(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE " + HorecaContract.Ville.TABLE_NAME + "(" +
 				HorecaContract.Ville._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				HorecaContract.Ville.NAME + " TEXT NOT NULL, " +
-				HorecaContract.Ville.CODEPOSTAL + " TEXT NOT NULL);");
+				HorecaContract.Ville.NAME + " TEXT NOT NULL UNIQUE, " +
+				HorecaContract.Ville.CODEPOSTAL + " TEXT NOT NULL UNIQUE);");
 		db.execSQL("CREATE TABLE " + HorecaContract.Horeca.TABLE_NAME + "(" +
 				HorecaContract.Horeca._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				HorecaContract.Horeca.NAME + " TEXT NOT NULL, " +
+				HorecaContract.Horeca.NAME + " TEXT NOT NULL UNIQUE, " +
 				HorecaContract.Horeca.MIN_PRICE + " INTEGER NOT NULL, " +
 				HorecaContract.Horeca.MAX_PRICE + " INTEGER NOT NULL, " +
 				HorecaContract.Horeca.LONGITUDE + " INTEGER NOT NULL, " +
 				HorecaContract.Horeca.LATITUDE + " INTEGER NOT NULL, " +
-				HorecaContract.Horeca.VILLE_ID + " INTEGER NOT NULL, " +
-				HorecaContract.Horeca.NUMTEL + " TEXT NOT NULL, " +
+				HorecaContract.Horeca.VILLE_ID + " INTEGER NOT NULL REFERENCES " + HorecaContract.Ville.TABLE_NAME + "(" + HorecaContract.Ville._ID + "), " +
+				HorecaContract.Horeca.NUMTEL + " TEXT NOT NULL UNIQUE, " +
 				HorecaContract.Horeca.HORAIRE + " TEXT, " +
 				HorecaContract.Horeca.DESCRIPTION + " TEXT);");
 		db.execSQL("CREATE TABLE " + HorecaContract.UserFavoriteHoreca.TABLE_NAME + " (" +
-				HorecaContract.UserFavoriteHoreca._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				HorecaContract.UserFavoriteHoreca.USER_ID + " INTEGER NOT NULL, "+
-				HorecaContract.UserFavoriteHoreca.HORECA_ID + " INTEGER NOT NULL);");
+				HorecaContract.UserFavoriteHoreca.USER_ID + " INTEGER NOT NULL REFERENCES " + HorecaContract.User.TABLE_NAME + "(" + HorecaContract.User._ID + "), " +
+				HorecaContract.UserFavoriteHoreca.HORECA_ID + " INTEGER NOT NULL REFERENCES " + HorecaContract.Horeca.TABLE_NAME + "(" + HorecaContract.Horeca._ID + "), " +
+				"PRIMARY KEY (" + HorecaContract.UserFavoriteHoreca.USER_ID + ", " + HorecaContract.UserFavoriteHoreca.HORECA_ID + "));");
 		db.execSQL("CREATE TABLE " + HorecaContract.HorecaType.TABLE_NAME + "(" +
 				HorecaContract.HorecaType._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				HorecaContract.HorecaType.NAME + " TEXT NOT NULL);");
+				HorecaContract.HorecaType.NAME + " TEXT NOT NULL UNIQUE);");
 		db.execSQL("CREATE TABLE " + HorecaContract.HorecaTypeJoin.TABLE_NAME + "(" +
-				HorecaContract.HorecaTypeJoin._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				HorecaContract.HorecaTypeJoin.HORECA_ID + " INTEGER NOT NULL, " +
-				HorecaContract.HorecaTypeJoin.HORECATYPE_ID + " INTEGER NOT NULL);");
+				HorecaContract.HorecaTypeJoin.HORECA_ID + " INTEGER NOT NULL REFERENCES " + HorecaContract.Horeca.TABLE_NAME + "(" + HorecaContract.Horeca._ID + "), " +
+				HorecaContract.HorecaTypeJoin.HORECATYPE_ID + " INTEGER NOT NULL REFERENCES " + HorecaContract.HorecaType.TABLE_NAME + "(" + HorecaContract.HorecaType._ID + "), " +
+				"PRIMARY KEY (" + HorecaContract.HorecaTypeJoin.HORECA_ID + ", " + HorecaContract.HorecaTypeJoin.HORECATYPE_ID + "));");
 		db.execSQL("CREATE TABLE " + HorecaContract.Plat.TABLE_NAME + "(" +
 				HorecaContract.Plat._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				HorecaContract.Plat.HORECA_ID + " INTEGER NOT NULL, " +
+				HorecaContract.Plat.HORECA_ID + " INTEGER NOT NULL REFERENCES " + HorecaContract.Horeca.TABLE_NAME + "(" + HorecaContract.Horeca._ID + "), " +
 				HorecaContract.Plat.NAME + " TEXT NOT NULL, " +
 				HorecaContract.Plat.PRICE + " INTEGER NOT NULL, " +
 				HorecaContract.Plat.DESCRIPTION + " TEXT, " +
-				HorecaContract.Plat.STOCK + " INTEGER);");
+				HorecaContract.Plat.STOCK + " INTEGER, " +
+				"UNIQUE (" + HorecaContract.Plat.NAME + ", " + HorecaContract.Plat.HORECA_ID + "));");
 		db.execSQL("CREATE TABLE " + HorecaContract.PlatType.TABLE_NAME + "(" +
 				HorecaContract.PlatType._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				HorecaContract.PlatType.NAME + " TEXT NOT NULL);");
+				HorecaContract.PlatType.NAME + " TEXT NOT NULL UNIQUE);");
 		db.execSQL("CREATE TABLE " + HorecaContract.PlatTypeJoin.TABLE_NAME + "(" +
-				HorecaContract.PlatTypeJoin._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				HorecaContract.PlatTypeJoin.PLAT_ID + " INTEGER NOT NULL, " +
-				HorecaContract.PlatTypeJoin.PLATTYPE_ID + " INTEGER NOT NULL);");
+				HorecaContract.PlatTypeJoin.PLATTYPE_ID + " INTEGER NOT NULL, " +
+				"PRIMARY KEY (" + HorecaContract.PlatTypeJoin.PLAT_ID + ", " + HorecaContract.PlatTypeJoin.PLATTYPE_ID + "));");
 		db.execSQL("CREATE TABLE " + HorecaContract.Ingredient.TABLE_NAME + "(" +
 				HorecaContract.Ingredient._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				HorecaContract.Ingredient.NAME + " TEXT NOT NULL);");
+				HorecaContract.Ingredient.NAME + " TEXT NOT NULL UNIQUE);");
 		db.execSQL("CREATE TABLE " + HorecaContract.User.TABLE_NAME + "(" +
 				HorecaContract.User._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				HorecaContract.User.EMAIL + " TEXT NOT NULL, " +
+				HorecaContract.User.EMAIL + " TEXT NOT NULL UNIQUE, " +
 				HorecaContract.User.NAME + " TEXT NOT NULL, " +
 				HorecaContract.User.PASSWORD + " TEXT NOT NULL);");
 		db.execSQL("CREATE TABLE " + HorecaContract.Contient.TABLE_NAME + "(" +
-				HorecaContract.Contient._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				HorecaContract.Contient.PLAT_ID + " INTEGER NOT NULL, " +
-				HorecaContract.Contient.INGREDIENT_ID + " INTEGER NOT NULL);");
+				HorecaContract.Contient.INGREDIENT_ID + " INTEGER NOT NULL, " +
+				"PRIMARY KEY (" + HorecaContract.Contient.PLAT_ID + ", " + HorecaContract.Contient.INGREDIENT_ID + "));");
 		db.execSQL("CREATE TABLE " + HorecaContract.Ouverture.TABLE_NAME + "(" +
 				HorecaContract.Ouverture._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				HorecaContract.Ouverture.HORECA_ID + " INTEGER NOT NULL, " +
+				HorecaContract.Ouverture.HORECA_ID + " INTEGER NOT NULL REFERENCES " + HorecaContract.Horeca.TABLE_NAME + "(" + HorecaContract.Horeca._ID + "), " +
 				HorecaContract.Ouverture.DEBUT + " INTEGER NOT NULL, " +
 				HorecaContract.Ouverture.FIN + " INTEGER NOT NULL, " +
-				HorecaContract.Ouverture.PLACES + " INTEGER);");
+				HorecaContract.Ouverture.PLACES + " INTEGER, " +
+				"UNIQUE (" + HorecaContract.Ouverture.HORECA_ID + ", " + HorecaContract.Ouverture.DEBUT + "), " +
+				"check (" + HorecaContract.Ouverture.DEBUT + " < " + HorecaContract.Ouverture.FIN + "));");
 		db.execSQL("CREATE TABLE " + HorecaContract.Reservation.TABLE_NAME + "(" +
 				HorecaContract.Reservation._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				HorecaContract.Reservation.USER_ID + " INTEGER NOT NULL, " +
-				HorecaContract.Reservation.OUVERTURE_ID + " INTEGER NOT NULL, " +
-				HorecaContract.Reservation.PLACES + " INTEGER NOT NULL);");
+				HorecaContract.Reservation.USER_ID + " INTEGER NOT NULL REFERENCES " + HorecaContract.User.TABLE_NAME + "(" + HorecaContract.User._ID + "), " +
+				HorecaContract.Reservation.OUVERTURE_ID + " INTEGER NOT NULL REFERENCES " + HorecaContract.Ouverture.TABLE_NAME + "(" + HorecaContract.Ouverture._ID + "), " +
+				HorecaContract.Reservation.PLACES + " INTEGER NOT NULL, " +
+				"UNIQUE (" + HorecaContract.Reservation.USER_ID + ", " + HorecaContract.Reservation.OUVERTURE_ID + "));");
 		db.execSQL("CREATE TABLE " + HorecaContract.Commande.TABLE_NAME + "(" +
 				HorecaContract.Commande._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				HorecaContract.Commande.USER_ID + " INTEGER NOT NULL, " +
-				HorecaContract.Commande.PLAT_ID + " INTEGER NOT NULL, " +
+				HorecaContract.Commande.USER_ID + " INTEGER NOT NULL REFERENCES " + HorecaContract.User.TABLE_NAME + "(" + HorecaContract.User._ID + "), " +
+				HorecaContract.Commande.PLAT_ID + " INTEGER NOT NULL REFERENCES " + HorecaContract.Plat.TABLE_NAME + "(" + HorecaContract.Plat._ID + "), " +
 				HorecaContract.Commande.TEMPS + " INTEGER NOT NULL, " +
-				HorecaContract.Commande.NOMBRE + " INTEGER NOT NULL);");
+				HorecaContract.Commande.NOMBRE + " INTEGER NOT NULL, " +
+				"UNIQUE (" + HorecaContract.Commande.USER_ID + ", " + HorecaContract.Commande.PLAT_ID + ", " + HorecaContract.Commande.TEMPS + "));");
 		db.execSQL("CREATE TABLE " + HorecaContract.Picture.TABLE_NAME + "(" +
 				HorecaContract.Picture._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				HorecaContract.Picture.HORECA_ID + " INTEGER NOT NULL, " +
+				HorecaContract.Picture.HORECA_ID + " INTEGER NOT NULL REFERENCES " + HorecaContract.Horeca.TABLE_NAME + "(" + HorecaContract.Horeca._ID + "), " +
 				HorecaContract.Picture.PATH + " TEXT NOT NULL, " +
 				HorecaContract.Picture.NAME + "  TEXT NOT NULL);");
 		db.execSQL("CREATE TABLE " + HorecaContract.Label.TABLE_NAME + "(" +
 				HorecaContract.Label._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				HorecaContract.Label.PATH + " TEXT NOT NULL, " +
-				HorecaContract.Label.NAME + "  TEXT NOT NULL, " +
+				HorecaContract.Label.NAME + "  TEXT NOT NULL UNIQUE, " +
 				HorecaContract.Label.DESCRIPTIONLABEL + "  TEXT NOT NULL);");
 		db.execSQL("CREATE TABLE " + HorecaContract.LabelJoinHoreca.TABLE_NAME + "(" +
-				HorecaContract.LabelJoinHoreca._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				HorecaContract.LabelJoinHoreca.HORECA_ID + " INTEGER NOT NULL, " +
-				HorecaContract.LabelJoinHoreca.LABEL_ID + "  INTEGER NOT NULL);");
+				HorecaContract.LabelJoinHoreca.HORECA_ID + " INTEGER NOT NULL REFERENCES " + HorecaContract.Horeca.TABLE_NAME + "(" + HorecaContract.Horeca._ID + "), " +
+				HorecaContract.LabelJoinHoreca.LABEL_ID + "  INTEGER NOT NULL REFERENCES " + HorecaContract.Label.TABLE_NAME + "(" + HorecaContract.Label._ID + "), " +
+				"PRIMARY KEY (" + HorecaContract.LabelJoinHoreca.HORECA_ID + ", " + HorecaContract.LabelJoinHoreca.LABEL_ID + "));");
 	}	
 	
 	public void populateDatabase(SQLiteDatabase db) {
@@ -132,7 +137,6 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		String horeca_numtels[] = {"01045424242", "01045007007", "01045454545"};
 		String horeca_horaires[] = {"24/24 7/7.", null, "Every day from 8h to 16h."};
 		String horeca_descriptions[] = {"Nous, c est le goût !", "Cher mais bon !", null};
-		int horeca_is_favorite[] = {0,1,0};
 		for (int i = 0; i < horeca_names.length; i++) {
 			ContentValues cv = new ContentValues();
 			cv.put(HorecaContract.Horeca.NAME, horeca_names[i]);
