@@ -54,10 +54,14 @@ public class MenuFragment extends Fragment {
         		startActivity(i);
 			}
 		});
+		
 		//return getListView();
         return view;
 	}
 	
+<<<<<<< HEAD
+	
+=======
 	public class MenuCursorAdapter extends CursorAdapter {
 		public MenuCursorAdapter(Context context, Cursor c) {
 			super(context, c, FLAG_REGISTER_CONTENT_OBSERVER);
@@ -80,4 +84,5 @@ public class MenuFragment extends Fragment {
 			return v;
 		}
 	}
+>>>>>>> 82dbca3b60610212dec930df02c7f6d0cdc2875b
 }
