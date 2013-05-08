@@ -1,16 +1,19 @@
 package com.horeca;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 public class MenuFragment extends Fragment {
 	
@@ -66,4 +69,26 @@ public class MenuFragment extends Fragment {
         return view;
 	}
 	
+	public class MenuCursorAdapter extends CursorAdapter {
+		public MenuCursorAdapter(Context context, Cursor c) {
+			super(context, c, FLAG_REGISTER_CONTENT_OBSERVER);
+		}
+	 
+		@Override
+		public void bindView(View view, Context context, Cursor cursor) {
+			Plat plat = new Plat(cursor);
+			TextView name = (TextView) view.findViewById(R.id.plat_item_name);
+			name.setText(plat.getName());
+			TextView distance = (TextView) view.findViewById(R.id.plat_item_price);
+			distance.setText(Utils.priceToString(plat.getPrice(), context));
+		}
+	 
+		@Override
+		public View newView(Context context, Cursor cursor, ViewGroup parent) {
+			LayoutInflater inflater = LayoutInflater.from(context);
+			View v = inflater.inflate(R.layout.plat_item, parent, false);
+			bindView(v, context, cursor);
+			return v;
+		}
+	}
 }
