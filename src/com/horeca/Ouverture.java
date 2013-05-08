@@ -28,7 +28,6 @@ public class Ouverture {
 	
 	public Ouverture (Cursor cursor) {
 		this.id = cursor.getLong(HorecaContract.Ouverture._ID_INDEX);
-		long horeca_id = cursor.getLong(HorecaContract.Ouverture.HORECA_ID_INDEX);
 		debut = cursor.getLong(HorecaContract.Ouverture.DEBUT_INDEX);
 		fin = cursor.getLong(HorecaContract.Ouverture.FIN_INDEX);
 		hasPlaces = !cursor.isNull(HorecaContract.Ouverture.PLACES_INDEX);

@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 public class SignUpActivity extends MyActivity {
 	private Button button = null;
@@ -38,7 +38,8 @@ public class SignUpActivity extends MyActivity {
 		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
         		android.R.layout.simple_spinner_item, Ville.getAllVilles(db),
-        		new String[]{HorecaContract.Ville.NAME}, new int[] {android.R.id.text1});
+        		new String[]{HorecaContract.Ville.NAME}, new int[] {android.R.id.text1},
+        		SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
         //        R.array.planets_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears

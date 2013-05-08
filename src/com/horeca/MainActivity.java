@@ -53,7 +53,8 @@ public class MainActivity extends MyActivity {
         // Create an ArrayAdapter using the string array and a default spinner layout
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
         		android.R.layout.simple_spinner_item, Ville.getAllVilles(db),
-        		new String[]{HorecaContract.Ville.NAME}, new int[] {android.R.id.text1});
+        		new String[]{HorecaContract.Ville.NAME}, new int[] {android.R.id.text1},
+        		SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
         //        R.array.planets_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -65,7 +66,8 @@ public class MainActivity extends MyActivity {
 
         SimpleCursorAdapter htadapter = new SimpleCursorAdapter(this,
         		android.R.layout.simple_spinner_item, HorecaType.getAllHorecaTypes(db),
-        		new String[]{HorecaContract.HorecaType.NAME}, new int[] {android.R.id.text1});
+        		new String[]{HorecaContract.HorecaType.NAME}, new int[] {android.R.id.text1},
+        		SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
         //        R.array.planets_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -77,7 +79,8 @@ public class MainActivity extends MyActivity {
 
         SimpleCursorAdapter ptadapter = new SimpleCursorAdapter(this,
         		android.R.layout.simple_spinner_item, PlatType.getAllPlatTypes(db),
-        		new String[]{HorecaContract.PlatType.NAME}, new int[] {android.R.id.text1});
+        		new String[]{HorecaContract.PlatType.NAME}, new int[] {android.R.id.text1},
+        		SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
         //        R.array.planets_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
