@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 public class MenuFragment extends Fragment {
@@ -39,18 +38,8 @@ public class MenuFragment extends Fragment {
 		
 		View view = inflater.inflate(R.layout.menu_view, container, false);
 		
-		// Display the menu in a list
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(), //this context
-				android.R.layout.simple_list_item_1, //id of the item layout used by default for the individual rows (this id is pre-defined by Android)
-				//android.R.id.list,
-				//R.id.plats_list,
-				cursor,
-				new String[] { HorecaContract.Plat.NAME },
-				new int[] { android.R.id.text1 }); // the list of objects to be adapted
-		// to remove deprecation warning, I need to add ", 0" but it is only in API 11 and we need 2.3.3 which is API 10
-		
 		plats_list = (ListView) view.findViewById(R.id.plats_list);
-		plats_list.setAdapter(adapter);
+		plats_list.setAdapter(new MenuCursorAdapter(getActivity(), cursor));
 		
 		db.close(); // the adapter uses it so we can't do it earlier
 		
