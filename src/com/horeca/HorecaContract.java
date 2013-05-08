@@ -175,8 +175,12 @@ public class HorecaContract {
 		public static final int NAME_INDEX = 2;
 		public static final String PASSWORD = "password";
 		public static final int PASSWORD_INDEX = 3;
+		public static final String VILLE_ID = "ville_id";
+		public static final int VILLE_ID_INDEX = 4;
+		public static final String ADDRESS = "address";
+		public static final int ADDRESS_INDEX = 5;
 		public static final String[] COLUMN_NAMES = new String[]{_ID,
-			EMAIL, NAME, PASSWORD};
+			EMAIL, NAME, PASSWORD, VILLE_ID, ADDRESS};
 	}
 	public static abstract class Contient implements BaseColumns {
 		public static final String Q = "c";

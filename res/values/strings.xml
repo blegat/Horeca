@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    <color name="white">#FFFFFF</color>
 
     <string name="app_name">Horeca</string>
     <string name="title_Profile">Profile</string>
@@ -26,7 +28,7 @@
     <string name="button_choose_horeca">Search for a restaurant</string>
     <string name="title_activity_horeca_list">Restaurants in %1$s</string>
     <string name="ville_spinner_label"><b>City:</b></string>
-    <string name="ville_prompt">Restaurant type:</string>
+    <string name="ville_prompt">City:</string>
     <string name="horecatype_label"><b>Restaurant type*:</b></string>
     <string name="horecatype_placeholder">Any type</string>
     <string name="horecatype_prompt">Restaurant type:</string>
@@ -86,7 +88,7 @@
     <string name="invalid_amount_warning">Invalid amount</string>
     <string name="horeca_is_favorite">Is favorite:</string>
     <string name="name"><b>Name</b></string>
-    <string name="address">Address</string>
+    <string name="address"><b>Address:</b></string>
     <string name="change_pass_button">Change password</string>
 
 </resources>

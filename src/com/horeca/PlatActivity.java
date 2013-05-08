@@ -68,7 +68,7 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 		plat_name.setText(plat.getName());
 		
 		plat_price = (TextView) findViewById(R.id.plat_price);
-		plat_price.setText(((Double) plat.getPrice()).toString() + getResources().getString(R.string.plat_price_currency));
+		plat_price.setText(Utils.priceToString(plat.getPrice(), this));
 		
 		plat_description = (TextView) findViewById(R.id.plat_description);
 		if (plat.hasDescription()) {
