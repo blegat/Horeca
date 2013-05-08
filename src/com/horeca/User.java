@@ -1,5 +1,8 @@
 package com.horeca;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -27,7 +30,7 @@ public class User {
 			return INVALID_EMAIL;
 		} else {
 			user.name = name;
-			user.password = password; // hash it
+			user.setPassword(password);
 			user.ville = new Ville(ville_id, db);
 			user.address = address;
 			user.save(db);
@@ -108,10 +111,21 @@ public class User {
 	public String getAddress() {
 		return address;
 	}
+	private static String hashPassword(String password) {
+		try {
+			return AeSimpleSHA1.SHA1(password);
+		} catch (NoSuchAlgorithmException e) {
+			return password;
+		} catch (UnsupportedEncodingException e) {
+			return password;
+		}
+	}
+	private void setPassword(String password) {
+		this.password = hashPassword(password);
+	}
 	private boolean passwordEquals(String password) {
-		// TODO secure it
 		Log.i("eq", this.password + "?" + password + "?");
-		return this.password.equals(password);
+		return this.password.equals(hashPassword(password));
 	}
 	private void save(SQLiteDatabase db) {
 		ContentValues cv = new ContentValues();
@@ -131,7 +145,7 @@ public class User {
 			return PASSWORDS_DONT_MATCH;
 		} else {
 		    ContentValues cv = new ContentValues();
-		    cv.put(HorecaContract.User.PASSWORD, newPassword);
+		    cv.put(HorecaContract.User.PASSWORD, hashPassword(newPassword));
 		    db.update(HorecaContract.User.TABLE_NAME, cv, HorecaContract.User._ID + " = ?",
 		    		new String[]{String.valueOf(this.id)});
 			return SUCCESS;

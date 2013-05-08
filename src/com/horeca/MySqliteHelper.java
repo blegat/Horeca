@@ -267,13 +267,15 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		long user_ville_ids[] = {1};
 		String user_address[] = {"Rue de Bugdroid, 42"};
 		for (int i = 0; i < user_emails.length; i++) {
-			ContentValues cv = new ContentValues();
+			User.signUp(db, user_emails[i], user_names[i], user_passwords[i], user_passwords[i], user_ville_ids[i], user_address[i]);
+			User.signOut();
+			/*ContentValues cv = new ContentValues();
 			cv.put(HorecaContract.User.EMAIL, user_emails[i]);
 			cv.put(HorecaContract.User.NAME, user_names[i]);
 			cv.put(HorecaContract.User.PASSWORD, user_passwords[i]);
 			cv.put(HorecaContract.User.VILLE_ID, user_ville_ids[i]);
 			cv.put(HorecaContract.User.ADDRESS, user_address[i]);
-			db.insert(HorecaContract.User.TABLE_NAME, null, cv);
+			db.insert(HorecaContract.User.TABLE_NAME, null, cv);*/
 		}
 		
 		int user_id = 1;
