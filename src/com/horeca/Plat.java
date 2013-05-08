@@ -38,10 +38,8 @@ public class Plat {
 	private Horeca horeca;
 	private Ingredient[] ingredients;
 	//SQLiteDatabase db; // (1)
-<<<<<<< HEAD
 	private boolean isFavorite;
 	
-=======
 	public Plat (Cursor cursor) {
 		this.id = cursor.getLong(HorecaContract.Plat._ID_INDEX);
 		name = cursor.getString(HorecaContract.Plat.NAME_INDEX);
@@ -53,7 +51,6 @@ public class Plat {
 		}
 		// /!\ Missing ingredients and horeca
 	}
->>>>>>> 82dbca3b60610212dec930df02c7f6d0cdc2875b
 	public Plat (long id, SQLiteDatabase db) {
 		// this.db = db; // (1)
 		Cursor cursor = getCursor(db,
