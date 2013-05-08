@@ -78,7 +78,9 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 				HorecaContract.User._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				HorecaContract.User.EMAIL + " TEXT NOT NULL UNIQUE, " +
 				HorecaContract.User.NAME + " TEXT NOT NULL, " +
-				HorecaContract.User.PASSWORD + " TEXT NOT NULL);");
+				HorecaContract.User.PASSWORD + " TEXT NOT NULL, " +
+				HorecaContract.User.VILLE_ID + " INTEGER NOT NULL REFERENCES " + HorecaContract.Ville.TABLE_NAME + "(" + HorecaContract.Ville._ID + "), " +
+				HorecaContract.User.ADDRESS + " TEXT NOT NULL);");
 		db.execSQL("CREATE TABLE " + HorecaContract.Contient.TABLE_NAME + "(" +
 				HorecaContract.Contient.PLAT_ID + " INTEGER NOT NULL, " +
 				HorecaContract.Contient.INGREDIENT_ID + " INTEGER NOT NULL, " +
@@ -262,12 +264,16 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		String user_emails[] = {"jean@dupont.com"};
 		String user_names[] = {"Jean Dupont"};
 		String user_passwords[] = {"foobar"};
+		long user_ville_ids[] = {1};
+		String user_address[] = {"Rue de Bugdroid, 42"};
 		for (int i = 0; i < user_emails.length; i++) {
-			db.execSQL("INSERT INTO " + HorecaContract.User.TABLE_NAME + "(" +
-					HorecaContract.User.EMAIL + ", " + HorecaContract.User.NAME + ", " +
-					HorecaContract.User.PASSWORD + ") VALUES('" +
-					user_emails[i] + "', '" + user_names[i] + "', '" +
-					user_passwords[i] + "');");
+			ContentValues cv = new ContentValues();
+			cv.put(HorecaContract.User.EMAIL, user_emails[i]);
+			cv.put(HorecaContract.User.NAME, user_names[i]);
+			cv.put(HorecaContract.User.PASSWORD, user_passwords[i]);
+			cv.put(HorecaContract.User.VILLE_ID, user_ville_ids[i]);
+			cv.put(HorecaContract.User.ADDRESS, user_address[i]);
+			db.insert(HorecaContract.User.TABLE_NAME, null, cv);
 		}
 		
 		int user_id = 1;

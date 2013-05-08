@@ -17,7 +17,7 @@ public class User {
 	public static User getCurrentUser() {
 		return current_user;
 	}
-	public static int signUp(SQLiteDatabase db, String email, String name, String password, String passwordConfirmation) {
+	public static int signUp(SQLiteDatabase db, String email, String name, String password, String passwordConfirmation, long ville_id, String address) {
 		if (!password.equals(passwordConfirmation)) {
 			return PASSWORDS_DONT_MATCH;
 		}
@@ -28,6 +28,8 @@ public class User {
 		} else {
 			user.name = name;
 			user.password = password; // hash it
+			user.ville = new Ville(ville_id, db);
+			user.address = address;
 			user.save(db);
 			current_user = user;
 			return SUCCESS;
@@ -58,6 +60,8 @@ public class User {
 	private String email;
 	private String name;
 	private String password; // TODO secure it
+	private Ville ville;
+	private String address;
 	public User (long id, SQLiteDatabase db) {
 		Cursor cursor = getCursor(db, HorecaContract.User._ID + " = ?", new String[]{String.valueOf(id)});
 		cursor.moveToFirst();
@@ -65,7 +69,10 @@ public class User {
 		this.email = cursor.getString(HorecaContract.User.EMAIL_INDEX);
 		this.name = cursor.getString(HorecaContract.User.NAME_INDEX);
 		this.password = cursor.getString(HorecaContract.User.PASSWORD_INDEX);
+		long ville_id = cursor.getLong(HorecaContract.User.VILLE_ID_INDEX);
+		this.address = cursor.getString(HorecaContract.User.ADDRESS_INDEX);
 		cursor.close();
+		ville = new Ville(ville_id, db);
 	}
 	private User (String email, SQLiteDatabase db) {
 		Cursor cursor = getCursor(db, HorecaContract.User.EMAIL + " = ?", new String[]{email});
@@ -79,6 +86,9 @@ public class User {
 			this.email = cursor.getString(HorecaContract.User.EMAIL_INDEX);
 			this.name = cursor.getString(HorecaContract.User.NAME_INDEX);
 			this.password = cursor.getString(HorecaContract.User.PASSWORD_INDEX);
+			long ville_id = cursor.getLong(HorecaContract.User.VILLE_ID_INDEX);
+			this.address = cursor.getString(HorecaContract.User.ADDRESS_INDEX);
+			ville = new Ville(ville_id, db);
 		}
 		cursor.close();
 	}
@@ -92,6 +102,12 @@ public class User {
 	public String getName() {
 		return name;
 	}
+	public Ville getVille() {
+		return ville;
+	}
+	public String getAddress() {
+		return address;
+	}
 	private boolean passwordEquals(String password) {
 		// TODO secure it
 		Log.i("eq", this.password + "?" + password + "?");
@@ -102,6 +118,8 @@ public class User {
 		cv.put(HorecaContract.User.EMAIL, email);
 		cv.put(HorecaContract.User.NAME, name);
 		cv.put(HorecaContract.User.PASSWORD, password);
+		cv.put(HorecaContract.User.VILLE_ID, ville.getId());
+		cv.put(HorecaContract.User.ADDRESS, address);
 		this.id = db.insert(HorecaContract.User.TABLE_NAME, null, cv);
 		this.exists = true;
 	}

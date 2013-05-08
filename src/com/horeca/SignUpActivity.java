@@ -34,7 +34,7 @@ public class SignUpActivity extends MyActivity {
             	// On évite de garder la db ouverte trop longtemps
         		MySqliteHelper sqliteHelper = new MySqliteHelper(SignUpActivity.this);
         		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
-        		int err = User.signUp(db, new_email, new_name, new_psw, new_pswC);
+        		int err = User.signUp(db, new_email, new_name, new_psw, new_pswC, 1, "Rue de la paix, 1");
         		db.close();
         		if (err == User.INVALID_EMAIL) {
         			password_err.setVisibility(View.GONE);
