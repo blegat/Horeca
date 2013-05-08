@@ -115,7 +115,25 @@ public class HorecaContract {
 		public static final String[] COLUMN_NAMES = new String[]{_ID,
 			HORECA_ID, NAME, PRICE,
 			DESCRIPTION, STOCK};
+		public static final String[] COLUMN_NAMES_Q = new String[]{_ID_Q,
+			HORECA_ID_Q, NAME_Q, PRICE_Q,
+			DESCRIPTION_Q, STOCK_Q};
 	}
+	public static abstract class UserFavoritePlat implements BaseColumns{
+		public static final String Q = "ufp";
+		public static final String TABLE_NAME = "userfavoriteplat";
+		public static final String TABLE_NAME_Q = TABLE_NAME + " "+ Q;
+		public static final String _ID_Q = Q + "." + _ID;
+		public static final int _ID_INDEX = 0;
+		public static final String USER_ID = "user_id";
+		public static final String USER_ID_Q = Q + "." + USER_ID;
+		public static final int USER_ID_INDEX = 1;
+		public static final String PLAT_ID = "plat_id";
+		public static final String PLAT_ID_Q = Q + "." + "plat_id";
+		public static final int PLAT_ID_INDEX = 2;
+		public static final String[] COLUMN_NAMES = new String[]{_ID,USER_ID, PLAT_ID};
+		public static final String[] COLUMN_NAMES_Q = new String[]{_ID_Q,USER_ID_Q, PLAT_ID_Q};
+	} 
 	public static abstract class PlatType implements BaseColumns {
 		public static final String Q = "pt";
 		public static final String TABLE_NAME = "plattypes";

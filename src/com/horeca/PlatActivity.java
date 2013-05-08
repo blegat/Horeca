@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -107,7 +106,7 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 		commande_nombre = (EditText) findViewById(R.id.commande_nombre);
 		commande_button = (Button) findViewById(R.id.commande_button);
 		current_commandes_button = (Button) findViewById(R.id.current_commandes_button);
-		//favorite_label = (TextView) findViewById(R.id.plat_is_favorite);
+		favorite_label = (TextView) findViewById(R.id.plat_is_favorite);
 		favorite = (ImageButton) findViewById(R.id.favorite);
 		refreshSigning();
 	}
@@ -174,12 +173,21 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 	public void onResume() {
     	super.onResume();
     	if (User.isSignedIn()) {
+    		// FIXME only do it if necessary
+			MySqliteHelper sqliteHelper = new MySqliteHelper(this);
+			SQLiteDatabase db = sqliteHelper.getReadableDatabase();
+			
+			plat.refreshFavorite(db);
+			
+			db.close();
     		if (plat.isFavorite()) {
     			favorite.setImageResource(R.drawable.star_on);
     		} else {
     			favorite.setImageResource(R.drawable.star_off);
     		}
     		favorite.setOnClickListener(this);
+    		favorite_label.setVisibility(View.VISIBLE);
+    		favorite.setVisibility(View.VISIBLE);
     	} else {
     		favorite_label.setVisibility(View.GONE);
     		favorite.setVisibility(View.GONE);
@@ -188,32 +196,42 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 
 	@Override
 	public void onClick(View view) {
-		long nombre = 0;
-		try {
-			nombre = Long.parseLong(commande_nombre.getText().toString());
-		} catch (NumberFormatException e) {
-			nombre = 0;
-		}
-		if (nombre <= 0 || (plat.hasStock() && nombre > plat.getStock())) {
-			Toast.makeText(this, R.string.invalid_amount_warning, Toast.LENGTH_SHORT).show();
+		if (view == favorite) {
+			if (plat.isFavorite()) {
+				favorite.setImageResource(R.drawable.star_off);
+				MySqliteHelper sqliteHelper = new MySqliteHelper(this);
+				SQLiteDatabase db = sqliteHelper.getReadableDatabase();
+				plat.removeFavorite(db);
+				db.close();
+			} else {
+				MySqliteHelper sqliteHelper = new MySqliteHelper(this);
+				SQLiteDatabase db = sqliteHelper.getReadableDatabase();
+				favorite.setImageResource(R.drawable.star_on);
+				plat.setFavorite(db);
+				db.close();
+			}
 		} else {
-			MySqliteHelper sqliteHelper = new MySqliteHelper(this);
-			SQLiteDatabase db = sqliteHelper.getWritableDatabase();
-		
-			Commande.createCommande(db, plat,
-					new GregorianCalendar(commande_date.getYear(), commande_date.getMonth(),
-							commande_date.getDayOfMonth(), commande_time.getCurrentHour(),
-							commande_time.getCurrentMinute()).getTime(), nombre);
+			long nombre = 0;
+			try {
+				nombre = Long.parseLong(commande_nombre.getText().toString());
+			} catch (NumberFormatException e) {
+				nombre = 0;
+			}
+			if (nombre <= 0 || (plat.hasStock() && nombre > plat.getStock())) {
+				Toast.makeText(this, R.string.invalid_amount_warning, Toast.LENGTH_SHORT).show();
+			} else {
+				MySqliteHelper sqliteHelper = new MySqliteHelper(this);
+				SQLiteDatabase db = sqliteHelper.getWritableDatabase();
 			
-			refreshStock(db);
-		
-			db.close();
+				Commande.createCommande(db, plat,
+						new GregorianCalendar(commande_date.getYear(), commande_date.getMonth(),
+								commande_date.getDayOfMonth(), commande_time.getCurrentHour(),
+								commande_time.getCurrentMinute()).getTime(), nombre);
+				
+				refreshStock(db);
+			
+				db.close();
+			}
 		}
-		
 	}
-	
-	
-	
-	
-
 }

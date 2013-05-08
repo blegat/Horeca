@@ -14,14 +14,13 @@ public class Plat {
 	private static Cursor getCursor(SQLiteDatabase db, String selection, String[] selectionArgs) {
 		String sort = null;
 		if (User.isSignedIn()) {
-			sort = "(SELECT COUNT(*) FROM " + HorecaContract.UserFavoritePlat.TABLE_NAME_Q 
-				+ ", " + HorecaContract.Plat.TABLE_NAME_Q	
+			sort = "(SELECT COUNT(*) FROM " + HorecaContract.UserFavoritePlat.TABLE_NAME_Q
 				+ " WHERE " + HorecaContract.UserFavoritePlat.PLAT_ID_Q + " = " 
 				+ HorecaContract.Plat._ID_Q +" AND " + HorecaContract.UserFavoritePlat.USER_ID_Q 
 				+ " = " + User.getCurrentUser().getId()  + ") DESC";
 		}
-		return db.query(HorecaContract.Plat.TABLE_NAME,
-				HorecaContract.Plat.COLUMN_NAMES, selection, selectionArgs, null, null, sort, null);
+		return db.query(HorecaContract.Plat.TABLE_NAME_Q,
+				HorecaContract.Plat.COLUMN_NAMES_Q, selection, selectionArgs, null, null, sort);
 	}
 	private static Cursor getFavoriteCursor(SQLiteDatabase db, String selection, String[] selectionArgs) {
 		return db.query(HorecaContract.UserFavoritePlat.TABLE_NAME,
@@ -85,12 +84,7 @@ public class Plat {
 			cursor.moveToNext();
 		}
 		cursor.close();
-		Cursor cursorF = getFavoriteCursor(db, HorecaContract.UserFavoritePlat.USER_ID + "= ? AND "+
-				HorecaContract.UserFavoritePlat.PLAT_ID + "= ?",
-				new String[]{String.valueOf(User.getCurrentUser().getId()),String.valueOf(this.getId())});
-		cursorF.moveToFirst();
-		isFavorite=(cursorF.getCount()==1);
-		cursorF.close();
+		refreshFavorite(db);
 	}
 	public void reloadStock(SQLiteDatabase db) {
 		Cursor cursor = getCursor(db,
@@ -142,20 +136,30 @@ public class Plat {
 	public Ingredient[] getIngredients() {
 		return ingredients;
 	}
-	public boolean isFavorite(){
+	public void refreshFavorite(SQLiteDatabase db) {
+		if (User.isSignedIn()) {
+			Cursor cursorF = getFavoriteCursor(db, HorecaContract.UserFavoritePlat.USER_ID + "= ? AND "+
+				HorecaContract.UserFavoritePlat.PLAT_ID + "= ?",
+				new String[]{String.valueOf(User.getCurrentUser().getId()),String.valueOf(this.getId())});
+			cursorF.moveToFirst();
+			isFavorite = (cursorF.getCount()==1);
+			cursorF.close();
+		}
+	}
+	public boolean isFavorite() {
 		return isFavorite;
 	}
 	public void setFavorite(SQLiteDatabase db){
 		ContentValues cv = new ContentValues();
 		cv.put(HorecaContract.UserFavoritePlat.USER_ID, String.valueOf(User.getCurrentUser().getId()));
 		cv.put(HorecaContract.UserFavoritePlat.PLAT_ID, String.valueOf(this.getId()));
-		db.insert(HorecaContract.UserFavoriteHoreca.TABLE_NAME, null, cv);
+		db.insert(HorecaContract.UserFavoritePlat.TABLE_NAME, null, cv);
 		isFavorite=true;
 	}
 	public void removeFavorite(SQLiteDatabase db){
 		String where = HorecaContract.UserFavoritePlat.USER_ID + " = ? AND " + HorecaContract.UserFavoritePlat.PLAT_ID + " = ?";
 		String whereargs[] = {String.valueOf(User.getCurrentUser().getId()),String.valueOf(this.getId())};
-		db.delete(HorecaContract.UserFavoriteHoreca.TABLE_NAME,where,whereargs);
+		db.delete(HorecaContract.UserFavoritePlat.TABLE_NAME,where,whereargs);
 		isFavorite=false;
 	}
 }

@@ -65,7 +65,7 @@
     <string name="plat_stock_unknown">unknown</string>
     <string name="plat_ingredients_label"><b>Ingredients:</b></string>
     <string name="plat_ingredients_none">No ingredient.</string>
-    <string name="plat_is_favorite">Is favorite:</string>
+    <string name="plat_is_favorite"><b>Is favorite:</b></string>
     <string name="plat_favorite_description"><b>Is this plat one of your favorite?</b></string>
     <string name="menu"><b>Menu:</b></string>
     <string name="horaire"><b>Schedule:</b></string>
@@ -86,7 +86,7 @@
     <string name="commandes_list_label"><b>Orders (click to delete):</b></string>
     <string name="title_activity_commandes">CommandesActivity</string>
     <string name="invalid_amount_warning">Invalid amount</string>
-    <string name="horeca_is_favorite">Is favorite:</string>
+    <string name="horeca_is_favorite"><b>Is favorite:</b></string>
     <string name="name"><b>Name</b></string>
     <string name="address"><b>Address:</b></string>
     <string name="change_pass_button">Change password</string>

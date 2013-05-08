@@ -3,6 +3,7 @@ package com.horeca;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +78,7 @@ public class PresentationFragment extends Fragment implements AdapterView.OnClic
 		
 		favorite_label = (TextView) view.findViewById(R.id.horeca_is_favorite);
 		favorite = (ImageButton) view.findViewById(R.id.favorite);
+		Log.i("fav", favorite.toString());
 		return view;
     }
     
@@ -89,6 +91,8 @@ public class PresentationFragment extends Fragment implements AdapterView.OnClic
     			favorite.setImageResource(R.drawable.star_off);
     		}
     		favorite.setOnClickListener(this);
+    		favorite_label.setVisibility(View.VISIBLE);
+    		favorite.setVisibility(View.VISIBLE);
     	} else {
     		favorite_label.setVisibility(View.GONE);
     		favorite.setVisibility(View.GONE);

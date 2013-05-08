@@ -64,6 +64,10 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 				HorecaContract.Plat.DESCRIPTION + " TEXT, " +
 				HorecaContract.Plat.STOCK + " INTEGER, " +
 				"UNIQUE (" + HorecaContract.Plat.NAME + ", " + HorecaContract.Plat.HORECA_ID + "));");
+		db.execSQL("CREATE TABLE " + HorecaContract.UserFavoritePlat.TABLE_NAME + " (" +
+				HorecaContract.UserFavoritePlat._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				HorecaContract.UserFavoritePlat.USER_ID + " INTEGER NOT NULL, "+
+				HorecaContract.UserFavoritePlat.PLAT_ID + " INTEGER NOT NULL);"); 
 		db.execSQL("CREATE TABLE " + HorecaContract.PlatType.TABLE_NAME + "(" +
 				HorecaContract.PlatType._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				HorecaContract.PlatType.NAME + " TEXT NOT NULL UNIQUE);");
@@ -284,7 +288,11 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		HorecaContract.UserFavoriteHoreca.USER_ID + "," + HorecaContract.UserFavoriteHoreca.HORECA_ID + ") VALUES ('" + 
 					user_id + "', '" + horeca_id + "');");
 		
-
+		int plat_id=3;
+		db.execSQL("INSERT INTO " + HorecaContract.UserFavoritePlat.TABLE_NAME + "(" +
+				HorecaContract.UserFavoritePlat.USER_ID + "," + HorecaContract.UserFavoritePlat.PLAT_ID + ") VALUES ('" + 
+				user_id + "', '" + plat_id + "');");
+		
 		long contient_plat_ids[] = {4, 4, 5};
 		long contient_ingredient_ids[] = {1, 2, 3};
 		for (int i = 0; i < contient_plat_ids.length; i++) {
