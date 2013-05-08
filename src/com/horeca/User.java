@@ -61,9 +61,10 @@ public class User {
 	private boolean exists;
 	private String email;
 	private String name;
-	private String password; // TODO secure it
+	private String password;
 	private Ville ville;
 	private String address;
+	private String numtel;
 	public User (long id, SQLiteDatabase db) {
 		Cursor cursor = getCursor(db, HorecaContract.User._ID + " = ?", new String[]{String.valueOf(id)});
 		cursor.moveToFirst();
@@ -73,6 +74,7 @@ public class User {
 		this.password = cursor.getString(HorecaContract.User.PASSWORD_INDEX);
 		long ville_id = cursor.getLong(HorecaContract.User.VILLE_ID_INDEX);
 		this.address = cursor.getString(HorecaContract.User.ADDRESS_INDEX);
+		this.numtel = cursor.getString(HorecaContract.User.NUMTEL_INDEX);
 		cursor.close();
 		ville = new Ville(ville_id, db);
 	}
@@ -90,6 +92,7 @@ public class User {
 			this.password = cursor.getString(HorecaContract.User.PASSWORD_INDEX);
 			long ville_id = cursor.getLong(HorecaContract.User.VILLE_ID_INDEX);
 			this.address = cursor.getString(HorecaContract.User.ADDRESS_INDEX);
+			this.numtel = cursor.getString(HorecaContract.User.NUMTEL_INDEX);
 			ville = new Ville(ville_id, db);
 		}
 		cursor.close();
@@ -109,6 +112,19 @@ public class User {
 	}
 	public String getAddress() {
 		return address;
+	}
+	public boolean hasNumtel() {
+		return numtel != null;
+	}
+	public String getNumtel() {
+		return numtel;
+	}
+	public void setNumtel(SQLiteDatabase db, String numtel) {
+		this.numtel = numtel;
+	    ContentValues cv = new ContentValues();
+	    cv.put(HorecaContract.User.NUMTEL, numtel);
+	    db.update(HorecaContract.User.TABLE_NAME, cv, HorecaContract.User._ID + " = ?",
+	    		new String[]{String.valueOf(this.id)});
 	}
 	private static String hashPassword(String password) {
 		try {

@@ -32,6 +32,10 @@
             android:label="@string/title_sign_in" >
         </activity>
         <activity
+            android:name="com.horeca.AddNumberActivity"
+            android:label="@string/title_addnumtel" >
+        </activity>
+        <activity
             android:name="com.horeca.ChangePasswordActivity"
             android:label="@string/title_changepss" >
         </activity>

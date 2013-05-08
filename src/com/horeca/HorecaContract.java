@@ -180,8 +180,10 @@ public class HorecaContract {
 		public static final int VILLE_ID_INDEX = 4;
 		public static final String ADDRESS = "address";
 		public static final int ADDRESS_INDEX = 5;
+		public static final String NUMTEL = "numtel";
+		public static final int NUMTEL_INDEX = 6;
 		public static final String[] COLUMN_NAMES = new String[]{_ID,
-			EMAIL, NAME, PASSWORD, VILLE_ID, ADDRESS};
+			EMAIL, NAME, PASSWORD, VILLE_ID, ADDRESS, NUMTEL};
 	}
 	public static abstract class Contient implements BaseColumns {
 		public static final String Q = "c";

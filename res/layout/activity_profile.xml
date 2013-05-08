@@ -41,12 +41,22 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        style="@style/simple_text" />
-	     <TextView 
+	    <TextView 
            android:textIsSelectable="true"
             android:id="@+id/show_ville"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        style="@style/simple_text" />
+	   	<TextView 
+    	    android:textIsSelectable="true"
+   		    android:id="@+id/show_numtel"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/simple_text" />
+        <View
+        	android:layout_width="match_parent"
+         	android:layout_height="2dip"
+         	android:background="#FF909090" /> 
 	    <Button
 	        android:id="@+id/Change_psw"
 	        android:text="@string/Change_psw"

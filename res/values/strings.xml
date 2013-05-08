@@ -15,6 +15,7 @@
     <string name="mot_de_passe"><b>Password:</b></string>
     <string name="ancien_mdp"><b>Password :</b></string>
     <string name="nouveau_mdp"><b>New password :</b></string>
+    <string name="title_addnumtel">Telephone nubmer</string>
     <string name="title_changepss">Change password</string>
     <string name="password_confirmation"><b>Password confirmation</b></string>
     <string name="wrong_password">Wrong password.</string>
@@ -25,7 +26,8 @@
     <string name="action_signOut">Sign out</string>
     <string name="action_profile">Profile</string>
     <string name="number"><b>Number :</b></string>
-    <string name="add_number">Add number</string>
+    <string name="change_number">Change phone number</string>
+    <string name="add_number">Add phone number</string>
     
     <string name="button_choose_horeca">Search for a restaurant</string>
     <string name="title_activity_horeca_list">Restaurants in %1$s</string>

@@ -11,6 +11,7 @@ public class ProfileActivity extends MyActivity {
 	private TextView mail = null;
 	private TextView address = null;
 	private TextView ville = null;
+	private TextView numtel = null;
 	private Button button = null;
 	private Button buttonnumber = null;
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class ProfileActivity extends MyActivity {
 		address.setText(User.getCurrentUser().getAddress());
 		ville = (TextView) findViewById(R.id.show_ville);
 		ville.setText(User.getCurrentUser().getVille().getName());
+		numtel = (TextView) findViewById(R.id.show_numtel);
 	    button = (Button) findViewById(R.id.Change_psw);
 	    button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
@@ -36,6 +38,17 @@ public class ProfileActivity extends MyActivity {
             	startActivity(new Intent(ProfileActivity.this,AddNumberActivity.class));
             }
 	    });
+	}
+	public void onResume() {
+		super.onResume();
+		if (User.getCurrentUser().hasNumtel()) {
+			numtel.setText(User.getCurrentUser().getNumtel());
+			numtel.setVisibility(View.VISIBLE);
+			buttonnumber.setText(R.string.change_number);
+		} else {
+			numtel.setVisibility(View.GONE);
+			buttonnumber.setText(R.string.add_number);
+		}
 	}
 }
 

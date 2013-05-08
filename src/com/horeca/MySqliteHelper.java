@@ -84,7 +84,8 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 				HorecaContract.User.NAME + " TEXT NOT NULL, " +
 				HorecaContract.User.PASSWORD + " TEXT NOT NULL, " +
 				HorecaContract.User.VILLE_ID + " INTEGER NOT NULL REFERENCES " + HorecaContract.Ville.TABLE_NAME + "(" + HorecaContract.Ville._ID + "), " +
-				HorecaContract.User.ADDRESS + " TEXT NOT NULL);");
+				HorecaContract.User.ADDRESS + " TEXT NOT NULL, " +
+				HorecaContract.User.NUMTEL + " TEXT);");
 		db.execSQL("CREATE TABLE " + HorecaContract.Contient.TABLE_NAME + "(" +
 				HorecaContract.Contient.PLAT_ID + " INTEGER NOT NULL, " +
 				HorecaContract.Contient.INGREDIENT_ID + " INTEGER NOT NULL, " +
