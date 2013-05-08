@@ -14,6 +14,7 @@ public class SignUpActivity extends MyActivity {
 	private TextView password_err = null;
 	private TextView mail_err = null;
 	private EditText password_confirmation = null;
+	private EditText address = null;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_signup);
@@ -23,7 +24,8 @@ public class SignUpActivity extends MyActivity {
 		password_err = (TextView) findViewById(R.id.password_err);
 		mail_err = (TextView) findViewById(R.id.mail_err);
 		password_confirmation = (EditText) findViewById(R.id.password_confirmation);
-	    //setContentView(R.layout.activity_signup);
+		address = (EditText) findViewById(R.id.address);
+				//setContentView(R.layout.activity_signup);
 	    button = (Button) findViewById(R.id.sign_up_button);
 	    button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
@@ -31,10 +33,11 @@ public class SignUpActivity extends MyActivity {
             	String new_email = email.getText().toString();
             	String new_psw = password.getText().toString();
             	String new_pswC = password_confirmation.getText().toString();
+            	String new_address = address.getText().toString();
             	// On évite de garder la db ouverte trop longtemps
         		MySqliteHelper sqliteHelper = new MySqliteHelper(SignUpActivity.this);
         		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
-        		int err = User.signUp(db, new_email, new_name, new_psw, new_pswC, 1, "Rue de la paix, 1");
+        		int err = User.signUp(db, new_email, new_name, new_psw, new_pswC, new_address);
         		db.close();
         		if (err == User.INVALID_EMAIL) {
         			password_err.setVisibility(View.GONE);
