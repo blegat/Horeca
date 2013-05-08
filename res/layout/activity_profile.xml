@@ -53,5 +53,11 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        style="@style/simple_text"/>
+	    <Button
+	        android:id="@+id/add_number"
+	        android:text="@string/add_number"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/simple_text"/>
 	</LinearLayout>
 </ScrollView>

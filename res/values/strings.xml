@@ -24,6 +24,8 @@
     <string name="action_signIn">Sign in</string>
     <string name="action_signOut">Sign out</string>
     <string name="action_profile">Profile</string>
+    <string name="number"><b>Number :</b></string>
+    <string name="add_number">Add number</string>
     
     <string name="button_choose_horeca">Search for a restaurant</string>
     <string name="title_activity_horeca_list">Restaurants in %1$s</string>
