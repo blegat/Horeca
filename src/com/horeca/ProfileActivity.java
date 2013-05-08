@@ -12,6 +12,7 @@ public class ProfileActivity extends MyActivity {
 	private TextView address = null;
 	private TextView ville = null;
 	private Button button = null;
+	private Button buttonnumber = null;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_profile);
@@ -27,6 +28,12 @@ public class ProfileActivity extends MyActivity {
 	    button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
             	startActivity(new Intent(ProfileActivity.this,ChangePasswordActivity.class));
+            }
+	    });
+	    buttonnumber = (Button) findViewById(R.id.add_number);
+	    buttonnumber.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+            	startActivity(new Intent(ProfileActivity.this,AddNumberActivity.class));
             }
 	    });
 	}
