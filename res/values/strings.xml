@@ -68,7 +68,7 @@
     <string name="plat_is_favorite"><b>Is favorite:</b></string>
     <string name="plat_favorite_description"><b>Is this plat one of your favorite?</b></string>
     <string name="menu"><b>Menu:</b></string>
-    <string name="horaire"><b>Schedule:</b></string>
+    <string name="horaire"><b>Choose your slot:</b></string>
     <string name="title_activity_ouverture">Opening</string>
     <string name="ouverture_debut_label"><b>From:</b></string>
     <string name="ouverture_fin_label"><b>To:</b></string>
