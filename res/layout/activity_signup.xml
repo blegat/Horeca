@@ -53,6 +53,16 @@
 	        android:layout_height="wrap_content"
 	        style="@style/simple_text" />
 	    <TextView
+	        android:text="@string/ville_spinner_label"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/simple_text" />
+	    <Spinner
+	        android:id="@+id/ville_spinner_2"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/simple_text" />
+	    <TextView
 	        android:text="@string/mot_de_passe"
 	        android:textIsSelectable="true"
 	        android:layout_width="match_parent"
