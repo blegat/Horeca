@@ -61,14 +61,16 @@ public class HorecaContract {
 		public static final String Q = "ufh";
 		public static final String TABLE_NAME = "userfavoritehoreca";
 		public static final String TABLE_NAME_Q = TABLE_NAME + " "+ Q;
+		public static final String _ID_Q = Q + "." + _ID;
+		public static final int _ID_INDEX = 0;
 		public static final String USER_ID = "user_id";
 		public static final String USER_ID_Q = Q + "." + USER_ID;
-		public static final int USER_ID_INDEX = 0;
+		public static final int USER_ID_INDEX = 1;
 		public static final String HORECA_ID = "horeca_id";
 		public static final String HORECA_ID_Q = Q + "." + "horeca_id";
-		public static final int HORECA_ID_INDEX = 1;
-		public static final String[] COLUMN_NAMES = new String[]{USER_ID, HORECA_ID};
-		public static final String[] COLUMN_NAMES_Q = new String[]{USER_ID_Q, HORECA_ID_Q};
+		public static final int HORECA_ID_INDEX = 2;
+		public static final String[] COLUMN_NAMES = new String[]{_ID,USER_ID, HORECA_ID};
+		public static final String[] COLUMN_NAMES_Q = new String[]{_ID_Q,USER_ID_Q, HORECA_ID_Q};
 	}
 	public static abstract class HorecaType implements BaseColumns {
 		public static final String Q = "ht";
@@ -115,6 +117,21 @@ public class HorecaContract {
 		public static final String[] COLUMN_NAMES = new String[]{_ID,
 			HORECA_ID, NAME, PRICE,
 			DESCRIPTION, STOCK};
+	}
+	public static abstract class UserFavoritePlat implements BaseColumns{
+		public static final String Q = "ufp";
+		public static final String TABLE_NAME = "userfavoriteplat";
+		public static final String TABLE_NAME_Q = TABLE_NAME + " "+ Q;
+		public static final String _ID_Q = Q + "." + _ID;
+		public static final int _ID_INDEX = 0;
+		public static final String USER_ID = "user_id";
+		public static final String USER_ID_Q = Q + "." + USER_ID;
+		public static final int USER_ID_INDEX = 1;
+		public static final String PLAT_ID = "plat_id";
+		public static final String PLAT_ID_Q = Q + "." + "plat_id";
+		public static final int PLAT_ID_INDEX = 2;
+		public static final String[] COLUMN_NAMES = new String[]{_ID,USER_ID, PLAT_ID};
+		public static final String[] COLUMN_NAMES_Q = new String[]{_ID_Q,USER_ID_Q, PLAT_ID_Q};
 	}
 	public static abstract class PlatType implements BaseColumns {
 		public static final String Q = "pt";
@@ -165,13 +182,16 @@ public class HorecaContract {
 		public static final String Q = "c";
 		public static final String TABLE_NAME = "contients";
 		public static final String TABLE_NAME_Q = TABLE_NAME + " " + Q;
+		public static final String _ID_Q = Q + "." + _ID;
+		public static final int _ID_INDEX = 0;
 		public static final String PLAT_ID = "plat_id";
 		public static final String PLAT_ID_Q = Q + "." + PLAT_ID;
-		public static final int PLAT_ID_INDEX = 0;
+		public static final int PLAT_ID_INDEX = 1;
 		public static final String INGREDIENT_ID = "ingredient_id";
 		public static final String INGREDIENT_ID_Q = Q + "." + INGREDIENT_ID;
-		public static final int INGREDIENT_ID_INDEX = 1;
-		public static final String[] COLUMN_NAMES = new String[]{PLAT_ID, INGREDIENT_ID};
+		public static final int INGREDIENT_ID_INDEX = 2;
+		public static final String[] COLUMN_NAMES = new String[]{_ID,
+			PLAT_ID, INGREDIENT_ID};
 	}
 	public static abstract class Ouverture implements BaseColumns {
 		public static final String TABLE_NAME = "ouvertures";
@@ -235,15 +255,17 @@ public class HorecaContract {
 		public static final String DESCRIPTIONLABEL = "descriptionlabel";
 		public static final int DESCRIPTION_INDEX = 3;
 		public static final String[] COLUMN_NAMES = new String[]{_ID,
-		 PATH, NAME, DESCRIPTIONLABEL};
+		 PATH, NAME ,DESCRIPTIONLABEL};
 	}
 	public static abstract class LabelJoinHoreca implements BaseColumns {
 		public static final String TABLE_NAME = "LabelJoinHoreca"; 
+		public static final int _ID_INDEX = 0;
 		public static final String HORECA_ID = "horeca_id";
-		public static final int HORECA_ID_INDEX = 0;
+		public static final int HORECA_ID_INDEX = 1;
 		public static final String LABEL_ID = "label_id";
-		public static final int LABEL_ID_INDEX = 1;
+		public static final int LABEL_ID_INDEX = 2;
 		
-		public static final String[] COLUMN_NAMES = new String[]{HORECA_ID, LABEL_ID};
+		public static final String[] COLUMN_NAMES = new String[]{_ID,
+			HORECA_ID, LABEL_ID};
 	}
 }

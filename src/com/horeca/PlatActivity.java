@@ -8,9 +8,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -31,6 +33,8 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 	private TextView commande_nombre_label = null;
 	private Button commande_button = null;
 	private Button current_commandes_button = null;
+	private ImageButton favorite = null;
+	private TextView favorite_label = null;
 	
 	private Plat plat = null;
 
@@ -103,6 +107,8 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 		commande_nombre = (EditText) findViewById(R.id.commande_nombre);
 		commande_button = (Button) findViewById(R.id.commande_button);
 		current_commandes_button = (Button) findViewById(R.id.current_commandes_button);
+		//favorite_label = (TextView) findViewById(R.id.plat_is_favorite);
+		favorite = (ImageButton) findViewById(R.id.favorite);
 		refreshSigning();
 	}
 	
@@ -165,6 +171,20 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 		
 		db.close();
 	}
+	public void onResume() {
+    	super.onResume();
+    	if (User.isSignedIn()) {
+    		if (plat.isFavorite()) {
+    			favorite.setImageResource(R.drawable.star_on);
+    		} else {
+    			favorite.setImageResource(R.drawable.star_off);
+    		}
+    		favorite.setOnClickListener(this);
+    	} else {
+    		favorite_label.setVisibility(View.GONE);
+    		favorite.setVisibility(View.GONE);
+    	}
+    }
 
 	@Override
 	public void onClick(View view) {
@@ -189,6 +209,11 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 		
 			db.close();
 		}
+		
 	}
+	
+	
+	
+	
 
 }

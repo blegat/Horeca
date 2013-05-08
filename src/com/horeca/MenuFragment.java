@@ -62,8 +62,10 @@ public class MenuFragment extends Fragment {
         		startActivity(i);
 			}
 		});
+		
 		//return getListView();
         return view;
 	}
+	
 	
 }
