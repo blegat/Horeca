@@ -43,9 +43,12 @@ public class SignUpActivity extends MyActivity {
         //        R.array.planets_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        db.close();
+
         // Apply the adapter to the spinner
         ville_spinner_2.setAdapter(adapter);
+        
+        // Close the DB AFTER setAdapter !!!!!
+        db.close();
         ville_spinner_2.setOnItemSelectedListener(new OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view,
                     int pos, long id) {
