@@ -109,11 +109,11 @@ public class User {
 			String newPassword, String newPasswordConfirmation) {
 		if (!passwordEquals(currentPassword)) {
 			return INVALID_PASSWORD;
-		} else if (newPassword.equals(newPasswordConfirmation)) {
+		} else if (!newPassword.equals(newPasswordConfirmation)) {
 			return PASSWORDS_DONT_MATCH;
 		} else {
 		    ContentValues cv = new ContentValues();
-		    cv.put(HorecaContract.User.PASSWORD, currentPassword);
+		    cv.put(HorecaContract.User.PASSWORD, newPassword);
 		    db.update(HorecaContract.User.TABLE_NAME, cv, HorecaContract.User._ID + " = ?",
 		    		new String[]{String.valueOf(this.id)});
 			return SUCCESS;

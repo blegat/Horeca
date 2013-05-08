@@ -51,13 +51,14 @@ public class MyActivity extends Activity {
             return true;
         case R.id.action_signIn:
     		startActivity(new Intent(this, SignInActivity.class));
+    		return true;
         case R.id.action_signOut:
         	User.signOut();
         	refreshMenuSigning();
         	refreshSigning();
         	return true;
         case R.id.action_profile:
-        	//	startActivity(new Intent(this, ProfileActivity.class));
+        	startActivity(new Intent(this, ProfileActivity.class));
         	return true;
     	}
         return false;

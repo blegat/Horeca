@@ -22,7 +22,7 @@ public class ChangePasswordActivity extends MyActivity {
 		nouveau_mdp = (EditText) findViewById(R.id.nouveau_mdp);
 		confirmation_mdp = (EditText) findViewById(R.id.password_confirmation);
 		password_error=(TextView) findViewById(R.id.password_err);
-	//	password_error2=(TextView) findViewById(R.id.password_err2);
+		password_error2=(TextView) findViewById(R.id.password_err2);
 	    button = (Button) findViewById(R.id.change_pass_button);
 	    button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
@@ -34,6 +34,7 @@ public class ChangePasswordActivity extends MyActivity {
             	int err = User.getCurrentUser().updatePassword(db, ancienmdp, nouveaumdp, confirmmdp);
             	if (err == User.INVALID_PASSWORD) {
         			password_error.setVisibility(View.GONE);
+        			password_error2.setVisibility(View.VISIBLE);
         		} else if (err == User.PASSWORDS_DONT_MATCH) {
         			password_error.setVisibility(View.VISIBLE);
         			password_error2.setVisibility(View.GONE);
@@ -44,8 +45,7 @@ public class ChangePasswordActivity extends MyActivity {
         		}
             	
         		db.close();
-        		finish();
             }
-            });
+        });
 	}
 }
