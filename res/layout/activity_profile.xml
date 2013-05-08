@@ -12,18 +12,29 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-       <TextView 
-           android:textIsSelectable="true"
+        <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content" >
+        <TextView
             android:id="@+id/show_name"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        style="@style/simple_text" />
-	    <TextView 
-           android:textIsSelectable="true"
+            android:textIsSelectable="true"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentLeft="true"
+             style="@style/title_text" />
+        <TextView
             android:id="@+id/show_mail"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        style="@style/simple_text" />
+            android:textIsSelectable="true"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentRight="true"
+             android:layout_below="@id/show_name"
+             style="@style/simple_text" />
+        </RelativeLayout>
+        <View
+           android:layout_width="match_parent"
+         android:layout_height="2dip"
+         android:background="#FF909090" /> 
 	    <TextView 
            android:textIsSelectable="true"
             android:id="@+id/show_address"
