@@ -8,28 +8,45 @@ import android.database.sqlite.SQLiteDatabase;
 public class Label {
 	
 	private Picture image;
+	private String nameLabel;
 	private String Description;
 	private static String DefaultDescription="Ce label ne contient pas de description. Contactez l'administrateur système car c'est ce qu'il faut dire quand on ne sais pas vous aider. A ne pas consomer sans avis médical.";
 	private static String DefaultPath="https://encrypted-tbn1.gstatic.com/images?q=tbn:";
 	private static String DefaultName="ANd9GcQnhVhJaenGcxmb3a47IZN_PVo6ajoIqJX_UDnRbo1vxDFjvaui4g";
+	private static String defaultNameLabel="Pas de label disponible pour cet établissement";
 	
 	public Label(Cursor c){
 		this.image= new Picture (c.getString(HorecaContract.Label.PATH_INDEX),c.getString(HorecaContract.Label.NAME_INDEX));
 		this.Description=c.getString(HorecaContract.Label.DESCRIPTION_INDEX);
+		this.nameLabel=c.getString(HorecaContract.Label.NAMELABEL_INDEX);
 	}
 	
 	
-	public Label(String p, String nf, String desc){
+	public Label(String p, String nf, String nam, String desc){
 		this.image= new Picture (p,nf);
 		this.Description=desc;
+		this.nameLabel=nam;
+	}
+	
+	public Label(String p, String nf, String nam){
+		this.image= new Picture (p,nf);
+		this.nameLabel=nam;
+		this.Description=DefaultDescription;
 	}
 	
 	public Label(String p, String nf){
 		this.image= new Picture (p,nf);
 		this.Description=DefaultDescription;
+		this.nameLabel=defaultNameLabel;
 	}
 	
-	String getDescription(){
+	public Label(){
+		this.image= new Picture (DefaultPath,DefaultName);
+		this.Description=DefaultDescription;
+		this.nameLabel=defaultNameLabel;
+	}
+	
+	public String getDescription(){
 		return Description;
 	}
 	
@@ -41,6 +58,12 @@ public class Label {
 	}
 	public static String getDefaultDescription(){
 		return DefaultDescription;
+	}
+	public static String getDefaultNameLabel(){
+		return defaultNameLabel;
+	}
+	public String getNameLabel(){
+		return nameLabel;
 	}
 	
 	Picture getPicture(){
@@ -65,7 +88,7 @@ public class Label {
 		Cursor c=getCursorIdForLabel(db,horeca);
 		Cursor Cursortemp;
 		if(c.isAfterLast()){
-			Label temp=new Label(getDefaultPath(),getDefaultName(),getDefaultDescription());
+			Label temp=new Label();
 			veclabel.add(temp);
 		}
 		else{
@@ -80,7 +103,7 @@ public class Label {
 				c.moveToNext();
 			}
 			if(veclabel.size()==0){
-				Label temp=new Label(getDefaultPath(),getDefaultName(),getDefaultDescription());
+				Label temp=new Label();
 				veclabel.add(temp);
 			}
 		}

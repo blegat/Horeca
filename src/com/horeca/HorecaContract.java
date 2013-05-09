@@ -258,8 +258,10 @@ public class HorecaContract {
 		public static final int NAME_INDEX = 2;
 		public static final String DESCRIPTIONLABEL = "descriptionlabel";
 		public static final int DESCRIPTION_INDEX = 3;
+		public static final String NAMELABEL = "namelabel";
+		public static final int NAMELABEL_INDEX = 4;
 		public static final String[] COLUMN_NAMES = new String[]{_ID,
-		 PATH, NAME, DESCRIPTIONLABEL};
+		 PATH, NAME, DESCRIPTIONLABEL, NAMELABEL};
 	}
 	public static abstract class LabelJoinHoreca implements BaseColumns {
 		public static final String TABLE_NAME = "LabelJoinHoreca"; 

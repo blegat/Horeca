@@ -120,7 +120,8 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 				HorecaContract.Label._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				HorecaContract.Label.PATH + " TEXT NOT NULL, " +
 				HorecaContract.Label.NAME + "  TEXT NOT NULL UNIQUE, " +
-				HorecaContract.Label.DESCRIPTIONLABEL + "  TEXT NOT NULL);");
+				HorecaContract.Label.DESCRIPTIONLABEL + "  TEXT NOT NULL, " +
+				HorecaContract.Label.NAMELABEL + "  TEXT NOT NULL UNIQUE);");
 		db.execSQL("CREATE TABLE " + HorecaContract.LabelJoinHoreca.TABLE_NAME + "(" +
 				HorecaContract.LabelJoinHoreca.HORECA_ID + " INTEGER NOT NULL REFERENCES " + HorecaContract.Horeca.TABLE_NAME + "(" + HorecaContract.Horeca._ID + "), " +
 				HorecaContract.LabelJoinHoreca.LABEL_ID + "  INTEGER NOT NULL REFERENCES " + HorecaContract.Label.TABLE_NAME + "(" + HorecaContract.Label._ID + "), " +
@@ -175,11 +176,13 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		
 		String labelPicPath[] = {"https://encrypted-tbn0.gstatic.com/images?q=tbn:","http://www.autogrill.be/Backend/Data/FlashImages/"};
 		String labelPicName[] = {"ANd9GcS4J-bXI3jjTQZgtCUtMiX95nO5HC73ChWafb9BC0vB8kz5dh-9","000054.jpg"};
+		String labelName[] = {"Anti-fast-food","Meilleur restaurant du monde!"};
 		String labelDescription[] = {"Une description","Une autre description"};
 		for (int i = 0; i < labelPicPath.length; i++) {
 			ContentValues cv = new ContentValues();
 			cv.put(HorecaContract.Label.PATH, labelPicPath[i]);
 			cv.put(HorecaContract.Label.NAME, labelPicName[i]);
+			cv.put(HorecaContract.Label.NAMELABEL, labelName[i]);
 			cv.put(HorecaContract.Label.DESCRIPTIONLABEL, labelDescription[i]);
 			db.insert(HorecaContract.Label.TABLE_NAME, null, cv);
 		}

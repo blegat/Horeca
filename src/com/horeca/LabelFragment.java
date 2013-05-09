@@ -29,6 +29,7 @@ public class LabelFragment extends Fragment implements ViewBinder {
 	private Horeca horeca;
 	ImageView image;
 	TextView descriptionView;
+	TextView namelabelView;
 	@Override
 	public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
 		// TODO Auto-generated method stub
@@ -50,13 +51,18 @@ public class LabelFragment extends Fragment implements ViewBinder {
 		
 		this.vecLabel=horeca.getVectorLabel();
 		
+
+	    Log.e("LabelFragment",vecLabel.get(0).getDescription());
+	    Log.e("LabelFragment",vecLabel.get(0).getNameLabel());
+		
 		this.image = (ImageView) contentView.findViewById(R.id.imageView1);
+		this.namelabelView = (TextView) contentView.findViewById(R.id.labelname);
+		namelabelView.setText(vecLabel.get(0).getNameLabel());
 		this.descriptionView = (TextView) contentView.findViewById(R.id.descriptionLabel);
 		descriptionView.setText(vecLabel.get(0).getDescription());
 		
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); 
 	    StrictMode.setThreadPolicy(policy);
-	    Log.e("LabelFragment",vecLabel.get(0).getPicture().getCompletePath());
 		downloadImage(vecLabel.get(0).getPicture().getCompletePath());
 		
 	    return contentView;

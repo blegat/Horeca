@@ -28,7 +28,6 @@ public class HorecaActivity extends FragmentActivity {
         		getResources().getString(R.string.menu_tab),
         		getResources().getDrawable(android.R.drawable.ic_menu_agenda)),
         		MenuFragment.class, null);
-        // Affichage de photo d'horeca
         tabHost.addTab(tabHost.newTabSpec("photos").setIndicator(
         		getResources().getString(R.string.picture_tab),
         		getResources().getDrawable(android.R.drawable.ic_menu_gallery)),
