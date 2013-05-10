@@ -25,6 +25,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -51,6 +52,7 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 	private Button current_commandes_button = null;
 	private ImageButton favorite = null;
 	private TextView favorite_label = null;
+	private LinearLayout linlayout = null;
 	
 	private Plat plat = null;
 
@@ -74,7 +76,7 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 		// Get the plat from the db
 		plat = new Plat(id, db);
 		vecPic=plat.getVecPic();
-		Log.e("Platactivity",String.valueOf(vecPic.size()));
+		maxIndex=vecPic.size()-1;
 		
 		// close the db, everything has been loaded in the constructor of Plat
 		db.close();
@@ -87,6 +89,8 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 		horeca_name = (TextView) findViewById(R.id.horeca_name);
 		horeca_name.setText(plat.getHoreca().getName());
 		
+		linlayout = (LinearLayout) findViewById(R.id.LinLay);
+		
 		plat_name = (TextView) findViewById(R.id.plat_name);
 		plat_name.setText(plat.getName());
 		
@@ -95,9 +99,10 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 		
 		image_Plat = (ImageView) findViewById(R.id.image_plat_view_id);
 		updateImagePlat(0);
-		this.image_Plat.setOnTouchListener(
+		this.linlayout.setOnTouchListener(
 	            new View.OnTouchListener() {
 	            	float x1, x2, y1, y2, t1nano, t2nano;
+	            	boolean mustBeChanged = false ;
 	            	
 	                public boolean onTouch(View myView, MotionEvent event) {
 	                    int action = event.getAction();
@@ -115,10 +120,11 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 	                    }
 		                if(isMovementLeftToRight(x1,x2,y1,y2,t1nano,t2nano)){
 		                	plat_index ++;
+		                	mustBeChanged=true;
 		                };
 		                if(isMovementRightToLeft(x1,x2,y1,y2,t1nano,t2nano)){
 		                	plat_index --;
-
+		                	mustBeChanged=true;
 		                };
 		                
 		                if(plat_index <0){
@@ -127,8 +133,10 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 		        		if(plat_index >maxIndex){
 		        			plat_index =maxIndex;
 		        		}
-
-		        		updateImagePlat(plat_index );
+		        		if(mustBeChanged){
+		        			mustBeChanged = false;
+			        		updateImagePlat(plat_index);
+		        		}
 	                    return true;
 	                }
 	            }    
