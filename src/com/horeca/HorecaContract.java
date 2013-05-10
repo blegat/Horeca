@@ -272,4 +272,16 @@ public class HorecaContract {
 		
 		public static final String[] COLUMN_NAMES = new String[]{HORECA_ID, LABEL_ID};
 	}
+	public static abstract class PlatPicture implements BaseColumns {
+		public static final String TABLE_NAME = "platpictures"; 
+		public static final int _ID_INDEX = 0;
+		public static final String PLAT_ID = "plat_id";
+		public static final int PLAT_ID_INDEX = 1;
+		public static final String PATH = "path_picture";
+		public static final int PATH_INDEX = 2;
+		public static final String NAME = "name_picture";
+		public static final int NAME_INDEX = 3;
+		public static final String[] COLUMN_NAMES = new String[]{_ID,
+			PLAT_ID, PATH, NAME};
+	}
 }

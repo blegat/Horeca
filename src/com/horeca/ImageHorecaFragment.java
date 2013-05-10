@@ -26,20 +26,21 @@ import android.widget.SimpleCursorAdapter.ViewBinder;
 
 public class ImageHorecaFragment extends Fragment implements ViewBinder {
 
+	View contentView ;
 	ImageView image;
 	Button button;
 	static int pictureIndex=0;
 	static int maxIndex;
 	Horeca horeca;
-	static protected Vector<Picture> vecPic;
+	private Vector<Picture> vecPic;
 	
 	
+	public String  getCompletePathForPicture(int index){
+		return this.getVecPic().get(pictureIndex).getCompletePath();
+	}
 	
-	
-	static String  getCompletePathForPicture(int index){
-		
-		Log.e("getCompletePath ImageHorecaFragment",String.valueOf(index));
-		return vecPic.get(pictureIndex).getCompletePath();
+	public Vector<Picture> getVecPic(){
+		return vecPic;
 	}
 	
 	public void buildVectorImages(){
@@ -58,23 +59,24 @@ public class ImageHorecaFragment extends Fragment implements ViewBinder {
 	@SuppressLint("NewApi")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-	    View contentView = inflater.inflate(R.layout.image_horeca_view, container, false);
+	    this.contentView = inflater.inflate(R.layout.image_horeca_view, container, false);
 	    
 	    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); 
 	    StrictMode.setThreadPolicy(policy);
-
+	    
 	    image = (ImageView) contentView.findViewById(R.id.imageView1);
 	    buildVectorImages();
 	    maxIndex=vecPic.size()-1;
 	    
 	    downloadImage(this.vecPic.get(0).getCompletePath());
 	    
-	    image.setOnTouchListener(
+	    this.contentView.setOnTouchListener(
 	            new View.OnTouchListener() {
 	            	float x1, x2, y1, y2, t1nano, t2nano;
 	            	
 	                public boolean onTouch(View myView, MotionEvent event) {
 	                    int action = event.getAction();
+	                    boolean mustBeCHanged=false;
 	                    if (action==MotionEvent.ACTION_DOWN)
 	                    {
 	                    	x1=(float) event.getX();
@@ -89,9 +91,11 @@ public class ImageHorecaFragment extends Fragment implements ViewBinder {
 	                    }
 		                if(isMovementLeftToRight(x1,x2,y1,y2,t1nano,t2nano)){
 		                	pictureIndex++;
+		                    mustBeCHanged=true;
 		                };
 		                if(isMovementRightToLeft(x1,x2,y1,y2,t1nano,t2nano)){
 		                	pictureIndex--;
+		                	mustBeCHanged=true;
 		                };
 		                
 		                if(pictureIndex<0){
@@ -100,8 +104,11 @@ public class ImageHorecaFragment extends Fragment implements ViewBinder {
 		        		if(pictureIndex>maxIndex){
 		        			pictureIndex=maxIndex;
 		        		}
-
+		        			
+		        		if (mustBeCHanged){
 	                	downloadImage(getCompletePathForPicture(pictureIndex));
+	                	mustBeCHanged=false;
+		        		}
 	                    return true;
 	                }
 	            }    
@@ -146,9 +153,7 @@ public class ImageHorecaFragment extends Fragment implements ViewBinder {
 		}
 		float diffX = x2 - x1 ;
 		float velocity = Math.abs(diffX*1000000000)/(t2nano-t1nano);
-		Log.e("Velocity",String.valueOf(velocity));
 		if (Math.abs(diffX) > SWIPE_MIN_DIFF_X && velocity > SWIPE_MIN_VELOCITY) {
-		// if diff <0 SWIPE right to left, if diff>0 SWIPE left to right
 			if(diffX<0){
 				return true;
 			}
@@ -167,7 +172,6 @@ public class ImageHorecaFragment extends Fragment implements ViewBinder {
 		float diffX = x2 - x1 ;
 		float velocity = Math.abs(diffX*1000000000)/(t2nano-t1nano);
 		if (Math.abs(diffX) > SWIPE_MIN_DIFF_X && velocity > SWIPE_MIN_VELOCITY) {
-		// if diff <0 SWIPE right to left, if diff>0 SWIPE left to right
 			if(diffX>0){
 				return true;
 			}

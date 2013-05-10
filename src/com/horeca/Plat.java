@@ -1,10 +1,15 @@
 package com.horeca;
 
+import java.util.Vector;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 public class Plat {
+	
+	private static String defaultpath="http://www.direct-signaletique.com/";
+	private static String defaultnamefile="I-Grande-2995-panneaux-d-interdiction-pic-234.net.jpg";
 	
 	public static Cursor getAllPlatsInHoreca(SQLiteDatabase db, Horeca horeca) {
 		return getCursor(db,
@@ -38,6 +43,7 @@ public class Plat {
 	private Ingredient[] ingredients;
 	//SQLiteDatabase db; // (1)
 	private boolean isFavorite;
+	Vector<Picture> vecPic;
 	
 	public Plat (Cursor cursor) {
 		this.id = cursor.getLong(HorecaContract.Plat._ID_INDEX);
@@ -64,6 +70,7 @@ public class Plat {
 		//     because that way the db can be closed after this contructor
 		//     A boolean could be passed to this constructor to tweak this
 		//     behavior
+		this.vecPic=convertCursorToVectorImage(Picture.getAllPicturesForPlat(db,this));
 		name = cursor.getString(HorecaContract.Plat.NAME_INDEX);
 		price = ((double) cursor.getLong(HorecaContract.Plat.PRICE_INDEX)) / 100;
 		description = cursor.getString(HorecaContract.Plat.DESCRIPTION_INDEX);
@@ -162,4 +169,28 @@ public class Plat {
 		db.delete(HorecaContract.UserFavoritePlat.TABLE_NAME,where,whereargs);
 		isFavorite=false;
 	}
+
+
+	private static Vector<Picture> convertCursorToVectorImage(Cursor cursor){
+		Vector<Picture> vecimg = new Vector<Picture>(0);
+		if(cursor.getCount()==0){
+			Picture temp=new Picture(defaultpath,defaultnamefile);
+			vecimg.addElement(temp);
+		}
+		else{
+			cursor.moveToFirst();
+			while (!cursor.isAfterLast()) {
+				Picture temp = new Picture(cursor);
+				vecimg.addElement(temp);
+				cursor.moveToNext();
+			};
+		}
+		cursor.close();
+		return vecimg;
+	}
+	
+	Vector<Picture> getVecPic(){
+		return this.vecPic;
+	}
+	
 }

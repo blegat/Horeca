@@ -11,14 +11,16 @@ public class Horeca {
 	private static String defaultpath="http://www.direct-signaletique.com/";
 	private static String defaultnamefile="I-Grande-2995-panneaux-d-interdiction-pic-234.net.jpg";
 	
-	private static Cursor getCursor(SQLiteDatabase db, String selection, String[] selectionArgs) {
-		return db.query(HorecaContract.Horeca.TABLE_NAME,
-				HorecaContract.Horeca.COLUMN_NAMES, selection, selectionArgs, null, null, null);
-	}
 	private static Cursor getFavoriteCursor(SQLiteDatabase db, String selection, String[] selectionArgs) {
 		return db.query(HorecaContract.UserFavoriteHoreca.TABLE_NAME,
 				HorecaContract.UserFavoriteHoreca.COLUMN_NAMES, selection, selectionArgs, null, null, null);
 	}
+	
+	private static Cursor getCursor(SQLiteDatabase db, String selection, String[] selectionArgs) {
+		return db.query(HorecaContract.Horeca.TABLE_NAME,
+				HorecaContract.Horeca.COLUMN_NAMES, selection, selectionArgs, null, null, null);
+	}
+	
 
 	private static Vector<Picture> convertCursorToVectorImage(Cursor cursor){
 		Vector<Picture> vecimg = new Vector<Picture>(0);

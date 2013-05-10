@@ -166,5 +166,12 @@
 	   	    android:layout_width="fill_parent"
 	   	    android:layout_height="wrap_content"
 	   	    android:text="@string/current_commandes_button_label" />
+
+	   	<ImageView
+	   	    android:id="@+id/image_plat_view_id"
+	   	    android:layout_width="match_parent"
+	   	    android:layout_height="217dp"
+	   	    android:src="@drawable/ic_launcher" />
+
    	</LinearLayout>
 </ScrollView>

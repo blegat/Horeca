@@ -15,13 +15,21 @@ public class Picture {
 	}
 
 	public static Cursor getAllPicturesForHoreca(SQLiteDatabase db, Horeca horeca) {
-		Log.e("Horeca",String.valueOf(horeca.getId()));
 		return getCursor(db,
 				HorecaContract.Picture.HORECA_ID + " = ?",
 				new String[]{((Long) horeca.getId()).toString()});
 	    
 	}
-	
+	public static Cursor getAllPicturesForPlat(SQLiteDatabase db, Plat plat) {
+		return getPlatCursor(db,
+				HorecaContract.PlatPicture.PLAT_ID + " = ?",
+				new String[]{((Long) plat.getId()).toString()});
+	    
+	}
+	private static Cursor getPlatCursor(SQLiteDatabase db, String selection, String[] selectionArgs) {
+		return db.query(HorecaContract.PlatPicture.TABLE_NAME,
+				HorecaContract.PlatPicture.COLUMN_NAMES, selection, selectionArgs, null, null, null);
+	}
 	private static Cursor getCursor(SQLiteDatabase db, String selection, String[] selectionArgs) {
 		return db.query(HorecaContract.Picture.TABLE_NAME,
 				HorecaContract.Picture.COLUMN_NAMES, selection, selectionArgs, null, null, null);

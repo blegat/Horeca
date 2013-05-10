@@ -1,17 +1,30 @@
 package com.horeca;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Vector;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -24,6 +37,10 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 	private TextView plat_description = null;
 	private TextView plat_stock = null;
 	private TextView plat_ingredients = null;
+	private ImageView image_Plat = null;
+	int plat_index = 0;
+	int maxIndex=0;
+	Vector<Picture> vecPic;
 	
 	private View commande_sep = null;
 	private DatePicker commande_date = null;
@@ -37,6 +54,7 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 	
 	private Plat plat = null;
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,12 +63,18 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 		Bundle b = getIntent().getExtras();
 		long id = b.getLong("_id");
 		
+		// Remove Strict mode to be allowed to download new pictures from the internet
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); 
+	    StrictMode.setThreadPolicy(policy);
+		
 		// Open the db
 		MySqliteHelper sqliteHelper = new MySqliteHelper(this);
 		SQLiteDatabase db = sqliteHelper.getReadableDatabase();
 		
 		// Get the plat from the db
 		plat = new Plat(id, db);
+		vecPic=plat.getVecPic();
+		Log.e("Platactivity",String.valueOf(vecPic.size()));
 		
 		// close the db, everything has been loaded in the constructor of Plat
 		db.close();
@@ -69,6 +93,48 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 		plat_price = (TextView) findViewById(R.id.plat_price);
 		plat_price.setText(Utils.priceToString(plat.getPrice(), this));
 		
+		image_Plat = (ImageView) findViewById(R.id.image_plat_view_id);
+		updateImagePlat(0);
+		this.image_Plat.setOnTouchListener(
+	            new View.OnTouchListener() {
+	            	float x1, x2, y1, y2, t1nano, t2nano;
+	            	
+	                public boolean onTouch(View myView, MotionEvent event) {
+	                    int action = event.getAction();
+	                    if (action==MotionEvent.ACTION_DOWN)
+	                    {
+	                    	x1=(float) event.getX();
+	                    	y1=(float) event.getY();
+	                    	t1nano=(float) System.nanoTime();
+	                    }
+	                    if (action==MotionEvent.ACTION_UP)
+	                    {
+	                    	x2=(float) event.getX();
+	                    	y2=(float) event.getY();
+	                    	t2nano=(float) System.nanoTime();
+	                    }
+		                if(isMovementLeftToRight(x1,x2,y1,y2,t1nano,t2nano)){
+		                	plat_index ++;
+		                };
+		                if(isMovementRightToLeft(x1,x2,y1,y2,t1nano,t2nano)){
+		                	plat_index --;
+
+		                };
+		                
+		                if(plat_index <0){
+		                	plat_index =0;
+		        		}
+		        		if(plat_index >maxIndex){
+		        			plat_index =maxIndex;
+		        		}
+
+		        		updateImagePlat(plat_index );
+	                    return true;
+	                }
+	            }    
+	            );
+
+				
 		plat_description = (TextView) findViewById(R.id.plat_description);
 		if (plat.hasDescription()) {
 			plat_description.setText(plat.getDescription());
@@ -234,4 +300,65 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 			}
 		}
 	}
+public boolean isMovementLeftToRight(float x1, float x2, float y1, float y2, float t1nano, float t2nano) {
+		
+		final int SWIPE_MIN_DIFF_X = 100;
+		final int SWIPE_MAX_DIFF_Y = 100;
+		final int SWIPE_MIN_VELOCITY = 500;
+		
+		if(Math.abs(y1 - y2) > SWIPE_MAX_DIFF_Y) {
+		return false;
+		}
+		float diffX = x2 - x1 ;
+		float velocity = Math.abs(diffX*1000000000)/(t2nano-t1nano);
+		if (Math.abs(diffX) > SWIPE_MIN_DIFF_X && velocity > SWIPE_MIN_VELOCITY) {
+		// if diff <0 SWIPE right to left, if diff>0 SWIPE left to right
+			if(diffX<0){
+				return true;
+			}
+		}
+		return false;
+	}
+	public boolean isMovementRightToLeft(float x1, float x2, float y1, float y2, float t1nano, float t2nano) {
+		
+		final int SWIPE_MIN_DIFF_X = 100;
+		final int SWIPE_MAX_DIFF_Y = 100;
+		final int SWIPE_MIN_VELOCITY = 500;
+		
+		if(Math.abs(y1 - y2) > SWIPE_MAX_DIFF_Y) {
+		return false;
+		}
+		float diffX = x2 - x1 ;
+		float velocity = Math.abs(diffX*1000000000)/(t2nano-t1nano);
+		if (Math.abs(diffX) > SWIPE_MIN_DIFF_X && velocity > SWIPE_MIN_VELOCITY) {
+		// if diff <0 SWIPE right to left, if diff>0 SWIPE left to right
+			if(diffX>0){
+				return true;
+			}
+		}
+		return false;
+	}
+	private void updateImagePlat(int labelIndex){
+		downloadImage(vecPic.get(plat_index).getCompletePath());
+	}
+	
+	private void downloadImage(String imageURL) {
+
+		Bitmap bitmap = null;
+
+		try {
+
+		URL urlImage = new URL(imageURL);
+		HttpURLConnection connection = (HttpURLConnection) urlImage.openConnection();
+		InputStream inputStream = connection.getInputStream();
+		bitmap = BitmapFactory.decodeStream(inputStream);
+		image_Plat.setImageBitmap(bitmap);
+
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		}
 }

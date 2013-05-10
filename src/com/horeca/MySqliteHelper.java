@@ -126,6 +126,11 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 				HorecaContract.LabelJoinHoreca.HORECA_ID + " INTEGER NOT NULL REFERENCES " + HorecaContract.Horeca.TABLE_NAME + "(" + HorecaContract.Horeca._ID + "), " +
 				HorecaContract.LabelJoinHoreca.LABEL_ID + "  INTEGER NOT NULL REFERENCES " + HorecaContract.Label.TABLE_NAME + "(" + HorecaContract.Label._ID + "), " +
 				"PRIMARY KEY (" + HorecaContract.LabelJoinHoreca.HORECA_ID + ", " + HorecaContract.LabelJoinHoreca.LABEL_ID + "));");
+		db.execSQL("CREATE TABLE " + HorecaContract.PlatPicture.TABLE_NAME + "(" +
+				HorecaContract.PlatPicture._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				HorecaContract.PlatPicture.PLAT_ID + " INTEGER NOT NULL REFERENCES " + HorecaContract.Plat.TABLE_NAME + "(" + HorecaContract.Plat._ID + "), " +
+				HorecaContract.PlatPicture.PATH + " TEXT NOT NULL, " +
+				HorecaContract.PlatPicture.NAME + "  TEXT NOT NULL);");
 	}	
 	
 	public void populateDatabase(SQLiteDatabase db) {
@@ -172,6 +177,16 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 			cv.put(HorecaContract.Picture.PATH, picturesPath[i]);
 			cv.put(HorecaContract.Picture.NAME, picturesName[i]);
 			db.insert(HorecaContract.Picture.TABLE_NAME, null, cv);
+		}
+		String picturesPlatPath[] = {"http://www.reklampub.com/wp-content/uploads/2012/10/","http://www.autogrill.be/Backend/Data/FlashImages/"};
+		String picturesPlatName[] = {"quick.jpg","000054.jpg"};
+		long platID_s[] = {1,1};
+		for (int i = 0; i < picturesPath.length; i++) {
+			ContentValues cv = new ContentValues();
+			cv.put(HorecaContract.PlatPicture.PLAT_ID, platID_s[i]);
+			cv.put(HorecaContract.PlatPicture.PATH, picturesPlatPath[i]);
+			cv.put(HorecaContract.PlatPicture.NAME, picturesPlatName[i]);
+			db.insert(HorecaContract.PlatPicture.TABLE_NAME, null, cv);
 		}
 		
 		String labelPicPath[] = {"https://encrypted-tbn0.gstatic.com/images?q=tbn:","http://www.autogrill.be/Backend/Data/FlashImages/"};
@@ -346,6 +361,7 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Picture.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.Label.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.LabelJoinHoreca.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + HorecaContract.PlatPicture.TABLE_NAME);
 	}
 
 }
