@@ -168,9 +168,9 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 			db.insert(HorecaContract.Horeca.TABLE_NAME, null, cv);
 		}
 		
-		String picturesPath[] = {"http://www.reklampub.com/wp-content/uploads/2012/10/","http://www.autogrill.be/Backend/Data/FlashImages/"};
-		String picturesName[] = {"quick.jpg","000054.jpg"};
-		long horecaID_s[] = {1,1};
+		String picturesPath[] = {"http://www.autogrill.be/Backend/Data/FlashImages/","http://www.reklampub.com/wp-content/uploads/2012/10/","http://static.lexpress.fr/medias/107/"};
+		String picturesName[] = {"000054.jpg","quick.jpg","hotel-george-v-restaurant-luxe_434.jpg"};
+		long horecaID_s[] = {1,1,2};
 		for (int i = 0; i < picturesPath.length; i++) {
 			ContentValues cv = new ContentValues();
 			cv.put(HorecaContract.Picture.HORECA_ID, horecaID_s[i]);
@@ -178,9 +178,14 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 			cv.put(HorecaContract.Picture.NAME, picturesName[i]);
 			db.insert(HorecaContract.Picture.TABLE_NAME, null, cv);
 		}
-		String picturesPlatPath[] = {"http://www.reklampub.com/wp-content/uploads/2012/10/","http://www.autogrill.be/Backend/Data/FlashImages/"};
-		String picturesPlatName[] = {"quick.jpg","000054.jpg"};
-		long platID_s[] = {1,1};
+		String picturesPlatPath[] = {"http://t1.gstatic.com/images?q=tbn:ANd9GcSgfT1kSXtFm2_Jpr5UX3GcEj684As4DshgGC31lcgSp2KGlrkHkw",
+				"http://t3.gstatic.com/images?q=tbn:ANd9GcSIoYK4lB1RB7wiPkOK9cCW66dtpkgrAO09iJuOsMLxI2KRE3lO",
+				"http://quick.com.mv/wp-content/uploads/recipes/chicken_nuggets.jpg"};
+		String picturesPlatName[] = {"",
+				"",
+				"",};
+		//long platID_s[] = {1,1,2,4,4,5,3,6,6,6,7};
+		long platID_s[] = {1,1,2};
 		for (int i = 0; i < picturesPath.length; i++) {
 			ContentValues cv = new ContentValues();
 			cv.put(HorecaContract.PlatPicture.PLAT_ID, platID_s[i]);

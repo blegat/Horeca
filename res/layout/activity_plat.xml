@@ -172,7 +172,7 @@
 	   	    android:id="@+id/image_plat_view_id"
 	   	    android:layout_width="match_parent"
 	   	    android:layout_height="217dp"
-	   	    android:src="@drawable/ic_launcher" />
+	   	    android:src="@drawable/nowifi" />
 
    	</LinearLayout>
 </ScrollView>
