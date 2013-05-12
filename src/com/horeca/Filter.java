@@ -27,6 +27,42 @@ public class Filter {
 		}
 	}
 	
+	private String op (String a, String b, String op) {
+		return "(" + a + " " + op + " " + b + ")";
+	}
+	private String times (String a, String b) {
+		return op(a, b, "*");
+	}
+	private String plus (String a, String b) {
+		return op(a, b, "+");
+	}
+	private String minus (String a, String b) {
+		return op(a, b, "-");
+	}
+	private String div (String a, String b) {
+		return op(a, b, "/");
+	}
+	private String sin (String a) {
+		return plus(a, div(times(times(a, a), a), "6"));
+	}
+	private String cos (String a) {
+		return minus("1", div(times(a, a), "2"));
+	}
+	private String acos (String a) {
+		return minus(minus("1.57", a), div(times(a, times(a, a)), "6"));
+	}
+	
+	private String degToRad (String deg) {
+		return times(deg, "0.01745327");
+	}
+	private String degToRad (double deg) {
+		return String.valueOf(deg * 0.01745327);
+	}
+	
+	private String dbToRad (String db) {
+		return degToRad(div(db, "1000000."));
+	}
+	
 	public Cursor getMatchingHorecas(SQLiteDatabase db, Context context, GPSTracker gps) {
 		String tables = HorecaContract.Horeca.TABLE_NAME_Q + ", " + HorecaContract.UserFavoriteHoreca.TABLE_NAME_Q;
 		String where = HorecaContract.Horeca.VILLE_ID_Q + " = " + String.valueOf(ville.getId());
@@ -71,15 +107,21 @@ public class Filter {
 		if (gps != null) {
 			double longitude = gps.getLongitude();
 			double latitude = gps.getLatitude();
-			String distSquared = "(" +
+			String lat1 = dbToRad(HorecaContract.Horeca.LONGITUDE_Q);
+			String lon1 = dbToRad(HorecaContract.Horeca.LATITUDE_Q);
+			String lat2 = degToRad(latitude);
+			String lon2 = degToRad(longitude);
+			/*String distSquared = "(" +
 					HorecaContract.Horeca.LONGITUDE_Q + " / 1000000. - " + longitude + ")*(" +
 					HorecaContract.Horeca.LONGITUDE_Q + " / 1000000. - " + longitude + ")+(" +
 					HorecaContract.Horeca.LATITUDE_Q + " / 1000000. - " + latitude + ")*(" +
-					HorecaContract.Horeca.LATITUDE_Q + " / 1000000. - " + latitude + ")";
+					HorecaContract.Horeca.LATITUDE_Q + " / 1000000. - " + latitude + ")";*/
+			String dist = times(acos(plus(times(sin(lat1), sin(lat2)), times(times(cos(lat1), cos(lat2)),
+					cos(minus(lon2, lon1))))), "6378100.");
 			if (hasMaxDistance) {
-				where = where + " AND " + distSquared + " < " + String.valueOf(maxDistance*maxDistance);
+				where = where + " AND " + dist + " < " + String.valueOf(maxDistance*maxDistance);
 			}
-			sort = addSort(sort, distSquared + " ASC");
+			sort = addSort(sort, dist + " ASC");
 		}
 		Log.i("where", where);
 		// We need to add UNIQ because the restaurant could have

@@ -141,15 +141,21 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 					HorecaContract.Ville.NAME + ", " + HorecaContract.Ville.CODEPOSTAL + ") VALUES('" +
 					ville_names[i] + "', '" + ville_codepostals[i] + "');");
 		}
-		String horeca_names[] = {"Quick", "Longeatude", "Crousty"};
-		long horeca_min_prices[] = {350, 3000, 230};
-		long horeca_max_prices[] = {890, 8900, 380};
-		double horeca_longitudes[] = {4613115, 4619547, 4616412};
-		double horeca_latitudes[] = {50669579, 50664065, 50669155};
-		long horeca_ville_ids[] = {1, 1, 1};
-		String horeca_numtels[] = {"01045424242", "01045007007", "01045454545"};
-		String horeca_horaires[] = {"24/24 7/7.", null, "Every day from 8h to 16h."};
-		String horeca_descriptions[] = {"Nous, c est le goût !", "Cher mais bon !", null};
+		String horeca_names[] = {"Quick", "Longeatude", "Crousty", "Il Doge"};
+		long horeca_min_prices[] = {350, 3000, 230, 1500};
+		long horeca_max_prices[] = {890, 8900, 380, 3000};
+		double horeca_longitudes[] = {4613115, 4619547, 4616412, 4612756};
+		double horeca_latitudes[] = {50669579, 50664065, 50669155, 50669167};
+		long horeca_ville_ids[] = {1, 1, 1, 1};
+		String horeca_numtels[] = {"+3232861811", "+3210456462", "+3210457552", "+3210453063"};
+		String horeca_horaires[] = {"24/24 7/7.",
+				"Ouvert du lundi au vendredi de 12 à 14h00 et de 19 à 22h00. Samedi de 19 à 22h00",
+				"Ouvert tous les jours de 8h à 16h.",
+				"Ouvert du mardi au dimanche, de 12h00 à 15h00 et de 18h00 à minuit. Nous sommes fermés le lundi."};
+		String horeca_descriptions[] = {"Nous, c'est le goût !",
+				"Un simple coup d'œil suffit à se rendre compte que vous n'êtes ni dans un restaurant. Ni dans un bar. Encore moins dans une galerie d’art. Et pourtant, vous prendrez l'apéritif au salon, vous dinerez dans la salle à manger et vous terminerez peut-être votre pousse-café au BAB'L devant une huile ou une aquarelle.",
+				null,
+				"Spécialités  composées principalement de produits de saison, carpaccios, pâtes fraîches et artisanales. Cave à vin exceptionnelle comptant plus de 130 références en vins italiens et grappas."};
 		for (int i = 0; i < horeca_names.length; i++) {
 			ContentValues cv = new ContentValues();
 			cv.put(HorecaContract.Horeca.NAME, horeca_names[i]);
@@ -233,41 +239,42 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 			db.insert(HorecaContract.HorecaTypeJoin.TABLE_NAME, null, cv);
 		}
 
-		String plat_names[] = {"CheeseBurger", "Chicken Wigs Truck", "Cake méditerranéen",
-					"Promenade de crustacés", "Gigondas", "Club", "Royal"};
+		String plat_names[] = {"CheeseBurger", "Chicken dips", "Caesar Salad",
+					"Promenade de crustacés", "Gigondas", "Club", "Royal",
+					"Carpaccio de saumon", "Brochette de scampis grillés",
+					"Escalope Il Doge", "Spaghetti du chef", "Hawaïenne"};
 		long plat_horeca_ids[] = {1, 1, 1,
-				2, 2, 3, 3};
-		long plat_prices[] = {300, 10000, 200,
-				3000, 5500, 250, 365};
+				2, 2, 3, 3,
+				4, 4, 4, 4, 4};
+		long plat_prices[] = {300, 210, 280,
+				3000, 5500, 250, 365,
+				1440, 1650, 1820, 1320, 1300};
 		String plat_descriptions[] = {
-				null,
-				"Huge amount of chicken",
+				"Un burger au goût d'origine garantie ! Simple mais efficace.",
+				"Des croustillants bâtonnets de poulet panés, moelleux et très savoureux.",
 				null,
 				"Le meilleur plat de crustacé de Belgique",
 				null,
 				"Sandwich simple",
-				"Sandwich magistral"};
+				"Sandwich magistral", null, null, null, null, null};
 		long plat_stocks[] = {-1, 4, 0,
-				2, 10, -1, 10};
+				2, 10, -1, 10,
+				4, -1, 8, 100, 10};
 		for (int i = 0; i < plat_names.length; i++) {
-			String column_names = HorecaContract.Plat.HORECA_ID + ", " +
-					HorecaContract.Plat.NAME + ", " +
-					HorecaContract.Plat.PRICE;
-			String column_values = "'" + plat_horeca_ids[i] + "', '" +
-					plat_names[i] + "', '" + plat_prices[i] + "'";
+			ContentValues cv = new ContentValues();
+			cv.put(HorecaContract.Plat.HORECA_ID, plat_horeca_ids[i]);
+			cv.put(HorecaContract.Plat.NAME, plat_names[i]);
+			cv.put(HorecaContract.Plat.PRICE, plat_prices[i]);
 			if (plat_descriptions[i] != null) {
-				column_names = column_names + ", " + HorecaContract.Plat.DESCRIPTION;
-				column_values = column_values + ", '" + plat_descriptions[i] + "'";
+				cv.put(HorecaContract.Plat.DESCRIPTION, plat_descriptions[i]);
 			}
 			if (plat_stocks[i] != -1) {
-				column_names = column_names + ", " + HorecaContract.Plat.STOCK;
-				column_values = column_values + ", '" + plat_stocks[i] + "'";
+				cv.put(HorecaContract.Plat.STOCK, plat_stocks[i]);
 			}
-			db.execSQL("INSERT INTO " + HorecaContract.Plat.TABLE_NAME + "(" +
-					column_names + ") VALUES(" + column_values + ");");
+			db.insert(HorecaContract.Plat.TABLE_NAME, null, cv);
 		}
 		
-		String plattype_names[] = {"Any type", "Sandwicherie"};
+		String plattype_names[] = {"Any type", "Sandwich"};
 		for (int i = 0; i < plattype_names.length; i++) {
 			ContentValues cv = new ContentValues();
 			cv.put(HorecaContract.PlatType.NAME, plattype_names[i]);
@@ -283,7 +290,9 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 			db.insert(HorecaContract.PlatTypeJoin.TABLE_NAME, null, cv);
 		}
 		
-		String ingredient_names[] = {"Homard", "Crabe", "Raisin"};
+		String ingredient_names[] = {"Homard", "Crabe", "Raisin",
+				"Crème", "Haché", "Champignons", "Fromage gratiné",
+				"Tomate", "Mozzarella", "Jambon", "Ananas", "Veau"};
 		for(String ingredient_name : ingredient_names) {
 			db.execSQL("INSERT INTO " + HorecaContract.Ingredient.TABLE_NAME + "(" +
 					HorecaContract.Ingredient.NAME + ") VALUES('" + ingredient_name + "');");
@@ -317,8 +326,10 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 				HorecaContract.UserFavoritePlat.USER_ID + "," + HorecaContract.UserFavoritePlat.PLAT_ID + ") VALUES ('" + 
 				user_id + "', '" + plat_id + "');");
 		
-		long contient_plat_ids[] = {4, 4, 5};
-		long contient_ingredient_ids[] = {1, 2, 3};
+		long contient_plat_ids[] = {4, 4, 5, 10, 10, 10, 10, 10,
+				11, 11, 11, 11, 11, 12, 12, 12, 12};
+		long contient_ingredient_ids[] = {1, 2, 3, 6, 7, 8, 10, 12,
+				4, 5, 6, 8, 10, 8, 9, 10, 11};
 		for (int i = 0; i < contient_plat_ids.length; i++) {
 			db.execSQL("INSERT INTO " + HorecaContract.Contient.TABLE_NAME + "(" +
 					HorecaContract.Contient.PLAT_ID + ", " + HorecaContract.Contient.INGREDIENT_ID +
@@ -327,14 +338,16 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 		
 		Calendar now_cal = Calendar.getInstance();
 		long hour = 60 * 60 * 1000, now = now_cal.getTimeInMillis();
-		long ouverture_horeca_ids[] = {1, 1, 1, 2, 2, 3, 3};
+		long ouverture_horeca_ids[] = {1, 1, 1, 2, 2, 3, 3, 4, 4};
 		long ouverture_debuts[] = {now, now + 3 * hour, now + 10 * hour,
 				now + hour, now + 8 * hour,
-				now + 6 * hour, now + hour / 2};
+				now + 6 * hour, now + hour / 2,
+				now + 2 * hour, now + 6 * hour};
 		long ouverture_fins[] = {now + hour, now + 5 * hour, now + 12 * hour,
 				now + 3 * hour, now + 10 * hour,
-				now + 9 * hour, now + 4 * hour};
-		long ouverture_places[] = {4, 8, -1, 8, 7, 32, 8};
+				now + 9 * hour, now + 4 * hour,
+				now + 4 * hour, now + 9 * hour};
+		long ouverture_places[] = {4, 8, -1, 8, 7, 32, 8, 10, 20};
 		for (int i = 0; i < ouverture_horeca_ids.length; i++) {
 			String column_names = HorecaContract.Ouverture.HORECA_ID + ", " +
 					HorecaContract.Ouverture.DEBUT + ", " + HorecaContract.Ouverture.FIN;
