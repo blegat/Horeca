@@ -42,28 +42,43 @@ public class Filter {
 	private String div (String a, String b) {
 		return op(a, b, "/");
 	}
-	private String sin (String a) {
-		return plus(a, div(times(times(a, a), a), "6"));
+	private String taylor (double[] cs, double a, String x) {
+		String out = "0";
+		String xma = "";
+		long fact = 1;
+		for (int i = 0; i < cs.length; i++) {
+			if (i == 0) {
+				xma = minus(x, String.valueOf(a));
+			} else {
+				fact *= i;
+				xma = times(xma, minus(x, String.valueOf(a)));
+			}
+			out = plus(out, times(String.valueOf(cs[i]), div(xma, String.valueOf(fact))));
+		}
+		return out;
 	}
-	private String cos (String a) {
-		return minus("1", div(times(a, a), "2"));
+	private String sin (String x, double a) {
+		return taylor(new double[] {Math.sin(a), Math.cos(a)}, a, x);
 	}
-	private String acos (String a) {
-		return minus(minus("1.57", a), div(times(a, times(a, a)), "6"));
+	private String cos (String x, double a) {
+		return taylor(new double[] {Math.cos(a), -Math.sin(a)}, a, x);
+	}
+	private String acos (String x, double a) {
+		return taylor(new double[] {Math.acos(a), -1/Math.sqrt(1-a*a)}, a, x);
 	}
 	
 	private String degToRad (String deg) {
 		return times(deg, "0.01745327");
 	}
-	private String degToRad (double deg) {
-		return String.valueOf(deg * 0.01745327);
+	private double degToRad (double deg) {
+		return deg * 0.01745327;
 	}
 	
 	private String dbToRad (String db) {
 		return degToRad(div(db, "1000000."));
 	}
 	
-	public Cursor getMatchingHorecas(SQLiteDatabase db, Context context, GPSTracker gps) {
+	public Horeca[] getMatchingHorecas(SQLiteDatabase db, Context context, GPSTracker gps) {
 		String tables = HorecaContract.Horeca.TABLE_NAME_Q + ", " + HorecaContract.UserFavoriteHoreca.TABLE_NAME_Q;
 		String where = HorecaContract.Horeca.VILLE_ID_Q + " = " + String.valueOf(ville.getId());
 		if (horecaType != null) {
@@ -107,28 +122,52 @@ public class Filter {
 		if (gps != null) {
 			double longitude = gps.getLongitude();
 			double latitude = gps.getLatitude();
-			String lat1 = dbToRad(HorecaContract.Horeca.LONGITUDE_Q);
+			/*String lat1 = dbToRad(HorecaContract.Horeca.LONGITUDE_Q);
 			String lon1 = dbToRad(HorecaContract.Horeca.LATITUDE_Q);
-			String lat2 = degToRad(latitude);
-			String lon2 = degToRad(longitude);
-			/*String distSquared = "(" +
+			double lat2 = degToRad(latitude);
+			double lon2 = degToRad(longitude);*/
+			String distSquared = "(" +
 					HorecaContract.Horeca.LONGITUDE_Q + " / 1000000. - " + longitude + ")*(" +
 					HorecaContract.Horeca.LONGITUDE_Q + " / 1000000. - " + longitude + ")+(" +
 					HorecaContract.Horeca.LATITUDE_Q + " / 1000000. - " + latitude + ")*(" +
-					HorecaContract.Horeca.LATITUDE_Q + " / 1000000. - " + latitude + ")";*/
-			String dist = times(acos(plus(times(sin(lat1), sin(lat2)), times(times(cos(lat1), cos(lat2)),
-					cos(minus(lon2, lon1))))), "6378100.");
+					HorecaContract.Horeca.LATITUDE_Q + " / 1000000. - " + latitude + ")";
+			/*String dist = times(acos(plus(times(sin(lat1, lat2), String.valueOf(Math.sin(lat2))), times(times(cos(lat1, lat2),
+					String.valueOf(Math.cos(lat2))),
+					cos(minus(String.valueOf(lon2), lon1), 0))),
+					Math.sin(lat2) * Math.sin(lat2) + Math.cos(lat2) * Math.cos(lat2)),
+					"6378100.");*/
 			if (hasMaxDistance) {
-				where = where + " AND " + dist + " < " + String.valueOf(maxDistance*maxDistance);
+				where = where + " AND " + distSquared + " < " + String.valueOf(maxDistance*maxDistance);
 			}
-			sort = addSort(sort, dist + " ASC");
+			sort = addSort(sort, distSquared + " ASC");
 		}
 		Log.i("where", where);
 		// We need to add UNIQ because the restaurant could have
 		// several plats with the good type
-		return db.query(true, tables,
+		Cursor cursor = db.query(true, tables,
 				HorecaContract.Horeca.COLUMN_NAMES_Q,
 				where, null, null, null, sort, LIMIT);
+		cursor.moveToFirst();
+		Horeca[] horecas = new Horeca[cursor.getCount()];
+		int n = 0;
+		while (!cursor.isAfterLast()) {
+			horecas[n] = new Horeca(cursor);
+			if (gps != null && hasMaxDistance) {
+				if (horecas[n].getDistance(gps) > maxDistance) {
+					n--;
+				}
+			}
+			n++;
+			cursor.moveToNext();
+		}
+		if (n < horecas.length) {
+			Horeca[] tmp = horecas;
+			horecas = new Horeca[n];
+			for (int i = 0; i < n; i++) {
+				horecas[i] = tmp[i];
+			}
+		}
+		return horecas;
 	}
 	
 	public void setVille(Ville ville) {

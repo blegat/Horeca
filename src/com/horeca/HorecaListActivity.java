@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -68,17 +68,17 @@ public class HorecaListActivity extends MyActivity {
 			filter.setMaxDistance(b.getDouble(MainActivity.DISTANCE_MAX_EXTRA));
 		}
 		
-		Cursor cursor;
+		Horeca[] list;
 		gps = new GPSTracker(this);
 		gps_warning = (TextView) findViewById(R.id.gps_warning);
 		if (gps.canGetLocation()) {
 			gps_warning.setVisibility(View.GONE);
-			cursor = filter.getMatchingHorecas(db, this, gps);
+			list = filter.getMatchingHorecas(db, this, gps);
 		} else {
 			// make sure it is visible even if it should be
 			gps_warning.setVisibility(View.VISIBLE);
 			gps.showSettingsAlert();
-			cursor = filter.getMatchingHorecas(db, this, null);
+			list = filter.getMatchingHorecas(db, this, null);
 		}
 
 		// Create the List of restaurants to choose from
@@ -91,7 +91,7 @@ public class HorecaListActivity extends MyActivity {
 		//db.close(); // too early, the adapter still uses it apparently
 		
 		horeca_list = (ListView) findViewById(R.id.horeca_list);
-		horeca_list.setAdapter(new HorecaListCursorAdapter(this, cursor));
+		horeca_list.setAdapter(new HorecaListArrayAdapter(this, list));
 		db.close();
 		
 		horeca_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -106,31 +106,30 @@ public class HorecaListActivity extends MyActivity {
 		});
 	}
 	
-	public class HorecaListCursorAdapter extends CursorAdapter {
-		public HorecaListCursorAdapter(Context context, Cursor c) {
-			super(context, c, FLAG_REGISTER_CONTENT_OBSERVER);
+	public class HorecaListArrayAdapter extends ArrayAdapter<Horeca> {
+		private Horeca[] horecas;
+		public HorecaListArrayAdapter(Context context, Horeca[] horecas) {
+			super(context, R.layout.horeca_item, horecas);
+			this.horecas = horecas;
 		}
 	 
 		@Override
-		public void bindView(View view, Context context, Cursor cursor) {
-			Horeca horeca = new Horeca(cursor);
-			TextView name = (TextView) view.findViewById(R.id.horeca_item_name);
-			name.setText(horeca.getName());
-			TextView distance = (TextView) view.findViewById(R.id.horeca_item_distance);
-			if (gps.getLocation() != null) {
-				distance.setText(Utils.distanceToString(horeca.getDistance(gps)));
-			} else {
-				distance.setVisibility(View.GONE);
+		public View getView(int i, View view, ViewGroup parent) {
+			if (view == null) {
+				LayoutInflater inflater = HorecaListActivity.this.getLayoutInflater();
+				view = inflater.inflate(R.layout.horeca_item, parent, false);
+				TextView name = (TextView) view.findViewById(R.id.horeca_item_name);
+				name.setText(horecas[i].getName());
+				TextView distance = (TextView) view.findViewById(R.id.horeca_item_distance);
+				if (gps.getLocation() != null) {
+					distance.setText(Utils.distanceToString(horecas[i].getDistance(gps)));
+				} else {
+					distance.setVisibility(View.GONE);
+				}
 			}
+			return view;
 		}
 	 
-		@Override
-		public View newView(Context context, Cursor cursor, ViewGroup parent) {
-			LayoutInflater inflater = LayoutInflater.from(context);
-			View v = inflater.inflate(R.layout.horeca_item, parent, false);
-			bindView(v, context, cursor);
-			return v;
-		}
 	}
 
 }
