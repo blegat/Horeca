@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 public class HorecaListActivity extends MyActivity {
 	GPSTracker gps;
+	Horeca[] horecas;
 	
 	private Ville ville;
 	private HorecaType horecaType = null;
@@ -68,17 +69,16 @@ public class HorecaListActivity extends MyActivity {
 			filter.setMaxDistance(b.getDouble(MainActivity.DISTANCE_MAX_EXTRA));
 		}
 		
-		Horeca[] list;
 		gps = new GPSTracker(this);
 		gps_warning = (TextView) findViewById(R.id.gps_warning);
 		if (gps.canGetLocation()) {
 			gps_warning.setVisibility(View.GONE);
-			list = filter.getMatchingHorecas(db, this, gps);
+			horecas = filter.getMatchingHorecas(db, this, gps);
 		} else {
 			// make sure it is visible even if it should be
 			gps_warning.setVisibility(View.VISIBLE);
 			gps.showSettingsAlert();
-			list = filter.getMatchingHorecas(db, this, null);
+			horecas = filter.getMatchingHorecas(db, this, null);
 		}
 
 		// Create the List of restaurants to choose from
@@ -91,7 +91,7 @@ public class HorecaListActivity extends MyActivity {
 		//db.close(); // too early, the adapter still uses it apparently
 		
 		horeca_list = (ListView) findViewById(R.id.horeca_list);
-		horeca_list.setAdapter(new HorecaListArrayAdapter(this, list));
+		horeca_list.setAdapter(new HorecaListArrayAdapter(this, horecas));
 		db.close();
 		
 		horeca_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -100,17 +100,15 @@ public class HorecaListActivity extends MyActivity {
 			{
         		Intent i = new Intent(HorecaListActivity.this, HorecaActivity.class);
         		// Tell PlatListActivity which horeca to take plats from
-        		i.putExtra("horeca_id", id);
+        		i.putExtra("horeca_id", horecas[position].getId());
         		startActivity(i);
 			}
 		});
 	}
 	
 	public class HorecaListArrayAdapter extends ArrayAdapter<Horeca> {
-		private Horeca[] horecas;
 		public HorecaListArrayAdapter(Context context, Horeca[] horecas) {
 			super(context, R.layout.horeca_item, horecas);
-			this.horecas = horecas;
 		}
 	 
 		@Override
