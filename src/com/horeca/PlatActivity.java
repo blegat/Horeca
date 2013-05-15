@@ -297,12 +297,14 @@ public class PlatActivity extends MyActivity implements OnClickListener {
 				MySqliteHelper sqliteHelper = new MySqliteHelper(this);
 				SQLiteDatabase db = sqliteHelper.getWritableDatabase();
 			
-				Commande.createCommande(db, plat,
+				if (null == Commande.createCommande(db, plat,
 						new GregorianCalendar(commande_date.getYear(), commande_date.getMonth(),
 								commande_date.getDayOfMonth(), commande_time.getCurrentHour(),
-								commande_time.getCurrentMinute()).getTime(), nombre);
-				
-				refreshStock(db);
+								commande_time.getCurrentMinute()).getTime(), nombre)) {
+					Toast.makeText(this, R.string.used_command_date, Toast.LENGTH_SHORT).show();
+				} else {
+					refreshStock(db);
+				}
 			
 				db.close();
 			}

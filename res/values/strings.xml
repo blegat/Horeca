@@ -90,6 +90,7 @@
     <string name="commandes_list_label"><b>Orders (click to delete):</b></string>
     <string name="title_activity_commandes">CommandesActivity</string>
     <string name="invalid_amount_warning">Invalid amount</string>
+    <string name="used_command_date">You have already made an order for this date.</string>
     <string name="horeca_is_favorite"><b>Is favorite:</b></string>
     <string name="name"><b>Name</b></string>
     <string name="address"><b>Address:</b></string>

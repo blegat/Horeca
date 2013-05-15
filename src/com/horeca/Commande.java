@@ -28,6 +28,9 @@ public class Commande {
 		cv.put(HorecaContract.Commande.TEMPS, temps.getTime());
 		cv.put(HorecaContract.Commande.NOMBRE, nombre);
 		long id = db.insert(HorecaContract.Commande.TABLE_NAME, null, cv);
+		if (id == -1) { // The command already exists for this date
+			return null;
+		}
 		if (plat.hasStock()) {
 			plat.setStock(db, plat.getStock() - nombre);
 		}
