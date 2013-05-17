@@ -120,6 +120,7 @@ public class Filter {
 				+ " = " + User.getCurrentUser().getId()  + ") DESC");
 		}
 		if (gps != null) {
+			Log.i("gps","fetched");
 			double longitude = gps.getLongitude();
 			double latitude = gps.getLatitude();
 			/*String lat1 = dbToRad(HorecaContract.Horeca.LONGITUDE_Q);

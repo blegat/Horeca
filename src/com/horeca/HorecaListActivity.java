@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +22,10 @@ public class HorecaListActivity extends MyActivity {
 	private HorecaType horecaType = null;
 	private PlatType platType = null;
 	private Ingredient ingredient = null;
+	private Filter filter = null;
 	
 	private TextView gps_warning = null;
+	private boolean has_gps = false;
 	private ListView horeca_list = null;
 	
 	@Override
@@ -48,7 +51,7 @@ public class HorecaListActivity extends MyActivity {
 		}
 		setTitle(String.format(getResources().getString(R.string.title_activity_horeca_list), ville.getName()));
 		
-		Filter filter = new Filter();
+		filter = new Filter();
 		filter.setVille(ville);
 		if (horecaType != null) {
 			filter.setHorecaType(horecaType);
@@ -72,9 +75,11 @@ public class HorecaListActivity extends MyActivity {
 		gps = new GPSTracker(this);
 		gps_warning = (TextView) findViewById(R.id.gps_warning);
 		if (gps.canGetLocation()) {
+			has_gps = true;
 			gps_warning.setVisibility(View.GONE);
 			horecas = filter.getMatchingHorecas(db, this, gps);
 		} else {
+			has_gps = false;
 			// make sure it is visible even if it should be
 			gps_warning.setVisibility(View.VISIBLE);
 			gps.showSettingsAlert();
@@ -104,6 +109,27 @@ public class HorecaListActivity extends MyActivity {
         		startActivity(i);
 			}
 		});
+	}
+	
+	@Override
+	public void onRestart () {
+		super.onRestart();
+		gps.getLocation(); // refresh canGetLocation
+		Log.i("gps","aha" + String.valueOf(has_gps) + String.valueOf(gps.canGetLocation()));
+		
+		if (!has_gps && gps.canGetLocation()) {
+			Log.i("gps","hihi");
+			// Open the db
+			MySqliteHelper sqliteHelper = new MySqliteHelper(this);
+			SQLiteDatabase db = sqliteHelper.getReadableDatabase();
+			
+			has_gps = true;
+			gps_warning.setVisibility(View.GONE);
+			horecas = filter.getMatchingHorecas(db, this, gps);
+
+			horeca_list.setAdapter(new HorecaListArrayAdapter(this, horecas));
+			db.close();
+		}
 	}
 	
 	public class HorecaListArrayAdapter extends ArrayAdapter<Horeca> {
